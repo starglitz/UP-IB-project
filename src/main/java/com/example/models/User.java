@@ -1,4 +1,4 @@
-package models;
+package com.example.models;
 
 public abstract class User {
     private String email;
