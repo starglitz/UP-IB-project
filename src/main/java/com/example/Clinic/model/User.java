@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.Clinic.model;
 
 public abstract class User {
     private String email;

@@ -1,4 +1,4 @@
-package com.example.models;
+package com.example.Clinic.model;
 
 public class Patient extends User {
     private String id;
