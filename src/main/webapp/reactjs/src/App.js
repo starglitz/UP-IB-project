@@ -2,6 +2,7 @@ import './App.css';
 import Navbar from './components/navbar';
 import SampleLayout from './layouts/SampleLayout';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import RegisterLayout from "./layouts/RegisterLayout";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Router>
             <Switch>
                 <Route path="/samplePath" exact component={SampleLayout}/>
+                <Route path="/register" exact component={RegisterLayout}/>
             </Switch>
         </Router>
     </div>
