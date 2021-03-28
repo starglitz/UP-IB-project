@@ -5,75 +5,48 @@ import {Button, Form} from "react-bootstrap";
 const RegisterLayout = () => {
     return (
         <>
-            <h1 style={{textAlign:'center', margin:'30px'}}>Register to our clinic</h1>
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-            }}>
+            <h1 style={{textAlign:'center', margin:'20px'}}>Register to our clinic</h1>
 
-            <Form>
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+            <div style={{margin: '0 auto', display: 'flex',
+                justifyContent: 'center'}}>
 
-                </Form.Group>
+                <form action="#" method="post" className="register-form">
 
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-                <Form.Group controlId="confirmPassword">
-                    <Form.Label>Confirm password</Form.Label>
-                    <Form.Control type="password" placeholder="Confirm password" />
-                </Form.Group>
+                    <label htmlFor="email" className="label-register">Email:</label>
+                    <input id="email" type="text" placeholder="enter email here" className="input-register"/>
 
-                <Form.Group controlId="formName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="name" placeholder="Enter name" />
+                    <label htmlFor="password" className="label-register">Password:</label>
+                    <input id="password" type="password" placeholder="enter password here" className="input-register"/>
 
-                </Form.Group>
+                    <label htmlFor="confirm" className="label-register">Confirm password:</label>
+                    <input id="confirm" type="password" placeholder="confirm password" className="input-register"/>
 
-                <Form.Group controlId="formSurname">
-                    <Form.Label>Surname</Form.Label>
-                    <Form.Control type="surname" placeholder="Enter surname" />
+                    <label htmlFor="name" className="label-register">Name:</label>
+                    <input id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
-                </Form.Group>
+                    <label htmlFor="surname" className="label-register">Surame:</label>
+                    <input id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
 
-                <Form.Group controlId="formAddress">
-                    <Form.Label>Home address</Form.Label>
-                    <Form.Control type="address" placeholder="Enter address" />
+                    <label htmlFor="address" className="label-register">Home address:</label>
+                    <input id="address" type="text" placeholder="enter your address here" className="input-register"/>
 
-                </Form.Group>
+                    <label htmlFor="city" className="label-register">City:</label>
+                    <input id="city" type="text" placeholder="enter your city here" className="input-register"/>
 
-                <Form.Group controlId="formCity">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control type="city" placeholder="Enter your city" />
+                    <label htmlFor="state" className="label-register">State:</label>
+                    <input id="state" type="text" placeholder="enter your state here" className="input-register"/>
 
-                </Form.Group>
+                    <label htmlFor="name" className="label-register">Name:</label>
+                    <input id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
-                <Form.Group controlId="formState">
-                    <Form.Label>State</Form.Label>
-                    <Form.Control type="state" placeholder="Enter state" />
+                    <label htmlFor="contact" className="label-register">Contact:</label>
+                    <input id="contact" type="text" placeholder="enter your phone number here" className="input-register"/>
 
-                </Form.Group>
+                    <label htmlFor="lbo" className="label-register">LBO:</label>
+                    <input id="lbo" type="text" placeholder="enter your LBO here" className="input-register"/>
 
-                <Form.Group controlId="formContact">
-                    <Form.Label>Contact</Form.Label>
-                    <Form.Control type="contact" placeholder="Enter your phone number" />
-
-                </Form.Group>
-
-                <Form.Group controlId="formLBO">
-                    <Form.Label>LBO</Form.Label>
-                    <Form.Control type="lbo" placeholder="Enter your LBO" />
-
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-            </Form>
+                    <input type="submit" value="submit" className="submit-register"/>
+                </form>
             </div>
         </>
     );

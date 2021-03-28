@@ -6,3 +6,51 @@
 .react-calendar {
     width: 100% !important;
 }
+
+
+register-form {
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.label-register,
+.input-register {
+    display: inline-block;
+}
+
+.label-register {
+    width: 30%;
+    text-align: right;
+}
+
+.label-register+.input-register {
+    width: 30%;
+    margin: 0 30% 0 4%;
+}
+
+.input-register+.input-register {
+    float: right;
+}
+
+.submit-register {
+
+    margin: 10px auto 0 auto;
+    display:block;
+    padding: 10px 24px;
+    font-size: 16px;
+    background-color: #81ab27;
+    border: #66871f;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+
+}
+
+
+.submit-register:hover {
+    background-color: #4CAF50; /* Green */
+
+}
+
+
+
