@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Service {
+    private Long id;
     private String name;
     private int price;
 }

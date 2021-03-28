@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class Clinic {
+    private Long id;
     private String name;
     private String description;
     private List<Doctor> doctors;
