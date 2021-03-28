@@ -1,8 +1,13 @@
 package com.example.Clinic.model;
 
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 public class Clinic {
     private String name;
     private String description;

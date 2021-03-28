@@ -1,5 +1,10 @@
 package com.example.Clinic.model;
 
-public class ClinicCenterAdmin {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class ClinicCenterAdmin extends User{
     private ClinicCenter clinicCenter;
 }
