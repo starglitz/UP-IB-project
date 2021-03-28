@@ -1,5 +1,5 @@
 import React from 'react';
-import {Navbar} from "react-bootstrap";
+import {Navbar, Nav} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
 import hospitallogo from '../hospital-logo.png';
 
@@ -7,7 +7,6 @@ const navbar = () => {
     return (
     <>
         <Navbar bg="dark" variant="dark">
-
 
             <Navbar.Brand href="#home">
 
@@ -21,6 +20,8 @@ const navbar = () => {
             </Navbar.Brand>
 
             <Navbar.Brand href="#home">Our clinic</Navbar.Brand>
+            <Nav.Link href="register">Register</Nav.Link>
+            <Nav.Link href="nursePage">Nurse page</Nav.Link>
         </Navbar>
     </>
     );
