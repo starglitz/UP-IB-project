@@ -52,5 +52,21 @@ register-form {
 
 }
 
+.label-profilInfo,
+.input-profilInfo {
+    display: inline-block;
+}
+
+.label-profilInfo {
+    width: 30%;
+    text-align: right;
+}
+
+.label-profilInfo+.input-profilInfo {
+    width: 30%;
+    margin: 0 30% 0 4%;
+}
+
+
 
 
