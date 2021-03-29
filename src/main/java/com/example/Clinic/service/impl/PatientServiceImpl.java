@@ -6,6 +6,8 @@ import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientServiceImpl implements PatientService {
 
@@ -15,5 +17,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient addPatient(Patient patient) {
         return patientDao.addPatient(patient);
+    }
+
+    @Override
+    public List<Patient> getALl() {
+        return patientDao.getAll();
     }
 }

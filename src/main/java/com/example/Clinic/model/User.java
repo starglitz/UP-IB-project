@@ -24,4 +24,16 @@ public abstract class User {
     private String city;
     private String country;
     private String phoneNumber;
+
+    public User(String email, String password, String name, String lastName,
+                String address, String city, String country, String phoneNumber) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+    }
 }
