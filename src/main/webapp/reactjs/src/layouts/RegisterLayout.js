@@ -10,7 +10,7 @@ const RegisterLayout = () => {
             <div style={{margin: '0 auto', display: 'flex',
                 justifyContent: 'center'}}>
 
-                <form action="#" method="post" className="register-form">
+                <form action="/registration" method="post" className="register-form">
 
                     <label htmlFor="email" className="label-register">Email:</label>
                     <input id="email" type="text" placeholder="enter email here" className="input-register"/>
@@ -24,7 +24,7 @@ const RegisterLayout = () => {
                     <label htmlFor="name" className="label-register">Name:</label>
                     <input id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
-                    <label htmlFor="surname" className="label-register">Surame:</label>
+                    <label htmlFor="surname" className="label-register">Surname:</label>
                     <input id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
 
                     <label htmlFor="address" className="label-register">Home address:</label>
@@ -36,8 +36,6 @@ const RegisterLayout = () => {
                     <label htmlFor="state" className="label-register">State:</label>
                     <input id="state" type="text" placeholder="enter your state here" className="input-register"/>
 
-                    <label htmlFor="name" className="label-register">Name:</label>
-                    <input id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
                     <label htmlFor="contact" className="label-register">Contact:</label>
                     <input id="contact" type="text" placeholder="enter your phone number here" className="input-register"/>
