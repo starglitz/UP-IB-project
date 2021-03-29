@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -23,4 +24,7 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getALl() {
         return patientDao.getAll();
     }
+
+    @Override
+    public Optional<Patient> getPatientById(Long id) { return  patientDao.getPatientById(id);}
 }

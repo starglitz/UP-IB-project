@@ -10,12 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PatientApiImpl implements PatientApi {
 
     @Autowired
     private PatientService patientService;
+
 
     @Override
     public ResponseEntity registerUser(Patient patient) {
@@ -26,10 +28,16 @@ public class PatientApiImpl implements PatientApi {
     @Override
     public ResponseEntity getAllPatients() {
 
-        initializeTestData();
 
         List<Patient> patients = patientService.getALl();
         return new ResponseEntity(patients, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getPatient(Long id) {
+
+        Optional<Patient> patient = patientService.getPatientById(id);
+        return  new ResponseEntity(patient, HttpStatus.OK);
     }
 
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class PatientDaoImpl implements PatientDao {
@@ -23,4 +24,7 @@ public class PatientDaoImpl implements PatientDao {
     public List<Patient> getAll() {
         return this.patientRepository.findAll();
     }
+
+    @Override
+    public Optional<Patient> getPatientById(Long id) {return this.patientRepository.findById(id); }
 }

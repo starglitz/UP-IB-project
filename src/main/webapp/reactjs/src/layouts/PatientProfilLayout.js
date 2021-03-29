@@ -2,7 +2,26 @@ import React, {Component} from 'react';
 import  profil_img from '../profil-img.png'
 
 class PatientProfilLayout extends Component {
+
+    state = {
+        loading: true,
+        patient: null
+    }
+
+    async componentDidMount() {
+        const url = "http://localhost:8080/patient/2";
+        const response = await fetch(url);
+        const data = await response.json();
+        this.setState({loading: false, patient: data});
+        console.log(this.state.patient)
+    }
+
+
     render() {
+        if (this.state.loading) {
+            return <div>loading...</div>;
+        }
+
 
         const imgStyle = {
             display: 'block',
@@ -24,31 +43,28 @@ class PatientProfilLayout extends Component {
 
 
                     <label htmlFor="email" className="label-profilInfo">Email:</label>
-                    <input id="email" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="email" type="text" value={this.state.patient.email}  className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="name" className="label-profilInfo">Name:</label>
-                    <input id="name" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="name" type="text" value={this.state.patient.name} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="surname" className="label-profilInfo">Surame:</label>
-                    <input id="surname" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="surname" type="text"  value={this.state.patient.lastName} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="address" className="label-profilInfo">Home address:</label>
-                    <input id="address" type="text" className="input-profilInfo " disabled={true}/>
+                    <input id="address" type="text" value={this.state.patient.address} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="city" className="label-profilInfo">City:</label>
-                    <input id="city" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="city" type="text"  value={this.state.patient.city} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="state" className="label-profilInfo">State:</label>
-                    <input id="state" type="text" className="input-profilInfo " disabled={true}/>
-
-                    <label htmlFor="name" className="label-profilInfo">Name:</label>
-                    <input id="name" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="state" type="text" value={this.state.patient.country} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="contact" className="label-profilInfo">Contact:</label>
-                    <input id="contact" type="text" className="input-profilInfo " disabled={true}/>
+                    <input id="contact" type="text" value={this.state.patient.phoneNumber} className="input-profilInfo " disabled={true}/>
 
                     <label htmlFor="lbo" className="label-profilInfo">LBO:</label>
-                    <input id="lbo" type="text"  className="input-profilInfo " disabled={true}/>
+                    <input id="lbo" type="text" value={this.state.patient.lbo}  className="input-profilInfo " disabled={true}/>
 
                 </div>
             </>
