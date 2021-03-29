@@ -3,6 +3,38 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Button, Form} from "react-bootstrap";
 
 const RegisterLayout = () => {
+
+    const sendData = ()  => {
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        let name = document.getElementById('name').value;
+        let surname = document.getElementById('surname').value;
+        let address = document.getElementById('address').value;
+        let city = document.getElementById('city').value;
+        let state = document.getElementById('state').value;
+        let contact = document.getElementById('contact').value;
+        let lbo = document.getElementById('lbo').value;
+
+        let user = {"email":email, "password":password, "name":name, "surname":surname,
+        "address":address, "city":city, "state":state, "contact":contact, "lbo":lbo, "enabled":true};
+        console.log(user);
+        fetch('http://localhost:8080/registration', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+        })
+            .then(response => response.json())
+            .then(user => {
+                console.log('Success:', user);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }
+
     return (
         <>
             <h1 style={{textAlign:'center', margin:'20px'}}>Register to our clinic</h1>
@@ -10,7 +42,8 @@ const RegisterLayout = () => {
             <div style={{margin: '0 auto', display: 'flex',
                 justifyContent: 'center'}}>
 
-                <form action="/registration" method="post" className="register-form">
+                <div className="register-form">
+                {/*<form method="post" className="register-form">*/}
 
                     <label htmlFor="email" className="label-register">Email:</label>
                     <input id="email" type="text" placeholder="enter email here" className="input-register"/>
@@ -43,11 +76,14 @@ const RegisterLayout = () => {
                     <label htmlFor="lbo" className="label-register">LBO:</label>
                     <input id="lbo" type="text" placeholder="enter your LBO here" className="input-register"/>
 
-                    <input type="submit" value="submit" className="submit-register"/>
-                </form>
+                    <button onClick={sendData} className="submit-register">Submit</button>
+                {/*</form>*/}
+                </div>
             </div>
         </>
     );
 };
 
 export default RegisterLayout;
+
+

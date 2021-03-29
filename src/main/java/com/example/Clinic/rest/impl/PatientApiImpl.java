@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -18,8 +20,17 @@ public class PatientApiImpl implements PatientApi {
     private PatientService patientService;
 
     @Override
-    public ResponseEntity registerUser(Patient patient) {
+    public ResponseEntity<String> registerUser(Patient patient) {
         patientService.addPatient(patient);
+
+        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+    }
+
+    @PostMapping("/registerTest")
+    public ResponseEntity register(@RequestBody Patient patient) {
+        System.out.println(patient);
+
+
         return new ResponseEntity(new Response(), HttpStatus.OK);
     }
 
@@ -35,10 +46,10 @@ public class PatientApiImpl implements PatientApi {
 
     public void initializeTestData() {
         Patient patient1= new Patient("email@gmail.com", "pass123", "Clark", "Johnson",
-                "Address Street 16a", "Novi Sad", "Serbia", "012345678", "095540", true);
+                "Address Street 16a", "Novi Sad", "Serbia", "012345678", "095540");
 
         Patient patient2= new Patient("email2@yahoo.com", "654321", "Eve", "Hamilton",
-                "Address Street 2", "Belgrade", "Serbia", "098765432", "196547", true);
+                "Address Street 2", "Belgrade", "Serbia", "098765432", "196547");
         patientService.addPatient(patient1);
         patientService.addPatient(patient2);
 
