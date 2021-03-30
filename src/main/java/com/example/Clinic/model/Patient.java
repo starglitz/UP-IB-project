@@ -11,14 +11,14 @@ import javax.persistence.Entity;
 @Entity
 public class Patient extends User {
     private String lbo;
-    private boolean enabled;
+    private boolean enabled = true;
 
 
     public Patient( String email, String password, String name, String lastName,
                     String address, String city, String country, String phoneNumber,
-                    String lbo, boolean enabled) {
+                    String lbo) {
         super(email, password, name, lastName, address, city, country, phoneNumber);
         this.lbo = lbo;
-        this.enabled = enabled;
+        this.enabled = true;
     }
 }
