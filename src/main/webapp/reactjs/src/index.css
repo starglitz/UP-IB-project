@@ -52,6 +52,12 @@ register-form {
 
 }
 
+#strength {
+    position:absolute;
+    right:38%;
+    
+}
+
 .label-profilInfo,
 .input-profilInfo {
     display: inline-block;
