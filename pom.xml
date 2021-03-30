@@ -15,7 +15,6 @@
 	<description>Internet security and project management project </description>
 	<properties>
 		<java.version>11</java.version>
-		<swagger.core.version>1.5.10</swagger.core.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -53,17 +52,6 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.7.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.7.0</version>
-		</dependency>
 
 
 		<dependency>
