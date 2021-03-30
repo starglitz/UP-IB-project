@@ -46,6 +46,11 @@ const RegisterLayout = () => {
                 ok = false;
                 alert("Make sure to fill all fields!")
             }
+
+            else if(password.length < 8) {
+                ok = false;
+                alert("Password should be at least 8 characters long! 😡")
+            }
             else if(password !== confirm) {
                 ok = false;
                 alert("Passwords don't match!")
@@ -81,11 +86,11 @@ const RegisterLayout = () => {
     } else if (false == enoughRegex.test(pwd.value)) {
         strength.innerHTML = 'More Characters';
     } else if (strongRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:green">Strong!</span>';
+        strength.innerHTML = '<span style="color:green">Strong! 👌</span>';
     } else if (mediumRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:orange">Medium!</span>';
+        strength.innerHTML = '<span style="color:orange">Medium! 😐</span>';
     } else {
-        strength.innerHTML = '<span style="color:red">Weak!</span>';
+        strength.innerHTML = '<span style="color:red">Weak! 😡</span>';
     }
     }
 
