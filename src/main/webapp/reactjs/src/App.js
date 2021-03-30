@@ -15,7 +15,7 @@ function App() {
                 <Route path="/samplePath" exact component={SampleLayout}/>
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/nursePage" exact component={NurseLayout}/>
-                <Route path="/profil" exact component={PatientProfilLayout}/>
+                <Route path="/profile" exact component={PatientProfilLayout}/>
             </Switch>
         </Router>
     </div>

@@ -9,7 +9,7 @@ class PatientProfilLayout extends Component {
     }
 
     async componentDidMount() {
-        const url = "http://localhost:8080/patient/2";
+        const url = "http://localhost:8080/patient/1";
         const response = await fetch(url);
         const data = await response.json();
         this.setState({loading: false, patient: data});
@@ -19,15 +19,19 @@ class PatientProfilLayout extends Component {
 
     render() {
         if (this.state.loading) {
-            return <div>loading...</div>;
+            return <div style={{textAlign:'center'}}>loading...</div>;
         }
 
+        if (!this.state.patient) {
+            return <div style={{textAlign:'center'}}>Can't find your profile :/</div>;
+        }
 
         const imgStyle = {
             display: 'block',
             margin: '20px auto 20px auto'
             };
         return (
+
             <>
                 <h3 style={{textAlign:'center', margin:'20px', textTransform:'uppercase'}}>My profile</h3>
                 <hr/>
