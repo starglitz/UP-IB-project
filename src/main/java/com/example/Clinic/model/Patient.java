@@ -5,11 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @Entity
 public class Patient extends User {
+
+    @NotEmpty(message = "last name is mandatory")
+    @NotBlank(message = "cant be blank")
+    @NotNull(message = "cant be null")
     private String lbo;
     private boolean enabled = true;
 

@@ -15,11 +15,11 @@ const RegisterLayout = () => {
         let contact = document.getElementById('contact').value;
         let lbo = document.getElementById('lbo').value;
 
-        if(validateForm(email,password,confirm,name,surname,address,city,state,contact,lbo)) {
+         if(validateForm(email,password,confirm,name,surname,address,city,state,contact,lbo)) {
 
 
-        let user = {"email":email, "password":password, "name":name, "surname":surname,
-        "address":address, "city":city, "state":state, "contact":contact, "lbo":lbo, "enabled":true};
+        let user = {"email":email, "password":password, "name":name, "lastName":surname,
+        "address":address, "city":city, "country":state, "phoneNumber":contact, "lbo":lbo, "enabled":true};
         console.log(user);
         fetch('http://localhost:8080/registration', {
             method: 'POST',
@@ -36,7 +36,7 @@ const RegisterLayout = () => {
                 console.error('Error:', error);
             });
 
-        }
+         }
     }
 
         const validateForm = (email, password,confirm, name, surname, address, city, state, contact, lbo)  => {

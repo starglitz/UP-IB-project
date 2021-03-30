@@ -6,12 +6,18 @@ import com.example.Clinic.service.PatientService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+<<<<<<< HEAD
 import org.springframework.web.bind.annotation.GetMapping;
+=======
+import org.springframework.validation.BindingResult;
+>>>>>>> 787b1e7f41366626fbae8be3e4501ae8c29d2949
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,18 +29,24 @@ public class PatientApiImpl implements PatientApi {
 
 
     @Override
-    public ResponseEntity<String> registerUser(Patient patient) {
-        patientService.addPatient(patient);
-
-        return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+    public ResponseEntity<Patient> registerUser(@RequestBody @Valid Patient patient) {
+        boolean valid = patientService.addPatient(patient);
+        if(valid) {
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
     }
 
+<<<<<<< HEAD
     @PostMapping("/registerTest")
     public ResponseEntity register(@RequestBody Patient patient) {
         System.out.println(patient);
 
         return new ResponseEntity(new Response(), HttpStatus.OK);
     }
+=======
+
+>>>>>>> 787b1e7f41366626fbae8be3e4501ae8c29d2949
 
     @Override
     @GetMapping("/patients")

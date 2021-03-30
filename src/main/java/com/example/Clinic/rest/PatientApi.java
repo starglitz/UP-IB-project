@@ -3,8 +3,10 @@ package com.example.Clinic.rest;
 import com.example.Clinic.model.Patient;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -13,7 +15,7 @@ public interface PatientApi {
 
     @PostMapping(value = "/registration",
              consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<String> registerUser(@RequestBody Patient patient);
+    ResponseEntity<Patient> registerUser(@Valid @RequestBody Patient patient);
 
     @GetMapping(value = "/allPatients",
         produces = {MediaType.APPLICATION_JSON_VALUE})
