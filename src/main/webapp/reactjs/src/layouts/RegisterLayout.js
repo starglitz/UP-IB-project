@@ -1,12 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {Button, Form} from "react-bootstrap";
 
 const RegisterLayout = () => {
 
     const sendData = ()  => {
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
+        let confirm = document.getElementById('confirm').value;
         let name = document.getElementById('name').value;
         let surname = document.getElementById('surname').value;
         let address = document.getElementById('address').value;
@@ -14,6 +14,9 @@ const RegisterLayout = () => {
         let state = document.getElementById('state').value;
         let contact = document.getElementById('contact').value;
         let lbo = document.getElementById('lbo').value;
+
+        if(validateForm(email,password,confirm,name,surname,address,city,state,contact,lbo)) {
+
 
         let user = {"email":email, "password":password, "name":name, "surname":surname,
         "address":address, "city":city, "state":state, "contact":contact, "lbo":lbo, "enabled":true};
@@ -33,7 +36,38 @@ const RegisterLayout = () => {
                 console.error('Error:', error);
             });
 
+        }
     }
+
+        const validateForm = (email, password,confirm, name, surname, address, city, state, contact, lbo)  => {
+            let ok = true;
+            if(email === "" || password === ""  || confirm === "" || name === "" || surname === "" || address === ""
+                || city === "" || state === "" || contact === "" || lbo === "") {
+                ok = false;
+                alert("Make sure to fill all fields!")
+            }
+            else if(password !== confirm) {
+                ok = false;
+                alert("Passwords don't match!")
+            }
+
+            else if(validateEmail(email) === false) {
+                ok = false;
+                alert("You have entered an invalid email address!")
+            }
+
+            return ok;
+        }
+
+
+        const validateEmail = (email)  => {
+            let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            if(email.match(mailformat)) {
+                return true;
+            }
+            return false;
+        }
+
 
     return (
         <>
@@ -46,22 +80,22 @@ const RegisterLayout = () => {
                 {/*<form method="post" className="register-form">*/}
 
                     <label htmlFor="email" className="label-register">Email:</label>
-                    <input id="email" type="text" placeholder="enter email here" className="input-register"/>
+                    <input  id="email" type="text" placeholder="enter email here" className="input-register"/>
 
                     <label htmlFor="password" className="label-register">Password:</label>
                     <input id="password" type="password" placeholder="enter password here" className="input-register"/>
 
                     <label htmlFor="confirm" className="label-register">Confirm password:</label>
-                    <input id="confirm" type="password" placeholder="confirm password" className="input-register"/>
+                    <input  id="confirm" type="password" placeholder="confirm password" className="input-register"/>
 
                     <label htmlFor="name" className="label-register">Name:</label>
-                    <input id="name" type="text" placeholder="enter your name here" className="input-register"/>
+                    <input  id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
                     <label htmlFor="surname" className="label-register">Surname:</label>
-                    <input id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
+                    <input  id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
 
                     <label htmlFor="address" className="label-register">Home address:</label>
-                    <input id="address" type="text" placeholder="enter your address here" className="input-register"/>
+                    <input  id="address" type="text" placeholder="enter your address here" className="input-register"/>
 
                     <label htmlFor="city" className="label-register">City:</label>
                     <input id="city" type="text" placeholder="enter your city here" className="input-register"/>
