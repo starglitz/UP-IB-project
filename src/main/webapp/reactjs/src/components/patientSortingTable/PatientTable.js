@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ReactBootstrapTable from 'react-bootstrap/Table'
 import React, {Component} from "react";
 import '../../index.css'
-import {SortingTable} from "./SortingTable";
 
 export class PatientTable extends Component {
 
@@ -62,9 +61,6 @@ export class PatientTable extends Component {
                         {patientsData.map(renderPatient)}
                     </tbody>
                 </ReactBootstrapTable>
-
-
-                <SortingTable/>
             </div>
         )
     }
