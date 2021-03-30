@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -32,13 +33,12 @@ public class PatientApiImpl implements PatientApi {
     public ResponseEntity register(@RequestBody Patient patient) {
         System.out.println(patient);
 
-
         return new ResponseEntity(new Response(), HttpStatus.OK);
     }
 
     @Override
+    @GetMapping("/patients")
     public ResponseEntity getAllPatients() {
-
 
         List<Patient> patients = patientService.getALl();
         return new ResponseEntity(patients, HttpStatus.OK);
