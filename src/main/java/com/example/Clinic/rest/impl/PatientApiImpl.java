@@ -9,11 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-<<<<<<< HEAD
+
 import org.springframework.web.bind.annotation.GetMapping;
-=======
-import org.springframework.validation.BindingResult;
->>>>>>> 787b1e7f41366626fbae8be3e4501ae8c29d2949
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -36,17 +33,8 @@ public class PatientApiImpl implements PatientApi {
         }
         return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
     }
+    
 
-<<<<<<< HEAD
-    @PostMapping("/registerTest")
-    public ResponseEntity register(@RequestBody Patient patient) {
-        System.out.println(patient);
-
-        return new ResponseEntity(new Response(), HttpStatus.OK);
-    }
-=======
-
->>>>>>> 787b1e7f41366626fbae8be3e4501ae8c29d2949
 
     @Override
     @GetMapping("/patients")
