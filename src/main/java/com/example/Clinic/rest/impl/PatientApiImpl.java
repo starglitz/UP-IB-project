@@ -33,7 +33,7 @@ public class PatientApiImpl implements PatientApi {
         }
         return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
     }
-    
+
 
 
     @Override

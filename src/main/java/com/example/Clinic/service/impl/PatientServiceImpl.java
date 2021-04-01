@@ -2,6 +2,7 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.dao.PatientDao;
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,8 +56,9 @@ public class PatientServiceImpl implements PatientService {
         }
 
         if (valid) {
+            String hashedPw = BCrypt.hashpw(patient.getPassword(), BCrypt.gensalt());//10
+            patient.setPassword(hashedPw);
             patientDao.addPatient(patient);
-            System.out.println("testing that it happened");
         }
         return valid;
 
