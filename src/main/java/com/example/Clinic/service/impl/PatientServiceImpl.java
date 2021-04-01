@@ -59,6 +59,9 @@ public class PatientServiceImpl implements PatientService {
             String hashedPw = BCrypt.hashpw(patient.getPassword(), BCrypt.gensalt());//10
             patient.setPassword(hashedPw);
             patientDao.addPatient(patient);
+
+
+
         }
         return valid;
 

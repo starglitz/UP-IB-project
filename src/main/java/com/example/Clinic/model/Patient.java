@@ -19,7 +19,7 @@ public class Patient extends User {
     @NotNull(message = "cant be null")
     private String lbo;
     private boolean enabled = true;
-
+    private boolean approved = false;
 
     public Patient( String email, String password, String name, String lastName,
                     String address, String city, String country, String phoneNumber,
