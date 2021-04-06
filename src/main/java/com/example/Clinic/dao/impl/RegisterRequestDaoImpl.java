@@ -28,4 +28,16 @@ public class RegisterRequestDaoImpl implements RegisterRequestDao {
     public RegisterRequest findByPatientId(Long id) {
         return registerRequestRepository.findByPatientId(id);
     }
+
+    @Override
+    public RegisterRequest update(RegisterRequest request) {
+        return registerRequestRepository.save(request);
+    }
+
+    @Override
+    public Optional<RegisterRequest> findById(Long id) {
+        return registerRequestRepository.findById(id);
+    }
+
+
 }

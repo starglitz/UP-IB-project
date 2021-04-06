@@ -4,6 +4,7 @@ import com.example.Clinic.model.RegisterRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -12,5 +13,8 @@ public interface RegisterRequestService {
     public RegisterRequest addRegisterRequest(RegisterRequest request);
     public Set<RegisterRequest> getAll();
     public RegisterRequest findByPatientId(Long id);
+
+    public RegisterRequest update(RegisterRequest request);
+
 
 }
