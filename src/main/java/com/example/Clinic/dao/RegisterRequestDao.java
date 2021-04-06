@@ -6,11 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface RegisterRequestDao {
 
     public RegisterRequest addRegisterRequest(RegisterRequest request);
-    public List<RegisterRequest> getAll();
+    public Set<RegisterRequest> getAll();
     public RegisterRequest findByPatientId(Long id);
 }

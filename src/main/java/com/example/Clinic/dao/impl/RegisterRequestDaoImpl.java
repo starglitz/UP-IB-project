@@ -6,8 +6,7 @@ import com.example.Clinic.repository.RegisterRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class RegisterRequestDaoImpl implements RegisterRequestDao {
@@ -21,8 +20,8 @@ public class RegisterRequestDaoImpl implements RegisterRequestDao {
     }
 
     @Override
-    public List<RegisterRequest> getAll() {
-        return registerRequestRepository.findAll();
+    public Set<RegisterRequest> getAll() {
+        return  new HashSet<RegisterRequest>(registerRequestRepository.findAll());
     }
 
     @Override

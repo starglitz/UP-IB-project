@@ -20,6 +20,9 @@ public class RegisterRequest {
     private RequestStatus status;
     private boolean visitedMail;
 
-
-
+    public RegisterRequest(Patient patient, RequestStatus status, boolean visitedMail) {
+        this.patient = patient;
+        this.status = status;
+        this.visitedMail = visitedMail;
+    }
 }

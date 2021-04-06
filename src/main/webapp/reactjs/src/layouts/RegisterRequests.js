@@ -4,11 +4,12 @@ import RegisterRequestRow from "../components/registerRequestRow";
 
 const RegisterRequests = () => {
 
-    const [requests, setRequests] = useState({});
+    const [requests, setRequests] = useState([]);
     const [hasError, setErrors] =  useState(false);
 
     useEffect(() => {
-        fetchData();
+            setRequests([]);
+            fetchData();
     }, []); // [] as second argument makes it load only once
 
     async function fetchData() {
@@ -33,30 +34,31 @@ console.log(requests);
 console.log(rows);
     return (
         <>
-           <table>
-               <thead>
+           <table className="requestsTable">
+
                <tr>
-                   <td>ID</td>
-                   <td>Name & Surname</td>
-                   <td>Status</td>
+                   <th>ID</th>
+                   <th>Name & Surname</th>
+                   <th>Status</th>
+                   <th colspan="2">Accept or decline a request</th>
                </tr>
-               </thead>
+
                 <tbody>
-                   {[requests].map((req) => (
+                   {requests.map((req) => (
                        // <tr key={req.id}>
                        // <td key={req.id}>{req.id}</td>
                        // <td key={req.id}>{req.email}</td>
                        // <td key={req.id}>{req.name}</td>
                        // </tr>
                        //  <p key={req.id}>{req.name}</p>
-                       <RegisterRequestRow key={req.id} email={req.email} id={req.id} name={req.name}/>
+                       <RegisterRequestRow key={req.id} email={req.patient.email} id={req.id} name={req.patient.name} patientid={req.patient.id}/>
 
                    ))}
                 </tbody>
 
            </table>
             {/*<DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection />*/}
-            <span>{JSON.stringify(requests)}</span>
+            {/*<span>{JSON.stringify(requests)}</span>*/}
         </>
     );
 };

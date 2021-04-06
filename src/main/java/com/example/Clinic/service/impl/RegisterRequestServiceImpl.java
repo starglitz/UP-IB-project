@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RegisterRequestServiceImpl implements RegisterRequestService {
@@ -20,7 +21,7 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
     }
 
     @Override
-    public List<RegisterRequest> getAll() {
+    public Set<RegisterRequest> getAll() {
         return registerRequestDao.getAll();
     }
 
