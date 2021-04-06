@@ -1,5 +1,7 @@
 import React, {Component, useEffect, useState} from 'react';
 import { DataGrid } from '@material-ui/data-grid';
+import RegisterRequestRow from "../components/registerRequestRow";
+
 const RegisterRequests = () => {
 
     const [requests, setRequests] = useState({});
@@ -46,7 +48,9 @@ console.log(rows);
                        // <td key={req.id}>{req.email}</td>
                        // <td key={req.id}>{req.name}</td>
                        // </tr>
-                        <p key={req.id}>{req.name}</p>
+                       //  <p key={req.id}>{req.name}</p>
+                       <RegisterRequestRow key={req.id} email={req.email} id={req.id} name={req.name}/>
+
                    ))}
                 </tbody>
 
