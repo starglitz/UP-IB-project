@@ -74,5 +74,36 @@ register-form {
 }
 
 
+.requestsTable {
+    margin: 0 auto;
+    margin-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+.requestsTable td, .requestsTable th {
+    /*border: 1px solid #ddd;*/
+    padding: 8px;
+}
+
+
+
+.requestsTable tr:nth-child(even){background-color: #f59b42;}
+
+.requestsTable tr:hover {background-color: #ffaa57;}
+
+.requestsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #fc8d21;
+    color: black;
+}
+
+.accept {
+    display: block;
+    margin: auto;
+}
 
 

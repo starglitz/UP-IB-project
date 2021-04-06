@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { MDBDataTable  } from 'mdbreact';
+//import { MDBDataTable  } from 'mdbreact';
 
 export const DataTable = () => {
 
@@ -52,17 +52,18 @@ export const DataTable = () => {
         }]
 
     return (
-        <MDBDataTable
-            bordered={true}
-            striped={true}
-            dark={true}
-            theadTextWhite={true}
-            tbodyTextWhite={true}
-            data={{
-                columns: columnsData,
-                rows: requests
-            }}
-            sortable={true}
-        />
+        // <MDBDataTable
+        //     bordered={true}
+        //     striped={true}
+        //     dark={true}
+        //     theadTextWhite={true}
+        //     tbodyTextWhite={true}
+        //     data={{
+        //         columns: columnsData,
+        //         rows: requests
+        //     }}
+        //     sortable={true}
+        // />
+        <p>pp</p>
     );
 }
