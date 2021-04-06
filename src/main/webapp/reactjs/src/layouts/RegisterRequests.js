@@ -40,7 +40,7 @@ console.log(rows);
                    <th>ID</th>
                    <th>Name & Surname</th>
                    <th>Status</th>
-                   <th colspan="2">Accept or decline a request</th>
+                   <th colSpan="2">Accept or decline a request</th>
                </tr>
 
                 <tbody>
@@ -51,7 +51,7 @@ console.log(rows);
                        // <td key={req.id}>{req.name}</td>
                        // </tr>
                        //  <p key={req.id}>{req.name}</p>
-                       <RegisterRequestRow key={req.id} email={req.patient.email} id={req.id} name={req.patient.name} patientid={req.patient.id}/>
+                       <RegisterRequestRow key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
 
                    ))}
                 </tbody>
