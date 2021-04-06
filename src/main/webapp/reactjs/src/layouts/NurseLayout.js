@@ -24,7 +24,6 @@ const RegisterLayout = () => {
                     onChange={onChange}
                     value={value} />
                 <hr/>
-                <h1>Patient list</h1>
                 <DataTable />
             </div>
         </>

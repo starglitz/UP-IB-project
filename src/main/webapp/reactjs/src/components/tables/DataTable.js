@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { MDBDataTable  } from 'mdbreact';
+import MUIDataTable from "mui-datatables";
 
 export const DataTable = () => {
 
@@ -17,52 +17,89 @@ export const DataTable = () => {
         return res.json()
     }
 
-    const columnsData = [
+    const columns = [
         {
             label: 'ID',
-            field: 'id',
+            name: 'id',
+            options: {
+                filter: true,
+                sort: true,
+            }
         },
         {
             label: 'Name',
-            field: 'name',
+            name: 'name',
+            options: {
+                filter: true,
+                sort: true,
+            }
         },
         {
             label: 'Last Name',
-            field: 'lastName',
+            name: 'lastName',
+            options: {
+                filter: true,
+                sort: true,
+            }
         },
         {
             label: 'Email',
-            field: 'email',
+            name: 'email',
+            options: {
+                filter: true,
+                sort: false,
+            }
         },
         {
             label: 'Phone',
-            field: 'phoneNumber',
+            name: 'phoneNumber',
+            options: {
+                filter: true,
+                sort: false,
+            }
         },
         {
             label: 'Address',
-            field: 'address',
+            name: 'address',
+            options: {
+                filter: true,
+                sort: true,
+            }
         },
         {
             label: 'City',
-            field: 'city',
+            name: 'city',
+            options: {
+                filter: true,
+                sort: true,
+            }
         },
         {
             label: 'LBO',
-            field: 'lbo',
+            name: 'lbo',
+            options: {
+                filter: false,
+                sort: true,
+            }
         }]
 
+    console.log(requests)
+
+    const options = {
+        selectableRows: false
+    };
+
     return (
-        <MDBDataTable
-            bordered={true}
-            striped={true}
-            dark={true}
-            theadTextWhite={true}
-            tbodyTextWhite={true}
-            data={{
-                columns: columnsData,
-                rows: requests
-            }}
-            sortable={true}
-        />
+        <>
+            <MUIDataTable
+                title={"Patient List"}
+                data={requests}
+                columns={columns}
+                options={options}
+                displayRowCheckbox={false}
+                displaySelectAll={false}
+                adjustForCheckbox={false}
+            />
+        </>
     );
 }
