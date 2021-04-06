@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import {PatientTable} from '../components/patientSortingTable/PatientTable'
+import {DataTable} from '../components/tables/DataTable'
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
@@ -23,10 +23,10 @@ const RegisterLayout = () => {
                 <Calendar
                     onChange={onChange}
                     value={value} />
+                <hr/>
+                <h1>Patient list</h1>
+                <DataTable />
             </div>
-
-
-            <PatientTable />
         </>
     );
 };
