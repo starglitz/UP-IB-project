@@ -63,15 +63,13 @@ const RegisterRequests = () => {
     return (
         <>
            <table className="requestsTable">
-
-               <tr>
-                   <th>ID</th>
-                   <th>Name & Surname</th>
-                   <th>Status</th>
-                   <th colSpan="2">Accept or decline a request</th>
-               </tr>
-
-                <tbody onClick={filterPending}>
+               <tbody>
+                   <tr>
+                       <th>ID</th>
+                       <th>Name & Surname</th>
+                       <th>Status</th>
+                       <th colSpan="2">Accept or decline a request</th>
+                   </tr>
                    {requests.filter(req => req.status == "PENDING").map((req) =>
                         <RegisterRequestRow accept={accept} decline={decline} key={this.state.key} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
                        )}
