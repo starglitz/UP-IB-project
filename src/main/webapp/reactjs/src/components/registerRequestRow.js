@@ -3,7 +3,7 @@ import {Button} from "@material-ui/core";
 const RegisterRequestRow = (props) => {
 
 
-if(props.status == 'PENDING') {
+if(props.status === 'PENDING') {
     return (
         <tr>
             <td>{props.patientid}</td>

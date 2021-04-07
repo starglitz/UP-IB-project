@@ -1,8 +1,11 @@
 package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.RegisterRequest;
+import com.example.Clinic.model.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.service.PatientService;
+import com.example.Clinic.service.RegisterRequestService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,11 +27,16 @@ public class PatientApiImpl implements PatientApi {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private RegisterRequestService registerRequestService;
+
 
     @Override
     public ResponseEntity<Patient> registerUser(@RequestBody @Valid Patient patient) {
         boolean valid = patientService.addPatient(patient);
         if(valid) {
+            RegisterRequest request = new RegisterRequest(patient, RequestStatus.PENDING, false);
+            registerRequestService.addRegisterRequest(request);
             return new ResponseEntity<>(patient, HttpStatus.OK);
         }
         return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);

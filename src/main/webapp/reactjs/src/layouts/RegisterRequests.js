@@ -1,6 +1,6 @@
-import React, {Component, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import RegisterRequestRow from "../components/registerRequestRow";
-import {Button} from "@material-ui/core";
+
 
 const RegisterRequests = () => {
 
@@ -18,25 +18,22 @@ const RegisterRequests = () => {
         const res = await fetch("http://localhost:8080/allRegisteringRequests");
         res
             .json()
-            .then(res => res.filter(req => req.status == "PENDING"))
+            .then(res => res.filter(req => req.status === "PENDING"))
             .then(res => setRequests(res))
             .catch(err => setErrors(err));
     }
 
- const filterPending = () => {
-        setRequests(requests.filter(req => req.status == "PENDING"))
- }
 
     let accept = (register_request_id) => {
         let request = {status:"APPROVED", register_request_id:register_request_id};
-        setRequests(requests.filter(req => req.status == "PENDING"))
+        setRequests(requests.filter(req => req.status === "PENDING"))
         setRandom(Math.random())
         sendData(request);
     }
 
     let decline = (register_request_id) => {
         let request = {status:"DECLINED", register_request_id:register_request_id};
-        setRequests(requests.filter(req => req.status == "PENDING"))
+        setRequests(requests.filter(req => req.status === "PENDING"))
         setRandom(Math.random())
         sendData(request);
     }
@@ -70,8 +67,8 @@ const RegisterRequests = () => {
                        <th>Status</th>
                        <th colSpan="2">Accept or decline a request</th>
                    </tr>
-                   {requests.filter(req => req.status == "PENDING").map((req) =>
-                        <RegisterRequestRow accept={accept} decline={decline} key={this.state.key} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
+                   {requests.filter(req => req.status === "PENDING").map((req) =>
+                        <RegisterRequestRow accept={accept} decline={decline} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
                        )}
                 </tbody>
            </table>
