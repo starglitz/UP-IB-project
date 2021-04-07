@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Component
 public class RegisterRequestApiImpl implements RegisterRequestApi {
@@ -49,5 +50,10 @@ public class RegisterRequestApiImpl implements RegisterRequestApi {
         // </test data>
 
         return new ResponseEntity(registerRequestService.getAll(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<RegisterRequest> updateRequest(@RequestBody RegisterRequest request) {
+        return new ResponseEntity<>(registerRequestService.update(request), HttpStatus.OK);
     }
 }

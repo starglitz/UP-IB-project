@@ -16,9 +16,9 @@ public class RegisterRequest {
     private Long register_request_id;
 
     @OneToOne
-    private Patient patient;
+    private Patient patient = new Patient();
     private RequestStatus status;
-    private boolean visitedMail;
+    private boolean visitedMail = false;
 
     public RegisterRequest(Patient patient, RequestStatus status, boolean visitedMail) {
         this.patient = patient;

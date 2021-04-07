@@ -1,7 +1,7 @@
 import {Button} from "@material-ui/core";
 
 const RegisterRequestRow = (props) => {
-    
+
       let accept = () => {
           let request = {status:"APPROVED", register_request_id:props.id};
           sendData(request);

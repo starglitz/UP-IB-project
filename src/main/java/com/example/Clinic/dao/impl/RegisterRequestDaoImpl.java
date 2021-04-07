@@ -31,7 +31,10 @@ public class RegisterRequestDaoImpl implements RegisterRequestDao {
 
     @Override
     public RegisterRequest update(RegisterRequest request) {
-        return registerRequestRepository.save(request);
+        RegisterRequest requestJpa = findById(request.getRegister_request_id()).get();
+        requestJpa.setStatus(request.getStatus());
+        requestJpa.setVisitedMail(request.isVisitedMail());
+        return registerRequestRepository.save(requestJpa);
     }
 
     @Override

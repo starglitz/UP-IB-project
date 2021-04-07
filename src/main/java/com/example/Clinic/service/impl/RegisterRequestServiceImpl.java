@@ -38,8 +38,10 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
     @Override
     public RegisterRequest update(RegisterRequest request) {
 
-        RegisterRequest requestJpa = registerRequestDao.findById(request.getRegister_request_id()).get();
-
+//        RegisterRequest requestJpa = registerRequestDao.findById(request.getRegister_request_id()).get();
+//        requestJpa.setStatus(request.getStatus());
+//        requestJpa.setVisitedMail(request.isVisitedMail());
+        return registerRequestDao.update(request);
     }
 
 
