@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MUIDataTable from "mui-datatables";
 
-export const DataTable = () => {
+export const PatientTable = () => {
 
     const [requests, setRequests] = useState([])
     const [hasError, setError] = useState(false)
@@ -16,6 +16,8 @@ export const DataTable = () => {
         const res = await fetch('http://localhost:8080/patients');
         return res.json()
     }
+
+    console.log(requests)
 
     const columns = [
         {
@@ -82,8 +84,6 @@ export const DataTable = () => {
                 sort: true,
             }
         }]
-
-    console.log(requests)
 
     const options = {
         selectableRows: false
