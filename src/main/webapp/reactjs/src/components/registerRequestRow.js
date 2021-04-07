@@ -31,21 +31,26 @@ const RegisterRequestRow = (props) => {
         }
 
 
-
-return (
-    <tr>
-        <td>{props.patientid}</td>
-        <td>{props.email}</td>
-        <td>{props.name}</td>
-        <td>
-                <Button className="accept" size="small" variant="contained" onClick={accept}>Accept</Button>
-        </td>
+if(props.status == 'PENDING') {
+    return (
+        <tr>
+            <td>{props.patientid}</td>
+            <td>{props.email}</td>
+            <td>{props.name}</td>
             <td>
-                    <Button className="accept" size="small" variant="contained" color="secondary" onClick={decline}>Decline</Button>
+                <Button id="accept" className="accept" size="small" variant="contained" onClick={accept}>Accept</Button>
+            </td>
+            <td>
+                <Button id="decline" className="accept" size="small" variant="contained" color="secondary"
+                        onClick={decline}>Decline</Button>
             </td>
 
-    </tr>
-)
+        </tr>
+    )
+}
+else {
+    return (null)
+}
 }
 
 export default RegisterRequestRow;
