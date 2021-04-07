@@ -8,10 +8,12 @@ import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class RecipeApiImpl implements RecipeApi {
 
     @Autowired
@@ -24,7 +26,7 @@ public class RecipeApiImpl implements RecipeApi {
     }
 
     @Override
-    public ResponseEntity getRecipeByDate() {
+    public ResponseEntity getAllRecipes() {
         initializeTestData();
         List<Recipe> recipes = recipeService.getAllRecipes();
         return new ResponseEntity(recipes, HttpStatus.OK);

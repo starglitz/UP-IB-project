@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public interface RecipeApi {
@@ -19,7 +18,7 @@ public interface RecipeApi {
 
     @GetMapping(value = "/recipes",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity getRecipeByDate();
+    ResponseEntity getAllRecipes();
 
     @GetMapping(value = "/recipes/{date}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})

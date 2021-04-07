@@ -4,10 +4,12 @@ import com.example.Clinic.dao.RecipeDao;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired

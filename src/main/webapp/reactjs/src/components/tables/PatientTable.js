@@ -96,9 +96,6 @@ export const DataTable = () => {
                 data={requests}
                 columns={columns}
                 options={options}
-                displayRowCheckbox={false}
-                displaySelectAll={false}
-                adjustForCheckbox={false}
             />
         </>
     );
