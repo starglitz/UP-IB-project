@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import  profil_img from '../profil-img.png'
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
 
 class PatientProfilLayout extends Component {
 
@@ -19,6 +21,12 @@ class PatientProfilLayout extends Component {
 
     handleEnableClik() {
         this.setState( {disabled: !this.state.disabled} )
+        let saveBtn = document.getElementById('save-btn');
+        if (saveBtn.style.display === "initial") {
+            saveBtn.style.display = "none";
+        } else {
+            saveBtn.style.display = "initial";
+        }
     }
 
     changeInputHandler = (event, prop) => {
@@ -26,13 +34,59 @@ class PatientProfilLayout extends Component {
         const person = {
             ...this.state.patient
         };
-        person.[prop] = event.target.value;
+        person[prop] = event.target.value;
 
         this.setState({patient: person});
     }
 
 
-    render() {
+    validateForm = (email, name, surname, address, city, state, contact, lbo)  => {
+        let ok = true;
+        if(email === "" || name === "" || surname === "" || address === ""
+            || city === "" || state === "" || contact === "" || lbo === "") {
+            ok = false;
+            alert("Make sure to fill all fields!")
+        }
+
+
+        else if(this.validateEmail(email) === false) {
+            ok = false;
+            alert("You have entered an invalid email address!")
+        }
+
+        return ok;
+    }
+
+
+    validateEmail = (email)  => {
+        let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        if(email.match(mailformat)) {
+            return true;
+        }
+        return false;
+    }
+
+    handleSaveData = ()  => {
+        let email = document.getElementById('email').value;
+        let name = document.getElementById('name').value;
+        let surname = document.getElementById('surname').value;
+        let address = document.getElementById('address').value;
+        let city = document.getElementById('city').value;
+        let state = document.getElementById('state').value;
+        let contact = document.getElementById('contact').value;
+        let lbo = document.getElementById('lbo').value;
+
+
+        if(this.validateForm(email,name,surname,address,city,state,contact,lbo)) {
+            alert('ok')
+        }
+        else {
+            alert('fail')
+        }
+    }
+
+
+            render() {
         if (this.state.loading) {
             return <div style={{textAlign:'center'}}>loading...</div>;
         }
@@ -45,6 +99,11 @@ class PatientProfilLayout extends Component {
             display: 'block',
             margin: '20px auto 20px auto'
             };
+        const btnStyle = {
+            display: 'block',
+            margin: '10px auto 10px auto',
+            textAlign: 'center'
+        };
         return (
 
             <>
@@ -101,7 +160,18 @@ class PatientProfilLayout extends Component {
                            disabled = {(this.state.disabled)? "disabled" : ""}
                            onChange={(event) => this.changeInputHandler(event, 'lbo')}/>
 
-                    <button  onClick = {this.handleEnableClik.bind(this)}  className="submit-register"> Edit </button>
+                    <div style={btnStyle}>
+                        <Button  onClick = {this.handleEnableClik.bind(this)}
+                                 variant="contained" color="primary"  size="medium"> Edit </Button>
+
+                        <Button id="save-btn" onClick={this.handleSaveData}
+                                variant="contained"
+                                color="primary"
+                                size="medium"
+                                style={{margin: '15px', display: 'none', backgroundColor: '#d60808'}}
+                                startIcon={<SaveIcon />}>Save</Button>
+                    </div>
+
 
                 </div>
             </>
