@@ -73,24 +73,7 @@ const RegisterRequests = () => {
 
                 <tbody onClick={filterPending}>
                    {requests.filter(req => req.status == "PENDING").map((req) =>
-                       // <RegisterRequestRow key={this.state.key} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
-
-                       <tr>
-                       <td>{req.patient.id}</td>
-                       <td>{req.patient.email}</td>
-                       <td>{req.patient.name}</td>
-                       <td>
-                       <Button id="accept" className="accept" size="small" variant="contained" onClick={() => accept(req.register_request_id)}>Accept</Button>
-                       </td>
-                       <td>
-                       <Button id="decline" className="accept" size="small" variant="contained" color="secondary"
-                       onClick={() => decline(req.register_request_id)}>Decline</Button>
-                       </td>
-
-                       </tr>
-
-
-
+                        <RegisterRequestRow accept={accept} decline={decline} key={this.state.key} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
                        )}
                 </tbody>
            </table>
