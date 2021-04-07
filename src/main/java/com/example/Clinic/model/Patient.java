@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -20,6 +20,10 @@ public class Patient extends User {
     private String lbo;
     private boolean enabled = true;
     private boolean approved = false;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "register_request_id")
+//    private RegisterRequest register_request;
 
     public Patient( String email, String password, String name, String lastName,
                     String address, String city, String country, String phoneNumber,

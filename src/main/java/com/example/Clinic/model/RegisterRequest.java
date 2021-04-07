@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
+@Table(name = "register_request")
 public class RegisterRequest {
 
 
