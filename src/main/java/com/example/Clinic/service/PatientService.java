@@ -12,4 +12,5 @@ public interface PatientService {
    public boolean addPatient(Patient patient);
    public List<Patient> getALl();
    public Optional<Patient> getPatientById(Long id);
+   public  boolean updatePatient(Patient patient, Long id);
 }

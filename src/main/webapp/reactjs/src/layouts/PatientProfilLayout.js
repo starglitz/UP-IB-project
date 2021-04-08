@@ -12,7 +12,7 @@ class PatientProfilLayout extends Component {
     }
 
     async componentDidMount() {
-        const url = "http://localhost:8080/patient/1";
+        const url = "http://localhost:8080/patient/2";
         const response = await fetch(url);
         const data = await response.json();
         this.setState({loading: false, patient: data});
@@ -40,12 +40,20 @@ class PatientProfilLayout extends Component {
     }
 
 
-    validateForm = (email, name, surname, address, city, state, contact, lbo)  => {
+    validateForm = (email, newPass, confirmPass, name, surname, address, city, state, contact, lbo)  => {
         let ok = true;
         if(email === "" || name === "" || surname === "" || address === ""
             || city === "" || state === "" || contact === "" || lbo === "") {
             ok = false;
             alert("Make sure to fill all fields!")
+        }
+        else if(newPass !== "" && newPass.length < 8) {
+            ok = false;
+            alert("Password should be at least 8 characters long! 😡")
+        }
+        else if(newPass !== confirmPass) {
+            ok = false;
+            alert("Passwords don't match!")
         }
 
 
@@ -75,10 +83,33 @@ class PatientProfilLayout extends Component {
         let state = document.getElementById('state').value;
         let contact = document.getElementById('contact').value;
         let lbo = document.getElementById('lbo').value;
+        let newPass = document.getElementById('newPassword').value;
+        let confirmPass = document.getElementById('confirmPass').value;
+
+        if(this.validateForm(email, newPass, confirmPass, name,surname,address,city,state,contact,lbo)) {
 
 
-        if(this.validateForm(email,name,surname,address,city,state,contact,lbo)) {
-            alert('ok')
+            let user = {"email":email, "password":0, "name":name, "lastName":surname,
+                "address":address, "city":city, "country":state, "phoneNumber":contact, "lbo":lbo, "enabled":true};
+            if(newPass !== ""){
+                user.password = newPass;
+            }
+            fetch('http://localhost:8080/patient/2', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            })
+                .then(response => response.json())
+                .then(user => {
+                    console.log('Success:', user);
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
         }
         else {
             alert('fail')
@@ -159,6 +190,16 @@ class PatientProfilLayout extends Component {
                     <input id="lbo" type="text" value={this.state.patient.lbo}  className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
                            onChange={(event) => this.changeInputHandler(event, 'lbo')}/>
+
+                    <label htmlFor="newPassword" className="label-profilInfo">New password:</label>
+                    <input id="newPassword" type="text"   className="input-profilInfo " placeholder="Enter new password"
+                           disabled = {(this.state.disabled)? "disabled" : ""}
+                           />
+
+                    <label htmlFor="confirmPass" className="label-profilInfo">Confirm password:</label>
+                    <input id="confirmPass" type="text"  className="input-profilInfo " placeholder="Enter new password again"
+                           disabled = {(this.state.disabled)? "disabled" : ""}
+                           />
 
                     <div style={btnStyle}>
                         <Button  onClick = {this.handleEnableClik.bind(this)}

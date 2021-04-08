@@ -68,6 +68,56 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public boolean updatePatient(Patient patient, Long id) {
+        boolean valid = true;
+        if(patient.getName().isEmpty() || patient.getName() == null) {
+            valid = false;
+        }
+
+        if(patient.getLastName().isEmpty() || patient.getLastName() == null) {
+            valid = false;
+        }
+
+        if(patient.getEmail().isEmpty() || patient.getEmail() == null) {
+            valid = false;
+        }
+
+        if(patient.getLbo().isEmpty() || patient.getLbo() == null) {
+            valid = false;
+        }
+
+        if(patient.getAddress().isEmpty() || patient.getAddress() == null) {
+            valid = false;
+        }
+
+        if(patient.getCity().isEmpty() || patient.getCity() == null) {
+            valid = false;
+        }
+
+        if(patient.getCountry().isEmpty() || patient.getCountry() == null) {
+            valid = false;
+        }
+
+        if(patient.getPhoneNumber().isEmpty() || patient.getPhoneNumber() == null) {
+            valid = false;
+        }
+
+        if (valid) {
+            System.out.println(patient.getPassword());
+            if(patient.getPassword().length() >= 8){
+                String hashedPw = BCrypt.hashpw(patient.getPassword(), BCrypt.gensalt());//10
+                patient.setPassword(hashedPw);
+                System.out.println("dasdsa" + patient.getPassword());
+            }
+            patientDao.updatePatient(patient, id);
+
+
+
+        }
+        return valid;
+    }
+
+    @Override
     public List<Patient> getALl() {
         return patientDao.getAll();
     }

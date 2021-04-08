@@ -59,6 +59,15 @@ public class PatientApiImpl implements PatientApi {
         return  new ResponseEntity(patient, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Patient> updatePatient(@Valid Patient patient, Long id) {
+        boolean valid = patientService.updatePatient(patient, id);
+        if(valid){
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
+    }
+
 
     public void initializeTestData() {
         Patient patient1= new Patient("email@gmail.com", "pass123", "Clark", "Johnson",
