@@ -3,6 +3,7 @@ import {Button} from "@material-ui/core";
 const RegisterRequestRow = (props) => {
 
 
+
 if(props.status === 'PENDING') {
     return (
         <tr>
