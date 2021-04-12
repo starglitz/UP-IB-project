@@ -29,8 +29,12 @@ const NewAppointmentLayout = () => {
     }
 
     const sendData = ()  => {
+
         let date = document.getElementById('date').value;
-        let time = document.getElementById('time').valueAsDate.toJSON().slice(-13, -8)
+        let time = document.getElementById('time');
+        if(time.valueAsDate != null) {
+            time = time.valueAsDate.toJSON().slice(-13, -8)
+        }
         let duration = document.getElementById('duration').value;
         let doctor = document.getElementById('doctor').value;
         let nurse = document.getElementById('nurse').value;
@@ -42,33 +46,52 @@ const NewAppointmentLayout = () => {
 
         console.log('doct id: ' + JSON.parse(doctor).id);
 
+        if(valid(date,time,duration,price)) {
 
-        let appointment = {"date": date, "time":time, "duration":duration,
-            "doctor":{"id":JSON.parse(doctor).id}, "nurse": {"id":JSON.parse(nurse).id},
-            "price":price};
-        console.log(appointment);
-        console.log(JSON.stringify(appointment));
-        fetch('http://localhost:8080/addAppointment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(appointment),
-        })
-            // .then(response => response.json())
-            .then(user => {
-                console.log('Success:', user);
+            let appointment = {
+                "date": date, "time": time, "duration": duration,
+                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
+                "price": price
+            };
+            console.log(appointment);
+            console.log(JSON.stringify(appointment));
+            fetch('http://localhost:8080/addAppointment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(appointment),
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-
+                // .then(response => response.json())
+                .then(user => {
+                    console.log('Success:', user);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
 
         }
 
+        }
 
+    const valid = (date, time, duration, price) => {
+        if(date === null || time === null || duration === "" || price === "") {
+            alert("Make sure to fill all fields!")
+            return false;
+        }
+        if(price < 1) {
+            alert("Price should be a positive number!")
+            return false;
+        }
+        if(duration < 1) {
+            alert("Duration should be a positive number!")
+            return false;
+        }
+        return true;
+    }
 
+    var curr = new Date();
+    var date = curr.toISOString().substr(0,10);
 
     return(
         <>
@@ -80,10 +103,10 @@ const NewAppointmentLayout = () => {
                 <div className="register-form">
 
                     <label htmlFor="date" className="label-register">Date:</label>
-                    <input  id="date" type="date"  className="input-register"/>
+                    <input defaultValue={date} id="date" type="date"  className="input-register"/>
 
                     <label htmlFor="time" className="label-register">Time:</label>
-                    <input  id="time" type="time"  min="09:00" max="18:00" className="input-register"/>
+                    <input defaultValue="07:00" required id="time" type="time"  min="09:00" max="18:00" className="input-register"/>
 
                     <label htmlFor="duration" className="label-register">Duration:</label>
                     <input  id="duration" type="text" placeholder="enter duration in minutes or hours" className="input-register"/>
