@@ -106,4 +106,28 @@ register-form {
     margin: auto;
 }
 
+.login-container{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.login-container > h2{
+    display: block;
+    text-align: center;
+    font-family: Arial;
+    font-weight: bold;
+}
+.login-container > img{
+    float: left;
+    width: 200px;
+    height: 200px;
+    display:block;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
 

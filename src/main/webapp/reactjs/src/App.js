@@ -7,6 +7,7 @@ import PatientProfilLayout from "./layouts/PatientProfilLayout";
 import RegisterRequests from "./layouts/RegisterRequests";
 import RecipeLayout from "./layouts/RecipeLayout";
 import NewAppointmentLayout from "./layouts/NewAppointmentLayout";
+import LoginLayout from "./layouts/LoginLayout";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Router>
             <Switch>
                 <Route path="/register" exact component={RegisterLayout}/>
+                <Route path="/login" exact component={LoginLayout}/>
                 <Route path="/nursePage" exact component={NurseLayout}/>
                 <Route path="/profile" exact component={PatientProfilLayout}/>
                 <Route path="/registerRequests" exact component={RegisterRequests}/>
