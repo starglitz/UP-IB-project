@@ -46,8 +46,7 @@ public class AppointmentApiImpl implements AppointmentApi {
         appointment.setDoctor(doctor);
         Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
         appointment.setNurse(nurse);
-
-        System.out.println("date and time!!!!!!!!!!!!!!!!!!!!: "+ appointment.getDateAndTime());
+        
         return new ResponseEntity(appointmentService.add(appointment), HttpStatus.OK);
     }
 

@@ -26,7 +26,8 @@ public class AppointmentDaoImpl implements AppointmentDao {
         Appointment appointmentJpa = findById(appointment.getAppointment_id()).get();
 
         appointmentJpa.setStatus(appointment.getStatus());
-        appointmentJpa.setDateAndTime(appointment.getDateAndTime());
+        appointmentJpa.setDate(appointment.getDate());
+        appointmentJpa.setTime(appointment.getTime());
         appointmentJpa.setDoctor(appointment.getDoctor());
         appointmentJpa.setNurse(appointment.getNurse());
         appointmentJpa.setDuration(appointment.getDuration());
