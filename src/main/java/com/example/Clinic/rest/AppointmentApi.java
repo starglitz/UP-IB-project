@@ -12,6 +12,10 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface AppointmentApi {
 
+    @PostMapping(value = "/addAppointment",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment);
+
     @GetMapping(value = "/allAppointments",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllAppointments();
@@ -19,10 +23,6 @@ public interface AppointmentApi {
     @GetMapping(value = "/appointment/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAppointment(@PathVariable("id") Long id);
-
-    @PostMapping(value = "/addAppointment",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment);
 
     @PutMapping(value = "/updateAppointment",
             consumes = {MediaType.APPLICATION_JSON_VALUE})

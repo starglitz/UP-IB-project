@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -41,7 +42,7 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity<Appointment> addAppointment(@Valid Appointment appointment) {
+    public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment) {
         Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
         appointment.setDoctor(doctor);
         Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
