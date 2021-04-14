@@ -153,8 +153,7 @@ class PatientProfilLayout extends Component {
 
                     <label htmlFor="email" className="label-profilInfo">Email:</label>
                     <input id="email" type="text" value={this.state.patient.email}   className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'email')}/>
+                           disabled/>
 
                     <label htmlFor="name" className="label-profilInfo">Name:</label>
                     <input id="name" type="text" value={this.state.patient.name} className="input-profilInfo "
@@ -188,8 +187,7 @@ class PatientProfilLayout extends Component {
 
                     <label htmlFor="lbo" className="label-profilInfo">LBO:</label>
                     <input id="lbo" type="text" value={this.state.patient.lbo}  className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'lbo')}/>
+                           disabled/>
 
                     <label htmlFor="newPassword" className="label-profilInfo">New password:</label>
                     <input id="newPassword" type="text"   className="input-profilInfo " placeholder="Enter new password"
