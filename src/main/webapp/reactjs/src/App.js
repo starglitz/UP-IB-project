@@ -8,6 +8,7 @@ import RegisterRequests from "./layouts/RegisterRequests";
 import RecipeLayout from "./layouts/RecipeLayout";
 import NewAppointmentLayout from "./layouts/NewAppointmentLayout";
 import LoginLayout from "./layouts/LoginLayout";
+import AppointmentsTable from "./components/tables/AppointmentsTable";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/registerRequests" exact component={RegisterRequests}/>
                 <Route path="/recipes" exact component={RecipeLayout}/>
                 <Route path="/addAppointment" exact component={NewAppointmentLayout}/>
+                <Route path="/appointments" exact component={AppointmentsTable}/>
             </Switch>
         </Router>
     </div>

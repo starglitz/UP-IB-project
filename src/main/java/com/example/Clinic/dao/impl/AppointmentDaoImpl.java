@@ -40,8 +40,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
     public Appointment delete(Appointment appointment) {
 
         Appointment appointmentJpa = findById(appointment.getAppointment_id()).get();
+        System.out.println("!!!!!!!!!!!!!!!!" + appointmentJpa);
         appointmentJpa.setDeleted(true);
-
+        appointmentRepository.save(appointmentJpa);
         return appointmentJpa;
     }
 

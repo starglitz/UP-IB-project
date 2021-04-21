@@ -101,6 +101,10 @@ register-form {
     color: black;
 }
 
+.appointmentsTable {
+    width:80%;
+}
+
 .accept {
     display: block;
     margin: auto;

@@ -30,6 +30,7 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Override
     public ResponseEntity getAllAppointments() {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + appointmentService.findAll());
         return new ResponseEntity(appointmentService.findAll(), HttpStatus.OK);
     }
 
