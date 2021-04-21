@@ -21,7 +21,7 @@ const AppointmentRow = (props) => {
                      <td>{props.price}</td>
                      <td>
                          <Button id="accept" className="accept" size="small" variant="contained"
-                                 onClick={() => props.accept(props.id)}>Modify</Button>
+                                 onClick={() => props.updateAppointment(props.id)}>Modify</Button>
                      </td>
                      <td>
                          <Button id="delete" className="accept" size="small" variant="contained" color="secondary"

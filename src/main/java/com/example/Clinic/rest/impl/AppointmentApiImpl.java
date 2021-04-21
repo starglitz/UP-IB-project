@@ -54,6 +54,11 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Override
     public ResponseEntity<Appointment> updateAppointment(@Valid Appointment appointment) {
+        Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
+        appointment.setDoctor(doctor);
+        Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
+        appointment.setNurse(nurse);
+
         return new ResponseEntity(appointmentService.update(appointment), HttpStatus.OK);
     }
 

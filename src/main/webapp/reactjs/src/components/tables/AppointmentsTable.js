@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import RegisterRequestRow from "../registerRequestRow";
 import AppointmentRow from "../AppointmentRow";
+import {useHistory} from "react-router-dom";
 
 const AppointmentsTable = () => {
 
@@ -9,6 +10,7 @@ const AppointmentsTable = () => {
 
     const [random, setRandom] = useState(Math.random());
 
+    let history = useHistory();
 
     useEffect(() => {
         fetchData();
@@ -33,6 +35,14 @@ const AppointmentsTable = () => {
         setRandom(Math.random())
         sendDataDelete(appointment);
     }
+    const update_appointment = (appointment_id) => {
+        history.push({
+            pathname: '/updateAppointment',
+            search: '?id=' + appointment_id,
+            state: { detail: appointment_id}
+        });
+    };
+
 
     // let decline = (register_request_id) => {
     //     let request = {status:"DECLINED", register_request_id:register_request_id};
@@ -77,7 +87,7 @@ const AppointmentsTable = () => {
                 </tr>
 
                 {appointments.filter(app => app.deleted === false).map((app) =>
-                    <AppointmentRow deleteAppointment={delete_appointment}
+                    <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
                       status={app.status} key={app.appointment_id} date={app.date} time={app.time}
                       duration={app.duration} id={app.appointment_id} doctor={app.doctor}
                       nurse={app.nurse} price={app.price} deleted={app.deleted}/>
