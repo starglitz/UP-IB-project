@@ -1,0 +1,137 @@
+.content-box {
+    width: 100%;
+    padding: 20px 5% 20px 5%;
+}
+
+.react-calendar {
+    width: 100% !important;
+}
+
+
+register-form {
+    width: 80%;
+    margin: 0 auto;
+
+}
+
+.label-register,
+.input-register {
+    display: inline-block;
+}
+
+.label-register {
+    width: 30%;
+    text-align: right;
+}
+
+.label-register+.input-register {
+    width: 30%;
+    margin: 0 30% 0 4%;
+}
+
+.input-register+.input-register {
+    float: right;
+}
+
+.submit-register {
+
+    margin: 10px auto 0 auto;
+    display:block;
+    padding: 10px 24px;
+    font-size: 16px;
+    background-color: #81ab27;
+    border: #66871f;
+    border-radius: 5px;
+    transition-duration: 0.4s;
+
+}
+
+
+.submit-register:hover {
+    background-color: #4CAF50; /* Green */
+
+}
+
+#strength {
+    position:absolute;
+    right:38%;
+
+}
+
+.label-profilInfo,
+.input-profilInfo {
+    display: inline-block;
+}
+
+.label-profilInfo {
+    width: 30%;
+    text-align: right;
+}
+
+.label-profilInfo+.input-profilInfo {
+    width: 30%;
+    margin: 0 30% 0 4%;
+}
+
+
+.requestsTable {
+    margin: 0 auto;
+    margin-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+
+.requestsTable td, .requestsTable th {
+    /*border: 1px solid #ddd;*/
+    padding: 8px;
+}
+
+
+
+.requestsTable tr:nth-child(even){background-color: #f59b42;}
+
+.requestsTable tr:hover {background-color: #ffaa57;}
+
+.requestsTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #fc8d21;
+    color: black;
+}
+
+.appointmentsTable {
+    width:80%;
+}
+
+.accept {
+    display: block;
+    margin: auto;
+}
+
+.login-container{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.login-container > h2{
+    display: block;
+    text-align: center;
+    font-family: Arial;
+    font-weight: bold;
+}
+.login-container > img{
+    float: left;
+    width: 200px;
+    height: 200px;
+    display:block;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+
