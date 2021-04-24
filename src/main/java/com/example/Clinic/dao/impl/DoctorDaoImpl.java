@@ -24,4 +24,9 @@ public class DoctorDaoImpl implements DoctorDao {
     public Optional<Doctor> findById(Long id) {
         return doctorRepository.findById(id);
     }
+
+    @Override
+    public List<Doctor> findByClinicId(Long id) {
+        return doctorRepository.findByClinicId(id);
+    }
 }

@@ -19,4 +19,8 @@ public interface DoctorApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getDoctor(@PathVariable("id") Long id);
 
+    @GetMapping(value = "/doctorByClinic/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getDoctorByClinicId(@PathVariable("id") Long id);
+
 }

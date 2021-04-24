@@ -23,4 +23,9 @@ public class DoctorApiImpl implements DoctorApi {
     public ResponseEntity getDoctor(Long id) {
         return new ResponseEntity(doctorService.findById(id), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity getDoctorByClinicId(Long id) {
+        return new ResponseEntity(doctorService.findByClinicId(id), HttpStatus.OK);
+    }
 }
