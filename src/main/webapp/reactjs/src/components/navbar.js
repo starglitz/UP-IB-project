@@ -23,6 +23,7 @@ const navbar = () => {
             <Nav.Link href="register">Register</Nav.Link>
             <Nav.Link href="login">Login</Nav.Link>
             <Nav.Link href="nursePage">Nurse page</Nav.Link>
+            <Nav.Link href="recipes">Recipe approval</Nav.Link>
             <Nav.Link href="profile">Profile</Nav.Link>
             <Nav.Link href="registerRequests">Register requests (admin)</Nav.Link>
             <Nav.Link href="addAppointment">New appointment</Nav.Link>
