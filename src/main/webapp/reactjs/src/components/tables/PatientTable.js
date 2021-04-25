@@ -13,7 +13,7 @@ export const PatientTable = () => {
     },[])
 
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/patients');
+        const res = await fetch('http://localhost:8080/allPatients',);
         return res.json()
     }
 
