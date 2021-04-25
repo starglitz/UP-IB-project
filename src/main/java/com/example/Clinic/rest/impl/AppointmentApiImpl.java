@@ -63,7 +63,7 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity<Appointment> deleteAppointment(@Valid Appointment appointment) {
+    public ResponseEntity<Appointment> deleteAppointment(Appointment appointment) {
         return new ResponseEntity(appointmentService.delete(appointment), HttpStatus.OK);
     }
 }

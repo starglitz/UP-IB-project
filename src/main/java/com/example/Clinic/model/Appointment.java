@@ -19,8 +19,6 @@ public class Appointment {
     private AppointmentStatus status = AppointmentStatus.FREE;
 
     @NotNull
-    @NotEmpty
-    @Future
     private LocalDate date;
     private LocalTime time;
 
@@ -35,7 +33,6 @@ public class Appointment {
     private Nurse nurse;
 
     @Min(1)
-    @NotEmpty
     @NotNull
     private int price;
     private boolean deleted;
