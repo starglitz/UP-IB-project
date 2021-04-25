@@ -23,8 +23,18 @@ public class RecipeDaoImpl implements RecipeDao {
     public List<Recipe> getAllRecipes() { return this.recipeRepository.findAll(); }
 
     @Override
-    public List<Recipe> getRecipesByDate(LocalDate date) { return this.recipeRepository.findAllById(Collections.singleton(date)); }
+    public List<Recipe> getNotApprovedRecipes() { return this.recipeRepository.findNotApproved(); }
 
     @Override
-    public void updateRecipe(Recipe recipe) { this.recipeRepository.save(recipe); }
+    public void updateRecipe(Recipe oldRecipe, Long id) {
+
+        Recipe newRecipe = recipeRepository.findById(id).get();
+
+        newRecipe.setNurse(oldRecipe.getNurse());
+        newRecipe.setIssueDate(oldRecipe.getIssueDate());
+        newRecipe.setDescription(oldRecipe.getDescription());
+        newRecipe.setValidated(oldRecipe.getValidated());
+
+        this.recipeRepository.save(newRecipe);
+    }
 }

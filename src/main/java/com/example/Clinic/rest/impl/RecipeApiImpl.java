@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,16 +27,25 @@ public class RecipeApiImpl implements RecipeApi {
     }
 
     @Override
+    public ResponseEntity approveRecipe(Recipe recipe, Long recipe_id) {
+        boolean valid = recipeService.updateRecipe(recipe, recipe_id);
+        if(valid){
+            return new ResponseEntity<>(recipe, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(recipe, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
     public ResponseEntity getAllRecipes() {
-        initializeTestData();
+        System.out.println("recepti");
         List<Recipe> recipes = recipeService.getAllRecipes();
         return new ResponseEntity(recipes, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity getRecipeByDate(LocalDate date) {
-        initializeTestData();
-        List<Recipe> recipes = recipeService.getRecipesByDate(date);
+    public ResponseEntity getNotApprovedRecipes() {
+        System.out.println("ne odobreni recepti");
+        List<Recipe> recipes = recipeService.getNotApprovedRecipes();
         return new ResponseEntity(recipes, HttpStatus.OK);
     }
 

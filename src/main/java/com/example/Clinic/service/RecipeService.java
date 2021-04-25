@@ -9,8 +9,8 @@ import java.util.List;
 @Service
 public interface RecipeService {
 
-    public Recipe addRecipe(Recipe recipe);
-    public List<Recipe> getAllRecipes();
-    public List<Recipe> getRecipesByDate(LocalDate date);
-    public void updateRecipe(Recipe recipe);
+    Recipe addRecipe(Recipe recipe);
+    List<Recipe> getAllRecipes();
+    List<Recipe> getNotApprovedRecipes();
+    boolean updateRecipe(Recipe recipe, Long recipe_id);
 }
