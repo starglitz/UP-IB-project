@@ -30,6 +30,6 @@ public interface AppointmentApi {
 
     @DeleteMapping(value = "/deleteAppointment",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Appointment> deleteAppointment(@Valid @RequestBody Appointment appointment);
+    ResponseEntity<Appointment> deleteAppointment( @RequestBody Appointment appointment);
 
 }

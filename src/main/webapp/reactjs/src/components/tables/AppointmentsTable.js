@@ -30,6 +30,7 @@ const AppointmentsTable = () => {
 
 
     let delete_appointment = (appointment_id) => {
+        console.log("delet appointment clicked")
         let appointment = {deleted:true, appointment_id:appointment_id};
         setAppointments(appointments.filter(app => app.deleted === false))
         setRandom(Math.random())
