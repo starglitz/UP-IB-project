@@ -45,10 +45,8 @@ public class PatientApiImpl implements PatientApi {
 
 
     @Override
-    @GetMapping("/patients")
     public ResponseEntity getAllPatients() {
-
-        List<Patient> patients = patientService.getALl();
+        List<Patient> patients = patientService.getAll();
         return new ResponseEntity(patients, HttpStatus.OK);
     }
 

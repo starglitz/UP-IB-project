@@ -118,7 +118,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Patient> getALl() {
+    public List<Patient> getAll() {
         return patientDao.getAll();
     }
 

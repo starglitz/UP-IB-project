@@ -22,9 +22,7 @@ public class PatientDaoImpl implements PatientDao {
     }
 
     @Override
-    public List<Patient> getAll() {
-        return this.patientRepository.findAll();
-    }
+    public List<Patient> getAll() { return this.patientRepository.findAll(); }
 
     @Override
     public Optional<Patient> getPatientById(Long id) {return this.patientRepository.findById(id); }

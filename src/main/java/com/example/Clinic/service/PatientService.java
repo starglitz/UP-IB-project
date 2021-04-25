@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface PatientService {
 
    public boolean addPatient(Patient patient);
-   public List<Patient> getALl();
+   public List<Patient> getAll();
    public Optional<Patient> getPatientById(Long id);
    public  boolean updatePatient(Patient patient, Long id);
 }
