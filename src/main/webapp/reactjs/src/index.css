@@ -133,5 +133,74 @@ register-form {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+#mojaTabela{
+    width: 700px;
+    margin: 50px auto;
+}
+/*-----------------------Clinic Profile-----------------------------------------*/
+.hospitalProfile-container h1{
+    font-family: "Noto Serif Georgian";
+    text-align:center;
+    margin:20px;
+}
+
+.hospitalProfile-container img{
+    margin: auto;
+    display: block;
+    width: 300px;
+}
+
+.hospitalProfile-container
+{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 55%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hospitalProfile-container li{
+    background: #e5e5e5;
+    margin: 5% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.info-row {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+}
+
+.info-row p{
+  margin-left: 20px;
+  font-family: "Noto Serif Georgian";
+    font-size: 20px;
+}
+
+.link-appointments{
+   text-align: center;
+}
+
+.link-appointments a{
+    display: inline-block;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-decoration: none;
+    color: #000;
+}
+
+.link-appointments a:link{
+    text-decoration: none;
+
+}
+
+
+
+
 
 

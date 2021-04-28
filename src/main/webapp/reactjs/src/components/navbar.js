@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar, Nav} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.css';
-import hospitallogo from '../hospital-logo.png';
+import hospitallogo from '../assets/hospital-logo.png';
 
 const navbar = () => {
     return (

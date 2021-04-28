@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import loginImg from '../login-img.jpg';
+import loginImg from '../assets/login-img.jpg';
 import {useHistory} from 'react-router-dom';
 const DEFAULT_LOGIN = {
     email: '',
