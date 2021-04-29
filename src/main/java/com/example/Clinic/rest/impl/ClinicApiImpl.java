@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Component
 public class ClinicApiImpl implements ClinicApi {
 
@@ -25,4 +28,11 @@ public class ClinicApiImpl implements ClinicApi {
         }
         return new ResponseEntity("No such hospital ", HttpStatus.BAD_REQUEST);
     }
+
+    @Override
+    public ResponseEntity getClinicsByDate(LocalDate date) {
+        return  new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.OK);
+    }
+
+
 }

@@ -62,7 +62,7 @@ function ClinicProfile(){
                     </ul>
 
                 <div className="link-appointments">
-                    <Link to="/clinicAppointments">Appointments</Link>
+                    <Link to={"/clinicAppointments/" + id}>Appointments</Link>
                 </div>
 
             </div>

@@ -3,6 +3,8 @@ package com.example.Clinic.service;
 import com.example.Clinic.model.Clinic;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,4 +12,5 @@ import java.util.Optional;
 public interface ClinicService {
     List<Clinic> findAll();
     Clinic findById(Long id);
+    List<Clinic> findClinicsByDate(LocalDate date);
 }

@@ -13,6 +13,7 @@ import UpdateAppointment from "./components/updateAppointment";
 import ClinicProfile from "./layouts/ClinicProfile";
 import Clinics from "./components/clinics/ClinicsTable";
 import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfile"
+import ClinicAppointments from "./components/appointments/appointmentTable";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                 <Route path="/clinicProfile" exact component={ClinicProfile}/>
                 <Route path="/clinics" exact component={Clinics}/>
                 <Route path="/clinic/:id" exact component={ClinicProfilePatient}/>
+                <Route path="/clinicAppointments/:id" exact component={ClinicAppointments}/>
             </Switch>
         </Router>
     </div>

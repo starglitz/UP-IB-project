@@ -55,4 +55,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
     public List<Appointment> findAll() {
         return appointmentRepository.findAll();
     }
+
+    @Override
+    public List<Appointment> findByClinicId(Long clinic_id) {
+        return appointmentRepository.findByClinicId(clinic_id);
+    }
 }

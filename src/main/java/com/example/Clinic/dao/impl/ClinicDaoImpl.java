@@ -6,6 +6,8 @@ import com.example.Clinic.repository.ClinicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +25,10 @@ public class ClinicDaoImpl implements ClinicDao {
     @Override
     public Optional<Clinic> findById(Long id) {
         return clinicRepository.findById(id);
+    }
+
+    @Override
+    public List<Clinic> findClinicsByDate(LocalDate date) {
+        return clinicRepository.findClinicsByDate(date);
     }
 }
