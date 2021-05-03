@@ -37,4 +37,9 @@ public class ClinicServiceImpl implements ClinicService {
             return clinicDao.findAll();
         }
     }
+
+    @Override
+    public Clinic update(Clinic clinic) {
+        return clinicDao.update(clinic);
+    }
 }

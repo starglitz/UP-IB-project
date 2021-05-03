@@ -1,5 +1,6 @@
 package com.example.Clinic.rest.impl;
 
+import com.example.Clinic.model.Clinic;
 import com.example.Clinic.rest.ClinicApi;
 import com.example.Clinic.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -32,6 +34,11 @@ public class ClinicApiImpl implements ClinicApi {
     @Override
     public ResponseEntity getClinicsByDate(LocalDate date) {
         return  new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity update(@Valid Clinic clinic) {
+        return  new ResponseEntity(clinicService.update(clinic), HttpStatus.OK);
     }
 
 

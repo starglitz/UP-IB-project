@@ -13,4 +13,5 @@ public interface ClinicService {
     List<Clinic> findAll();
     Clinic findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);
+    Clinic update(Clinic clinic);
 }

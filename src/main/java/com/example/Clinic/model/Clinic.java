@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
@@ -14,7 +15,11 @@ public class Clinic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long clinic_id;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String description;
   //  private List<Doctor> doctors;
 //    @OneToMany
