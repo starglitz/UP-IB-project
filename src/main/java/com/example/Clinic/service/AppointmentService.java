@@ -14,4 +14,6 @@ public interface AppointmentService {
     public Appointment delete(Appointment appointment);
     public Appointment findById(Long id);
     public List<Appointment> findAll();
-    public List<Appointment> findByClinicId(Long clinic_id);}
+    public List<Appointment> findByClinicId(Long clinic_id);
+    public List<Appointment> findFreeByClinicId(Long clinic_id);
+}

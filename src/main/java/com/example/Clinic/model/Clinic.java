@@ -17,9 +17,9 @@ public class Clinic {
     private String name;
     private String description;
   //  private List<Doctor> doctors;
-    @OneToMany
-    @JoinColumn(name = "service_id")
-    private List<Service> pricelist;
+//    @OneToMany
+//    @JoinColumn(name = "service_id")
+//    private List<Service> services;
     private float rating;
 
 }

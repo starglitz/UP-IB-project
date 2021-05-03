@@ -28,6 +28,10 @@ public interface AppointmentApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicAppointments(@PathVariable long id);
 
+    @GetMapping(value = "/appointments/free/clinic/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getFreeClinicAppointments(@PathVariable long id);
+
     @PutMapping(value = "/updateAppointment",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> updateAppointment(@Valid @RequestBody Appointment appointment);

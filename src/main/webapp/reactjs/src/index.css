@@ -33,6 +33,11 @@ register-form {
     float: right;
 }
 
+
+
+
+
+
 .submit-register {
 
     margin: 10px auto 0 auto;
@@ -197,6 +202,64 @@ register-form {
 .link-appointments a:link{
     text-decoration: none;
 
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #353A40;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #353A40;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f59b42;
+}
+
+
+
+.right-part {
+    margin-left:40px
+}
+
+
+.hospital-info {
+    margin:40px;
+    justify-content: center;
+    background-color: #353A40;
+    padding:20px;
+
+
+    border-radius: 8px;
+
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+
+}
+
+.label-hospital {
+    color: wheat;
+    margin:10px
+}
+
+.centered {
+    margin: 0 auto;
+    justify-content: center;
+    margin-bottom:40px;
 }
 
 
