@@ -2,12 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import {Typography} from "@material-ui/core";
-
+import {useHistory} from "react-router-dom";
 function AppointmentTable() {
 
 
     const [requests, setRequests] = useState([])
     const [hasError, setError] = useState(false)
+    const history = useHistory();
 
     useEffect(() => {
         fetchData()
@@ -23,8 +24,8 @@ function AppointmentTable() {
     }
 
     const clickHandler = (e) => {
-
-
+        const id = e[0];
+        history.push("/booking/" + id)
     }
 
     console.log(requests)
@@ -33,7 +34,7 @@ function AppointmentTable() {
     const columns = [
         {
             label: 'id',
-            name: 'id',
+            name: 'appointment_id',
             options: {
                 display: false,
                 filter: false
@@ -61,8 +62,8 @@ function AppointmentTable() {
             }
         },
         {
-            label: 'Duration',
-            name: 'duration',
+            label: 'Start at',
+            name: 'start',
             options: {
                 filter: true,
                 sort: false,

@@ -2,13 +2,22 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {Typography} from "@material-ui/core";
 import MUIDataTable from "mui-datatables";
-
+import {useHistory} from "react-router-dom";
 function DoctorAppointmentsTable({appointments}) {
+
+    const history = useHistory();
+
+
+    const clickHandler = (e) => {
+
+        const id = e[0];
+        history.push("/booking/" + id)
+    }
 
     const columns = [
         {
             label: 'id',
-            name: 'id',
+            name: 'appointment_id',
             options: {
                 display: false,
                 filter: false
@@ -36,8 +45,8 @@ function DoctorAppointmentsTable({appointments}) {
             }
         },
         {
-            label: 'Duration',
-            name: 'duration',
+            label: 'Start at',
+            name: 'start',
             options: {
                 filter: true,
                 sort: false,
@@ -55,7 +64,8 @@ function DoctorAppointmentsTable({appointments}) {
 
     const options = {
         selectableRows: 'none',
-        viewColumns: false
+        viewColumns: false,
+        onRowClick: clickHandler
 
     };
 

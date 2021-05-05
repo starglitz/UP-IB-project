@@ -50,7 +50,6 @@ function ClinicsTable() {
     }
 
     const clickHandler = (e) => {
-        alert('1');
         const id = e[0];
         history.push("/clinic/" + id);
     }

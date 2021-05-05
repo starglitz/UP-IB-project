@@ -29,6 +29,7 @@ const navbar = () => {
             <Nav.Link href="addAppointment">New appointment</Nav.Link>
             <Nav.Link href="appointments">All appointments (admin)</Nav.Link>
             <Nav.Link href="clinicProfile">Clinic profile (admin)</Nav.Link>
+            <Nav.Link href="clinics">Clinics</Nav.Link>
         </Navbar>
     </>
     );
