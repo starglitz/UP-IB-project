@@ -20,11 +20,12 @@ public class Appointment {
 
     @NotNull
     private LocalDate date;
-    private LocalTime time;
 
-    @NotEmpty
     @NotNull
-    private String duration;
+    private LocalTime start;
+
+    @NotNull
+    private LocalTime end;
 
     @ManyToOne
     private Doctor doctor;
@@ -38,13 +39,13 @@ public class Appointment {
     private boolean deleted;
 
     public Appointment(AppointmentStatus status, @NotNull @NotEmpty @Future LocalDate date,
-                       LocalTime time, @NotEmpty @NotNull String duration,
+                       LocalTime start, LocalTime end,
                        Doctor doctor, Nurse nurse, @Min(1) @NotEmpty int price,
                        boolean deleted) {
         this.status = status;
         this.date = date;
-        this.time = time;
-        this.duration = duration;
+        this.start = start;
+        this.end = end;
         this.doctor = doctor;
         this.nurse = nurse;
         this.price = price;
