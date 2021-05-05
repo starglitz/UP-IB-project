@@ -31,4 +31,14 @@ public class ClinicDaoImpl implements ClinicDao {
     public List<Clinic> findClinicsByDate(LocalDate date) {
         return clinicRepository.findClinicsByDate(date);
     }
+
+    @Override
+    public Clinic update(Clinic clinic) {
+        Clinic clinicJpa = clinicRepository.findById(clinic.getClinic_id()).get();
+
+        clinicJpa.setName(clinic.getName());
+        clinicJpa.setDescription(clinic.getDescription());
+
+        return clinicRepository.save(clinicJpa);
+    }
 }

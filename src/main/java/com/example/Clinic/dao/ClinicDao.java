@@ -13,4 +13,5 @@ public interface ClinicDao {
     List<Clinic> findAll();
     Optional<Clinic> findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);
+    Clinic update(Clinic clinic);
 }

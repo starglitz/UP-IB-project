@@ -3,6 +3,8 @@ import AppointmentRow from "../components/AppointmentRow";
 import DoctorRow from "../components/doctorRow";
 import {useHistory} from "react-router-dom";
 import ServicesTable from "../components/tables/ServicesTable";
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
 
 const ClinicProfile = () => {
 
@@ -22,6 +24,8 @@ const ClinicProfile = () => {
     const [hasError, setErrors] =  useState(false);
 
     const [random, setRandom] = useState(Math.random());
+
+    const [disabled, setDisabled] = useState(true);
 
     let history = useHistory();
 
@@ -90,6 +94,42 @@ const ClinicProfile = () => {
     }
 
 
+     const handleEnableClick = () => {
+        setDisabled(!disabled);
+       // this.setState( {disabled: !this.state.disabled} )
+        let saveBtn = document.getElementById('save-btn');
+        if (saveBtn.style.display === "initial") {
+            saveBtn.style.display = "none";
+        } else {
+            saveBtn.style.display = "initial";
+        }
+    }
+
+    const handleSaveData = () => {
+        let name = document.getElementById('name').value;
+        let description = document.getElementById('description').value;
+        let rating = document.getElementById('rating').value;
+
+        let hospital = {clinic_id:'1', name:name, description: description, rating: rating}
+
+        fetch('http://localhost:8080/clinic', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(hospital),
+        })
+            .then(response => response.json())
+            .then(hospital => {
+                console.log('Success:', hospital);
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }
+
 
     return (
         <>
@@ -108,25 +148,44 @@ const ClinicProfile = () => {
 
                     <h1 style={{textAlign:'center',color: 'wheat'}}>Clinic info</h1>
                     <table style={{marginTop:'30px'}}>
+                        <tbody>
                     <tr>
                         <td>
                     <label htmlFor="name" className="label-hospital">Name:</label></td>
-                        <td>  <input defaultValue={clinic.name} readOnly id="name" type="text"  className="input-hospital"/>
+                        <td>  <input defaultValue={clinic.name} id="name" type="text"  className="input-hospital"
+                                     disabled = {(disabled)? "disabled" : ""}/>
                         </td>
                     </tr>
                         <tr>
                             <td>
-                    <label htmlFor="description" className="label-hospital">Time:</label>
+                    <label htmlFor="description" className="label-hospital">Description:</label>
                             </td>
-                            <td>  <input defaultValue={clinic.description} readOnly id="description" type="text" className="input-hospital"/>
+                            <td>  <input defaultValue={clinic.description} id="description" type="text" className="input-hospital"
+                                         disabled = {(disabled)? "disabled" : ""}/>
                             </td>
                         </tr>
                         <tr>
                             <td>  <label htmlFor="rating" className="label-hospital">Rating:</label>
                             </td>
-                            <td>   <input defaultValue={clinic.rating} readOnly id="rating" type="text" className="input-hospital"/>
+                            <td>   <input defaultValue={clinic.rating}  id="rating" type="text" className="input-hospital"
+                                          disabled/>
                             </td>
                             </tr>
+                        <tr><td><Button  onClick = {handleEnableClick}
+                                         variant="contained" color="primary"  size="medium"> Edit </Button></td>
+
+                        <td><Button id="save-btn" onClick={handleSaveData}
+                                    variant="contained"
+                                    color="primary"
+                                    size="medium"
+                                    style={{margin: '15px', display: 'none', backgroundColor: '#d60808'}}
+                                    startIcon={<SaveIcon />}>Save</Button></td>
+                        </tr>
+                        </tbody>
+
+
+
+
                     </table>
 
                 </div>
