@@ -31,25 +31,25 @@ const NewAppointmentLayout = () => {
     const sendData = ()  => {
 
         let date = document.getElementById('date').value;
-        let time = document.getElementById('time');
-        if(time.valueAsDate != null) {
-            time = time.valueAsDate.toJSON().slice(-13, -8)
+        let start = document.getElementById('start');
+        if(start.valueAsDate != null) {
+            start = start.valueAsDate.toJSON().slice(-13, -8)
         }
-        let duration = document.getElementById('duration').value;
+        let end = document.getElementById('end').value;
         let doctor = document.getElementById('doctor').value;
         let nurse = document.getElementById('nurse').value;
         let price = document.getElementById('price').value;
 
         console.log('date: ' + date);
-        console.log('time: ' + time);
+        console.log('start: ' + start);
         console.log('doctor: ' + JSON.parse(doctor));
 
         console.log('doct id: ' + JSON.parse(doctor).id);
 
-        if(valid(date,time,duration,price)) {
+        if(valid(date,start,end,price)) {
 
             let appointment = {
-                "date": date, "time": time, "duration": duration,
+                "date": date, "start": start, "end": end,
                 "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
                 "price": price
             };
@@ -106,10 +106,10 @@ const NewAppointmentLayout = () => {
                     <input defaultValue={date} id="date" type="date"  className="input-register"/>
 
                     <label htmlFor="time" className="label-register">Time:</label>
-                    <input defaultValue="07:00" required id="time" type="time"  min="09:00" max="18:00" className="input-register"/>
+                    <input defaultValue="09:00" required id="start" type="time" min="09:00" max="18:00" className="input-register"/>
 
                     <label htmlFor="duration" className="label-register">Duration:</label>
-                    <input  id="duration" type="text" placeholder="enter duration in minutes or hours" className="input-register"/>
+                    <input  defaultValue="10:00" required id="end" type="time" min="10:00" max="19:00" className="input-register"/>
 
                     <label htmlFor="doctor" className="label-register">Doctor:</label>
                     <select name="doctor" id="doctor" className="input-register">
