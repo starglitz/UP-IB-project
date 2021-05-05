@@ -51,6 +51,11 @@ public class AppointmentApiImpl implements AppointmentApi {
     public ResponseEntity getFreeClinicAppointments(long id) {
         return new ResponseEntity(appointmentService.findFreeByClinicId(id), HttpStatus.OK);
     }
+    @Override
+    public ResponseEntity getFreeDoctorAppointemnts(Long doctorId) {
+        return new ResponseEntity(appointmentService.findFreeByDoctor(doctorId), HttpStatus.OK);
+
+    }
 
 
     @Override

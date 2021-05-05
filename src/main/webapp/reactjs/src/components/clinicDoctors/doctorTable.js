@@ -1,102 +1,99 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import {Typography} from "@material-ui/core";
+import {useParams} from "react-router-dom";
+import DoctorAppointmentsTable from "./doctorAppointmentsTable";
 
-function AppointmentTable() {
-
-
+function DoctorTable() {
     const [requests, setRequests] = useState([])
     const [hasError, setError] = useState(false)
+    const [appointments, setAppointments] = useState([])
+
 
     useEffect(() => {
         fetchData()
             .then(res => setRequests(res))
             .catch(err => setError(err));
-    },[])
+    }, [])
 
-    const {id} = useParams();
+
+
+    const {clinicId} = useParams();
+    const {date} = useParams();
 
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/clinicAppointments/' + id);
+        const res = await fetch('http://localhost:8080/doctors/' + clinicId + "/" + date,);
         return res.json()
     }
 
     const clickHandler = (e) => {
 
+        async function fetchDataAppointments() {
+            const res = await fetch('http://localhost:8080/doctorAppointments/' + e[0],);
+            return res.json()
+        }
 
+        fetchDataAppointments()
+            .then(res => setAppointments(res))
+            .catch(err => setError(err));
     }
 
-    console.log(requests)
+console.log(requests)
 
 
     const columns = [
         {
-            label: 'id',
+            label: 'ID',
             name: 'id',
             options: {
                 display: false,
-                filter: false
-            }
-        },
-        {
-            label: 'Doctor',
-            name: 'doctor',
-            options: {
-                filter: true,
+                filter: false,
                 sort: true,
-                customBodyRender: (value, tableMeta, updateValue) => (
-                    <Typography>
-                        {value.name}
-                    </Typography>
-                )
             }
         },
         {
-            label: 'Date',
-            name: 'date',
+            label: 'Name',
+            name: 'name',
             options: {
                 filter: true,
                 sort: true,
             }
         },
         {
-            label: 'Duration',
-            name: 'duration',
+            label: 'Lastname',
+            name: 'lastName',
             options: {
                 filter: true,
-                sort: false,
+                sort: true,
             }
         },
         {
-            label: 'Price',
-            name: 'price',
+            label: 'Grade',
+            name: 'grade',
             options: {
                 filter: true,
-                sort: false,
+                sort: true,
             }
-        }
-        ]
+        }]
 
     const options = {
         selectableRows: 'none',
-        onRowClick: clickHandler,
-        viewColumns: false
-
+        viewColumns: false,
+        onRowClick: clickHandler
     };
 
     return (
         <>
             <div id="mojaTabela">
                 <MUIDataTable
-                    title={"Appointment List"}
+                    title={"Doctors List"}
                     data={requests}
                     columns={columns}
                     options={options}
                 />
+            <DoctorAppointmentsTable appointments={appointments}/>
             </div>
         </>
     );
 }
 
-export default AppointmentTable;
+export default DoctorTable;

@@ -49,5 +49,9 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentDao.findFreeByClinicId(clinic_id);
     }
 
+    @Override
+    public List<Appointment> findFreeByDoctor(Long doctor_id) {
+        return appointmentDao.findFreeByDoctor(doctor_id);
+    }
 
 }

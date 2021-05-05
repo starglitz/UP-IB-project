@@ -16,4 +16,6 @@ public interface AppointmentDao {
     public List<Appointment> findAll();
     public List<Appointment> findByClinicId(Long clinic_id);
     public List<Appointment> findFreeByClinicId(Long clinic_id);
+    List<Appointment> findFreeByDoctor(Long doctor_id);
+
 }

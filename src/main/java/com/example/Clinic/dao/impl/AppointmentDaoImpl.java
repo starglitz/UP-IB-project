@@ -66,5 +66,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
         return appointmentRepository.findFreeByClinicId(clinic_id);
     }
 
+    @Override
+    public List<Appointment> findFreeByDoctor(Long doctor_id) {
+        return appointmentRepository.findFreeByDoctor(doctor_id);
+    }
 
 }

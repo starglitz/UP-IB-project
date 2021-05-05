@@ -2,8 +2,6 @@ import React, {useEffect, useState} from 'react';
 import MUIDataTable, { TableFilterList }  from "mui-datatables";
 import {useHistory} from "react-router-dom";
 import {Tooltip} from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import {CalendarToday} from "@material-ui/icons";
 import TextField from '@material-ui/core/TextField';
 
 function ClinicsTable() {
@@ -25,7 +23,7 @@ function ClinicsTable() {
 
     const [requests, setRequests] = useState([])
     const [hasError, setError] = useState(false)
-    const [date, setDate] = useState(formatDate('Sun May 11,2014'));
+    const [date, setDate] = useState(formatDate('Sun Jan 01,2000'));
     const [filter, setFilter] = useState(false);
     const history = useHistory();
 
@@ -47,7 +45,7 @@ function ClinicsTable() {
             clickHandler(e)
         }
         else {
-            clickHandler2()
+            clickHandler2(e)
         }
     }
 
@@ -63,7 +61,8 @@ function ClinicsTable() {
     }
 
     const clickHandler2 = (e) => {
-        alert('I am you but stronger')
+        const id = e[0];
+        history.push("/doctors/" + id + "/" + date)
     }
     const columns = [
         {

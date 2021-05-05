@@ -1,34 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import MUIDataTable from "mui-datatables";
 import {Typography} from "@material-ui/core";
+import MUIDataTable from "mui-datatables";
 
-function AppointmentTable() {
-
-
-    const [requests, setRequests] = useState([])
-    const [hasError, setError] = useState(false)
-
-    useEffect(() => {
-        fetchData()
-            .then(res => setRequests(res))
-            .catch(err => setError(err));
-    },[])
-
-    const {id} = useParams();
-
-    async function fetchData() {
-        const res = await fetch('http://localhost:8080/clinicAppointments/' + id);
-        return res.json()
-    }
-
-    const clickHandler = (e) => {
-
-
-    }
-
-    console.log(requests)
-
+function DoctorAppointmentsTable({appointments}) {
 
     const columns = [
         {
@@ -76,11 +51,10 @@ function AppointmentTable() {
                 sort: false,
             }
         }
-        ]
+    ]
 
     const options = {
         selectableRows: 'none',
-        onRowClick: clickHandler,
         viewColumns: false
 
     };
@@ -90,7 +64,7 @@ function AppointmentTable() {
             <div id="mojaTabela">
                 <MUIDataTable
                     title={"Appointment List"}
-                    data={requests}
+                    data={appointments}
                     columns={columns}
                     options={options}
                 />
@@ -99,4 +73,4 @@ function AppointmentTable() {
     );
 }
 
-export default AppointmentTable;
+export default DoctorAppointmentsTable;

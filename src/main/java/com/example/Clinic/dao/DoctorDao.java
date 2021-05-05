@@ -4,6 +4,7 @@ import com.example.Clinic.model.Doctor;
 import org.springframework.stereotype.Repository;
 
 import javax.print.Doc;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,4 +14,5 @@ public interface DoctorDao {
     List<Doctor> findAll();
     Optional<Doctor> findById(Long id);
     List<Doctor> findByClinicId(Long id);
+    List<Doctor> findByClinicAndDate(Long id, LocalDate date);
 }

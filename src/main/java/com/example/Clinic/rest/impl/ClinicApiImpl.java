@@ -33,7 +33,10 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Override
     public ResponseEntity getClinicsByDate(LocalDate date) {
-        return  new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.OK);
+        if(clinicService.findClinicsByDate(date).size() > 0) {
+            return new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.OK);
+        }
+        return new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.NOT_FOUND);
     }
 
     @Override

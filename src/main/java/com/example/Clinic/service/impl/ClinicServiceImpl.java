@@ -4,9 +4,11 @@ import com.example.Clinic.dao.ClinicDao;
 import com.example.Clinic.model.Clinic;
 import com.example.Clinic.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,9 +35,11 @@ public class ClinicServiceImpl implements ClinicService {
         if(clinics.size() > 0){
             return clinics;
         }
-        else {
+        else if(date.equals(LocalDate.of(2000, 01, 01))){
             return clinicDao.findAll();
         }
+        else
+            return new ArrayList<Clinic>();
     }
 
     @Override

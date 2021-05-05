@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DoctorApiImpl implements DoctorApi {
 
@@ -22,6 +24,11 @@ public class DoctorApiImpl implements DoctorApi {
     @Override
     public ResponseEntity getDoctor(Long id) {
         return new ResponseEntity(doctorService.findById(id), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getDoctorsByClinicAndDate(Long id, LocalDate date) {
+        return new ResponseEntity(doctorService.findByClinicAndDate(id,date), HttpStatus.OK);
     }
 
     @Override
