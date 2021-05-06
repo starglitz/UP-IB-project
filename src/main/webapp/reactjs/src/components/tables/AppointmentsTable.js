@@ -89,7 +89,7 @@ const AppointmentsTable = () => {
 
                 {appointments.filter(app => app.deleted === false).map((app) =>
                     <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
-                      status={app.status} key={app.appointment_id} date={app.date} time={app.time}
+                      status={app.status} key={app.appointment_id} date={app.date} start={app.start} end={app.end}
                       duration={app.duration} id={app.appointment_id} doctor={app.doctor}
                       nurse={app.nurse} price={app.price} deleted={app.deleted}/>
 

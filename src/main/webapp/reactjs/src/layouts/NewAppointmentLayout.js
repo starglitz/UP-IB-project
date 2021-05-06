@@ -105,10 +105,10 @@ const NewAppointmentLayout = () => {
                     <label htmlFor="date" className="label-register">Date:</label>
                     <input defaultValue={date} id="date" type="date"  className="input-register"/>
 
-                    <label htmlFor="time" className="label-register">Time:</label>
+                    <label htmlFor="time" className="label-register">Start time:</label>
                     <input defaultValue="09:00" required id="start" type="time" min="09:00" max="18:00" className="input-register"/>
 
-                    <label htmlFor="duration" className="label-register">Duration:</label>
+                    <label htmlFor="duration" className="label-register">End time:</label>
                     <input  defaultValue="10:00" required id="end" type="time" min="10:00" max="19:00" className="input-register"/>
 
                     <label htmlFor="doctor" className="label-register">Doctor:</label>

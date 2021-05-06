@@ -226,8 +226,8 @@ const ClinicProfile = () => {
                             <th>ID</th>
                             <th>Status</th>
                             <th>Date</th>
-                            <th>Time</th>
-                            <th>Duration</th>
+                            <th>Start time</th>
+                            <th>End time</th>
                             <th>Doctor</th>
                             <th>Nurse</th>
                             <th>Price</th>
@@ -238,8 +238,8 @@ const ClinicProfile = () => {
 
                         {appointments.filter(app => app.deleted === false).map((app) =>
                             <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
-                                            status={app.status} key={app.appointment_id} date={app.date} time={app.time}
-                                            duration={app.duration} id={app.appointment_id} doctor={app.doctor}
+                                            status={app.status} key={app.appointment_id} date={app.date} start={app.start}
+                                            end={app.end} id={app.appointment_id} doctor={app.doctor}
                                             nurse={app.nurse} price={app.price} deleted={app.deleted}/>
 
                         )}

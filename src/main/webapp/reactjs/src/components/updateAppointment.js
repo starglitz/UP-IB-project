@@ -10,8 +10,8 @@ const UpdateAppointment = () => {
         id: '',
         status:'',
         date:'',
-        time:'',
-        duration:'',
+        start:'',
+        end:'',
         doctor: {},
         nurse: {},
         price:'',
@@ -64,21 +64,27 @@ const UpdateAppointment = () => {
     const sendData = ()  => {
 
         let date = document.getElementById('date').value;
-        let time = document.getElementById('time');
-        if(time.valueAsDate != null) {
-            time = time.valueAsDate.toJSON().slice(-13, -8)
+        let start = document.getElementById('start');
+        if(start.valueAsDate != null) {
+            start = start.valueAsDate.toJSON().slice(-13, -8)
         }
-        let duration = document.getElementById('duration').value;
+
+
+        let end = document.getElementById('end');
+        if(end.valueAsDate != null) {
+            end = end.valueAsDate.toJSON().slice(-13, -8)
+        }
+        // let duration = document.getElementById('duration').value;
         let doctor = document.getElementById('doctor').value;
         let nurse = document.getElementById('nurse').value;
         let price = document.getElementById('price').value;
 
 
 
-        if(valid(date,time,duration,price)) {
+        if(valid(date,start,end,price)) {
 
             let appointmentModified = {"appointment_id": appointment.appointment_id,
-                "date": date, "time": time, "duration": duration,
+                "date": date, "start": start, "end": end,
                 "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
                 "price": price
             };
@@ -106,17 +112,13 @@ const UpdateAppointment = () => {
 
     }
 
-    const valid = (date, time, duration, price) => {
-        if(date === null || time === null || duration === "" || price === "") {
+    const valid = (date, start, end, price) => {
+        if(date === null || start === null || end === null || price === "") {
             alert("Make sure to fill all fields!")
             return false;
         }
         if(price < 1) {
             alert("Price should be a positive number!")
-            return false;
-        }
-        if(duration < 1) {
-            alert("Duration should be a positive number!")
             return false;
         }
         return true;
@@ -137,11 +139,12 @@ const UpdateAppointment = () => {
                     <label htmlFor="date" className="label-register">Date:</label>
                     <input defaultValue={appointment.date} id="date" type="date"  className="input-register"/>
 
-                    <label htmlFor="time" className="label-register">Time:</label>
-                    <input defaultValue={appointment.time} required id="time" type="time"  min="09:00" max="18:00" className="input-register"/>
+                    <label htmlFor="start" className="label-register">Start time:</label>
+                    <input defaultValue={appointment.start} required id="start" type="time"  min="09:00" max="18:00" className="input-register"/>
 
-                    <label htmlFor="duration" className="label-register">Duration:</label>
-                    <input defaultValue={appointment.duration} id="duration" type="text" placeholder="enter duration in minutes or hours" className="input-register"/>
+
+                    <label htmlFor="end" className="label-register">End time:</label>
+                    <input defaultValue={appointment.end} required id="end" type="time"  min="09:00" max="18:00" className="input-register"/>
 
                     <label htmlFor="doctor" className="label-register">Doctor:</label>
                     <select name="doctor" id="doctor" className="input-register">

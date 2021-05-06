@@ -32,8 +32,7 @@ public class Appointment {
 
     @ManyToOne
     private Nurse nurse;
-
-    @Min(1)
+    
     @NotNull
     private int price;
     private boolean deleted;
