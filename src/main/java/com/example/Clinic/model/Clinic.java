@@ -27,4 +27,15 @@ public class Clinic {
 //    private List<Service> services;
     private float rating;
 
+
+//    @OneToOne(mappedBy = "clinic")
+//    private Address address;
+
+
+    private String addressName;
+
+    private String lat;
+
+    private String lng;
+
 }

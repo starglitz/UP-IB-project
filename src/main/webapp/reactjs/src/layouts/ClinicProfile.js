@@ -6,6 +6,7 @@ import ServicesTable from "../components/tables/ServicesTable";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import PatientsTable from "../components/patients/PatientsTable";
+import Location from "../components/Location";
 
 const ClinicProfile = () => {
 
@@ -15,7 +16,13 @@ const ClinicProfile = () => {
         name: '',
         description: '',
         rating: '',
-        priceList: []
+        priceList: [],
+        addressName:'',
+        lat:'',
+        lng:''
+    });
+
+    const [address, setAddress] = useState({
     });
 
     const [doctors, setDoctors] = useState([]);
@@ -34,6 +41,8 @@ const ClinicProfile = () => {
         fetchData()
         fetchDoctors()
         fetchAppointments()
+        fetchAddress()
+        console.log(address)
     }, []);
 
     async function fetchData() {
@@ -60,6 +69,18 @@ const ClinicProfile = () => {
             .then(res => setAppointments(res))
             .catch(err => setErrors(err));
     }
+
+    async function fetchAddress() {
+        const res = await fetch("http://localhost:8080/address/clinic/1");
+        res
+            .json()
+            .then(res => setAddress(res))
+            .then(res => console.log(res))
+            .catch(err => setErrors(err));
+    }
+
+
+
 
     let delete_appointment = (appointment_id) => {
         console.log("delet appointment clicked")
@@ -172,6 +193,16 @@ const ClinicProfile = () => {
                                           disabled/>
                             </td>
                             </tr>
+
+
+                    <tr>
+                        <td>  <label htmlFor="addr" className="label-hospital">Address:</label>
+                        </td>
+                        <td>   <input defaultValue={clinic.addressName}  id="rating" type="text" className="input-hospital"
+                                      disabled = {(disabled)? "disabled" : ""}/>
+                        </td>
+                    </tr>
+
                         <tr><td><Button  onClick = {handleEnableClick}
                                          variant="contained" color="primary"  size="medium"> Edit </Button></td>
 
@@ -188,6 +219,9 @@ const ClinicProfile = () => {
 
 
                     </table>
+                    <br/>
+                    <Location name={clinic.addressName} lat={clinic.lat} lng={clinic.lng}></Location>
+              <br/>
 
                 </div>
 

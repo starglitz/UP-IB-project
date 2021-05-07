@@ -18,6 +18,8 @@ import DoctorTable from "./components/clinicDoctors/doctorTable";
 import BookingPage from "./components/booking/bookingPage";
 import PatientProfile from "./profile/PatientProfile";
 import PatientsTable from "./components/patients/PatientsTable";
+import Location from "./components/Location";
+
 
 function App() {
   return (
@@ -42,6 +44,7 @@ function App() {
                 <Route path="/booking/:id" exact component={BookingPage}/>
                 <Route path="/patientProfile" exact component={PatientProfile}/>
                 <Route path="/patients" exact component={PatientsTable}/>
+                <Route path="/mapsTest" exact component={Location}/>
             </Switch>
         </Router>
     </div>
