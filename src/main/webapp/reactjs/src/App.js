@@ -16,6 +16,8 @@ import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfil
 import ClinicAppointments from "./components/appointments/appointmentTable";
 import DoctorTable from "./components/clinicDoctors/doctorTable";
 import BookingPage from "./components/booking/bookingPage";
+import PatientProfile from "./profile/PatientProfile";
+import PatientsTable from "./components/patients/PatientsTable";
 
 function App() {
   return (
@@ -38,6 +40,8 @@ function App() {
                 <Route path="/clinicAppointments/:id" exact component={ClinicAppointments}/>
                 <Route path="/doctors/:clinicId/:date" exact component={DoctorTable}/>
                 <Route path="/booking/:id" exact component={BookingPage}/>
+                <Route path="/patientProfile" exact component={PatientProfile}/>
+                <Route path="/patients" exact component={PatientsTable}/>
             </Switch>
         </Router>
     </div>

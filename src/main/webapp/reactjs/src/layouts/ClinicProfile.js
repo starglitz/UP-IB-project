@@ -5,6 +5,7 @@ import {useHistory} from "react-router-dom";
 import ServicesTable from "../components/tables/ServicesTable";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import PatientsTable from "../components/patients/PatientsTable";
 
 const ClinicProfile = () => {
 
@@ -245,6 +246,7 @@ const ClinicProfile = () => {
                         )}
                         </tbody>
                     </table>
+
                     </div>
                 </div>
             </div>
