@@ -20,6 +20,7 @@ public class Patient extends User {
     private String lbo;
     private boolean enabled = true;
     private boolean approved = false;
+    private long patientBookId;
 
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "register_request_id")
