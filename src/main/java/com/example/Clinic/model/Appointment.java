@@ -16,6 +16,7 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appointment_id;
 
+    @NotNull
     private AppointmentStatus status = AppointmentStatus.FREE;
 
     @NotNull
@@ -27,11 +28,17 @@ public class Appointment {
     @NotNull
     private LocalTime end;
 
+    @NotNull
     @ManyToOne
     private Doctor doctor;
 
+    @NotNull
     @ManyToOne
     private Nurse nurse;
+
+    @NotNull
+    @ManyToOne
+    private Patient patient;
     
     @NotNull
     private int price;
@@ -39,7 +46,7 @@ public class Appointment {
 
     public Appointment(AppointmentStatus status, @NotNull @NotEmpty @Future LocalDate date,
                        LocalTime start, LocalTime end,
-                       Doctor doctor, Nurse nurse, @Min(1) @NotEmpty int price,
+                       Doctor doctor, Nurse nurse, Patient patient, @Min(1) @NotEmpty int price,
                        boolean deleted) {
         this.status = status;
         this.date = date;
@@ -47,6 +54,7 @@ public class Appointment {
         this.end = end;
         this.doctor = doctor;
         this.nurse = nurse;
+        this.patient = patient;
         this.price = price;
         this.deleted = deleted;
     }

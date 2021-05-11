@@ -30,6 +30,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
         appointmentJpa.setStart(appointment.getStart());
         appointmentJpa.setDoctor(appointment.getDoctor());
         appointmentJpa.setNurse(appointment.getNurse());
+        appointmentJpa.setPatient(appointment.getPatient());
         appointmentJpa.setEnd(appointment.getEnd());
         appointmentJpa.setPrice(appointment.getPrice());
 
