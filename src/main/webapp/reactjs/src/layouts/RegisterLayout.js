@@ -33,8 +33,19 @@ const RegisterLayout = () => {
          if(validateForm(email,password,confirm,name,surname,address,city,state,contact,lbo)) {
         handleClickOpen();
 
-        let user = {"email":email, "password":password, "name":name, "lastName":surname,
-        "address":address, "city":city, "country":state, "phoneNumber":contact, "lbo":lbo, "enabled":true};
+        let user = {
+            "email":email,
+            "password":password,
+            "name":name,
+            "lastName":surname,
+            "address":address,
+            "city":city,
+            "country":state,
+            "phoneNumber":contact,
+            "lbo":lbo,
+            "enabled":true,
+            "patientBookId": Math.floor(Math.random() * 100000)
+        };
         console.log(user);
         fetch('http://localhost:8080/registration', {
             method: 'POST',
