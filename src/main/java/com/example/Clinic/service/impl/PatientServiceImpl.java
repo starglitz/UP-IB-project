@@ -1,7 +1,10 @@
 package com.example.Clinic.service.impl;
 
+import com.example.Clinic.dao.PatientBookDao;
 import com.example.Clinic.dao.PatientDao;
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.PatientBook;
+import com.example.Clinic.model.Recipe;
 import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Autowired
     private PatientDao patientDao;
+
+    @Autowired
+    private PatientBookDao patientBookDao;
 
     @Override
     public boolean addPatient(Patient patient) {
@@ -58,10 +64,12 @@ public class PatientServiceImpl implements PatientService {
         if (valid) {
             String hashedPw = BCrypt.hashpw(patient.getPassword(), BCrypt.gensalt());//10
             patient.setPassword(hashedPw);
+
+            PatientBook patientBook = new PatientBook();
+            patientBook.setPatient(patient);
+
+            patientBookDao.addPatientBook(patientBook);
             patientDao.addPatient(patient);
-
-
-
         }
         return valid;
 
@@ -110,8 +118,6 @@ public class PatientServiceImpl implements PatientService {
                 System.out.println("dasdsa" + patient.getPassword());
             }
             patientDao.updatePatient(patient, id);
-
-
 
         }
         return valid;

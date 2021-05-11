@@ -9,8 +9,8 @@ import java.util.Optional;
 @Service
 public interface AppointmentService {
 
-    public Appointment add(Appointment appointment);
-    public Appointment update(Appointment appointment);
+    public boolean add(Appointment appointment);
+    public boolean update(Appointment appointment);
     public Appointment delete(Appointment appointment);
     public Appointment findById(Long id);
     public List<Appointment> findAll();

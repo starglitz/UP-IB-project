@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public interface RecipeService {
 
-    Recipe addRecipe(Recipe recipe);
+    boolean addRecipe(Recipe recipe);
     List<Recipe> getAllRecipes();
     List<Recipe> getNotApprovedRecipes();
     boolean updateRecipe(Recipe recipe, Long recipe_id);

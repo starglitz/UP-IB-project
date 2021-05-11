@@ -2,12 +2,10 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.dao.RecipeDao;
 import com.example.Clinic.model.Recipe;
-import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,7 +15,26 @@ public class RecipeServiceImpl implements RecipeService {
     private RecipeDao recipeDao;
 
     @Override
-    public Recipe addRecipe(Recipe recipe) { return this.recipeDao.addRecipe(recipe); }
+    public  boolean addRecipe(Recipe recipe) {
+        boolean valid = checkValid(recipe);
+
+        if (valid) {
+            recipeDao.addRecipe(recipe);
+        }
+
+        return valid;
+    }
+
+    @Override
+    public boolean updateRecipe(Recipe recipe, Long id) {
+        boolean valid = checkValid(recipe);
+
+        if (valid && recipe.getRecipe_id().equals(id)) {
+            recipeDao.updateRecipe(recipe, id);
+        }
+
+        return valid;
+    }
 
     @Override
     public List<Recipe> getAllRecipes() { return this.recipeDao.getAllRecipes(); }
@@ -25,8 +42,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> getNotApprovedRecipes() { return this.recipeDao.getNotApprovedRecipes(); }
 
-    @Override
-    public boolean updateRecipe(Recipe recipe, Long id) {
+    private boolean checkValid(Recipe recipe) {
         boolean valid = true;
 
         if (recipe.getDescription().isEmpty() || recipe.getDescription() == null) { valid = false; }
@@ -34,10 +50,6 @@ public class RecipeServiceImpl implements RecipeService {
         if (recipe.getNurse() == null) { valid = false; }
         if (recipe.getRecipe_id() == null) { valid = false; }
         if (recipe.getValidated() == null) { valid = false; }
-
-        if (valid && recipe.getRecipe_id().equals(id)) {
-            recipeDao.updateRecipe(recipe, id);
-        }
 
         return valid;
     }
