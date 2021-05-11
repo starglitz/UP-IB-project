@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,18 +23,24 @@ public class RecipeApiImpl implements RecipeApi {
     private RecipeService recipeService;
 
     @Override
-    public ResponseEntity addRecipe(Recipe recipe) {
-        recipeService.addRecipe(recipe);
-        return new ResponseEntity(new Response(), HttpStatus.OK);
+    public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid Recipe recipe) {
+        boolean valid = recipeService.addRecipe(recipe);
+
+        if (valid)
+            return new ResponseEntity(recipe, HttpStatus.OK);
+
+        return new ResponseEntity(recipe, HttpStatus.BAD_REQUEST);
     }
 
     @Override
     public ResponseEntity approveRecipe(Recipe recipe, Long recipe_id) {
+
         boolean valid = recipeService.updateRecipe(recipe, recipe_id);
-        if(valid){
-            return new ResponseEntity<>(recipe, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(recipe, HttpStatus.BAD_REQUEST);
+
+        if(valid)
+            return new ResponseEntity(recipe, HttpStatus.OK);
+
+        return new ResponseEntity(recipe, HttpStatus.BAD_REQUEST);
     }
 
     @Override
