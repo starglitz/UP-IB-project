@@ -10,6 +10,7 @@ import NewAppointmentLayout from "./layouts/NewAppointmentLayout";
 import LoginLayout from "./layouts/LoginLayout";
 import AppointmentsTable from "./components/tables/AppointmentsTable";
 import UpdateAppointment from "./components/updateAppointment";
+import AppointmentReview from "./layouts/AppointmentReview";
 import ClinicProfile from "./layouts/ClinicProfile";
 import Clinics from "./components/clinics/ClinicsTable";
 import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfile"
@@ -42,6 +43,8 @@ function App() {
                 <Route path="/clinicAppointments/:id" exact component={ClinicAppointments}/>
                 <Route path="/doctors/:clinicId/:date" exact component={DoctorTable}/>
                 <Route path="/booking/:id" exact component={BookingPage}/>
+                <Route path="/appointment/:id" exact component={BookingPage}/>
+                <Route path="/appointmentReview" exact component={AppointmentReview}/>
                 <Route path="/patientProfile" exact component={PatientProfile}/>
                 <Route path="/patients" exact component={PatientsTable}/>
                 <Route path="/mapsTest" exact component={Location}/>
