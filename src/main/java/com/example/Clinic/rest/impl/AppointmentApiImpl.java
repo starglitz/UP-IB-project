@@ -3,10 +3,12 @@ package com.example.Clinic.rest.impl;
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Doctor;
 import com.example.Clinic.model.Nurse;
+import com.example.Clinic.model.Patient;
 import com.example.Clinic.rest.AppointmentApi;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
 import com.example.Clinic.service.NurseService;
+import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Autowired
     private NurseService nurseService;
+
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public ResponseEntity getAllAppointments() {
@@ -69,13 +74,26 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity<Appointment> updateAppointment(@Valid Appointment appointment) {
-        Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
-        appointment.setDoctor(doctor);
-        Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
-        appointment.setNurse(nurse);
+    public ResponseEntity<Appointment> updateAppointment(@Valid Appointment appointmentParam, Long id) {
+        boolean valid = appointmentService.update(appointmentParam);
+        Appointment appointment = appointmentService.findById(id);
+        if (valid) {
+            Doctor doctor = doctorService.findById(appointmentParam.getDoctor().getId()).get();
+            appointment.setDoctor(doctor);
+            Nurse nurse = nurseService.findById(appointmentParam.getNurse().getId()).get();
+            appointment.setNurse(nurse);
+            Patient patient = patientService.getPatientById(appointmentParam.getPatient().getId()).get();
+            appointment.setPatient(patient);
 
-        return new ResponseEntity(appointmentService.update(appointment), HttpStatus.OK);
+            appointment.setStart(appointmentParam.getStart());
+            appointment.setEnd(appointmentParam.getEnd());
+            appointment.setStatus(appointmentParam.getStatus());
+            appointment.setDeleted(appointmentParam.isDeleted());
+            appointment.setPrice(appointmentParam.getPrice());
+
+            return new ResponseEntity(appointmentService.update(appointment), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(appointment, HttpStatus.BAD_REQUEST);
     }
 
     @Override

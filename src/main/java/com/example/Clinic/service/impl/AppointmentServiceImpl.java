@@ -2,6 +2,8 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.dao.AppointmentDao;
 import com.example.Clinic.model.Appointment;
+import com.example.Clinic.model.Recipe;
+import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +17,22 @@ public class AppointmentServiceImpl implements AppointmentService {
     private AppointmentDao appointmentDao;
 
     @Override
-    public Appointment add(Appointment appointment) {
-        return appointmentDao.add(appointment);
+    public boolean add(Appointment appointment) {
+        boolean valid = checkValid(appointment);
+
+        if (valid) { appointmentDao.add(appointment); }
+
+        return valid;
     }
 
     @Override
-    public Appointment update(Appointment appointment) {
-        return appointmentDao.update(appointment);
-    }
+    public boolean update(Appointment appointment) {
+        boolean valid = checkValid(appointment);
 
+        if (valid) { appointmentDao.update(appointment); }
+
+        return valid;
+    }
     @Override
     public Appointment delete(Appointment appointment) {
         return appointmentDao.delete(appointment);
@@ -52,6 +61,20 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> findFreeByDoctor(Long doctor_id) {
         return appointmentDao.findFreeByDoctor(doctor_id);
+    }
+
+
+    private boolean checkValid(Appointment appointment) {
+        boolean valid = true;
+
+        if (appointment.getDate() == null) { valid = false; }
+        if (appointment.getStart() == null) { valid = false; }
+        if (appointment.getEnd() == null) { valid = false; }
+        if (appointment.getDoctor() == null) { valid = false; }
+        if (appointment.getNurse() == null) { valid = false; }
+        if (appointment.getPatient() == null) { valid = false; }
+
+        return valid;
     }
 
 }
