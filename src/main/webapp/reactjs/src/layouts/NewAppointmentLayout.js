@@ -50,7 +50,7 @@ const NewAppointmentLayout = () => {
 
             let appointment = {
                 "date": date, "start": start, "end": end,
-                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
+                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id}, "patient": null,
                 "price": price
             };
             console.log(appointment);
