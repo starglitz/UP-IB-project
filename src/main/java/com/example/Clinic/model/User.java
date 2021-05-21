@@ -18,28 +18,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotBlank(message = "email is mandatory")
     private String email;
 
-    @NotBlank(message = "password is mandatory")
     private String password;
 
-    @NotBlank(message = "name is mandatory")
     private String name;
 
-    @NotBlank(message = "last name is mandatory")
     private String lastName;
 
-    @NotBlank(message = "address is mandatory")
     private String address;
 
-    @NotBlank(message = "city is mandatory")
     private String city;
 
-    @NotBlank(message = "country is mandatory")
     private String country;
 
-    @NotBlank(message = "phone number is mandatory")
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
