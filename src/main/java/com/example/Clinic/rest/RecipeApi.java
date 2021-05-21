@@ -9,21 +9,20 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/recipes")
 public interface RecipeApi {
 
-    @PostMapping(value = "/addRecipe",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Recipe> addRecipe(@Valid @RequestBody Recipe recipe);
 
-    @GetMapping(value = "/allRecipes",
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllRecipes();
 
-    @GetMapping(value = "/notApprovedRecipes",
+    @GetMapping(value = "/notApproved",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getNotApprovedRecipes();
 
-    @PutMapping(value = "/updateRecipe/{recipe_id}",
+    @PutMapping(value = "/approve/{recipe_id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Recipe> approveRecipe(@Valid @RequestBody Recipe recipe,

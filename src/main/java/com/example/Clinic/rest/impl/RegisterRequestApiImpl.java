@@ -51,7 +51,7 @@ public class RegisterRequestApiImpl implements RegisterRequestApi {
     }
 
     @Override
-    public ResponseEntity<RegisterRequest> updateRequest(@RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterRequest> updateRequest(Long id,@RequestBody RegisterRequest request) {
         return new ResponseEntity<>(registerRequestService.update(request), HttpStatus.OK);
     }
 }

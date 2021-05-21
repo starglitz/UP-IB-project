@@ -54,7 +54,7 @@ public class PatientApiImpl implements PatientApi {
     }
 
     @Override
-    public ResponseEntity<Patient> updatePatient(@Valid Patient patient, Long id) {
+    public ResponseEntity<Patient> updatePatient(Long id,@Valid Patient patient) {
         boolean valid = patientService.updatePatient(patient, id);
         if(valid){
             return new ResponseEntity<>(patient, HttpStatus.OK);

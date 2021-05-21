@@ -12,23 +12,23 @@ import java.util.Date;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/clinics")
 public interface ClinicApi {
 
 
-    @GetMapping(value = "/allClinics",
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllClinics();
 
     @GetMapping(value = "/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinic(@PathVariable("id") Long id);
 
-    @GetMapping(value = "/clinics/{date}",
+    @GetMapping(value = "/{date}",
                 produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicsByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
 
 
-    @PutMapping(value="/clinic", produces = {MediaType.APPLICATION_JSON_VALUE},
+    @PutMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE},
     consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity update( @Valid @RequestBody Clinic clinic);
+    ResponseEntity update(@PathVariable("id") Long id,@Valid @RequestBody Clinic clinic);
 }
