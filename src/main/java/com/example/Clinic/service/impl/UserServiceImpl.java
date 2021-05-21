@@ -17,30 +17,10 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl  implements UserService {
 
-    @Autowired
-    private DoctorDao doctorDao;
-
-    @Autowired
-    private NurseDao nurseDao;
-
-    @Autowired
-    private PatientDao patientDao;
 
     @Autowired
     private UserRepository userRepository;
 
-
-    @Override
-    public boolean checkPatientLogin(LoginForm loginForm) {
-
-        List<Patient> patients = patientDao.getAll();
-        for(Patient patient : patients){
-            if(loginForm.getEmail().equals(patient.getUser().getEmail()) && BCrypt.checkpw(loginForm.getPassword(), patient.getUser().getPassword())){
-                return true;
-            }
-        }
-        return false;
-    }
 
     @Override
     public Optional<User> findUserByEmail(String email) {

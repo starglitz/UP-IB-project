@@ -2,6 +2,7 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.dao.ServiceDao;
 import com.example.Clinic.model.Service;
+import com.example.Clinic.repository.ServiceRepository;
 import com.example.Clinic.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,11 +12,11 @@ import java.util.List;
 public class ServiceServiceImpl implements ServiceService {
 
     @Autowired
-    private ServiceDao serviceDao;
+    private ServiceRepository serviceRepository;
 
     @Override
     public List<Service> findByClinicId(Long clinic_id) {
-        System.out.println(serviceDao.findByClinicId(clinic_id));
-        return serviceDao.findByClinicId(clinic_id);
+
+        return serviceRepository.findByClinicId(clinic_id);
     }
 }

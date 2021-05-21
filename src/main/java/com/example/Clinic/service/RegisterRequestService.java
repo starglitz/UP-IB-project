@@ -13,7 +13,7 @@ public interface RegisterRequestService {
     public RegisterRequest addRegisterRequest(RegisterRequest request);
     public Set<RegisterRequest> getAll();
     public RegisterRequest findByPatientId(Long id);
-
+    public Optional<RegisterRequest> findById(Long id);
     public RegisterRequest update(RegisterRequest request);
 
 

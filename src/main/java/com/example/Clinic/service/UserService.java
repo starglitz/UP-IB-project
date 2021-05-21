@@ -12,8 +12,6 @@ import java.util.Optional;
 @Service
 public interface UserService {
 
-    public boolean checkPatientLogin(LoginForm loginForm);
-
     Optional<User> findUserByEmail(String email);
 
 }

@@ -2,6 +2,7 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.dao.RecipeDao;
 import com.example.Clinic.model.Recipe;
+import com.example.Clinic.repository.RecipeRepository;
 import com.example.Clinic.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,14 +13,14 @@ import java.util.List;
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
-    private RecipeDao recipeDao;
+    private RecipeRepository recipeRepository;
 
     @Override
     public  boolean addRecipe(Recipe recipe) {
         boolean valid = checkValid(recipe);
 
         if (valid) {
-            recipeDao.addRecipe(recipe);
+            recipeRepository.save(recipe);
         }
 
         return valid;
@@ -30,17 +31,17 @@ public class RecipeServiceImpl implements RecipeService {
         boolean valid = checkValid(recipe);
 
         if (valid && recipe.getRecipe_id().equals(id)) {
-            recipeDao.updateRecipe(recipe, id);
+            recipeRepository.save(recipe);
         }
 
         return valid;
     }
 
     @Override
-    public List<Recipe> getAllRecipes() { return this.recipeDao.getAllRecipes(); }
+    public List<Recipe> getAllRecipes() { return this.recipeRepository.findAll(); }
 
     @Override
-    public List<Recipe> getNotApprovedRecipes() { return this.recipeDao.getNotApprovedRecipes(); }
+    public List<Recipe> getNotApprovedRecipes() { return this.recipeRepository.findNotApproved(); }
 
     private boolean checkValid(Recipe recipe) {
         boolean valid = true;

@@ -5,6 +5,7 @@ import com.example.Clinic.dao.PatientDao;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.Recipe;
+import com.example.Clinic.repository.PatientRepository;
 import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.Optional;
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
-    private PatientDao patientDao;
+    private PatientRepository patientRepository;
 
     @Autowired
     private PatientBookDao patientBookDao;
@@ -125,9 +126,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> getAll() {
-        return patientDao.getAll();
+        return patientRepository.findAll();
     }
 
     @Override
-    public Optional<Patient> getPatientById(Long id) { return  patientDao.getPatientById(id);}
+    public Optional<Patient> getPatientById(Long id) { return  patientRepository.findById(id);}
 }
