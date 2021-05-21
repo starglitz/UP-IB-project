@@ -3,24 +3,28 @@ package com.example.Clinic.service.impl;
 import com.example.Clinic.dao.AppointmentDao;
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Recipe;
+import com.example.Clinic.repository.AppointmentRepository;
 import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
-    private AppointmentDao appointmentDao;
+    private AppointmentRepository appointmentRepository;
 
     @Override
     public boolean add(Appointment appointment) {
         boolean valid = checkValid(appointment);
 
-        if (valid) { appointmentDao.add(appointment); }
+        if (valid) {
+            appointmentRepository.save(appointment);
+        }
 
         return valid;
     }
@@ -29,38 +33,42 @@ public class AppointmentServiceImpl implements AppointmentService {
     public boolean update(Appointment appointment) {
         boolean valid = checkValid(appointment);
 
-        if (valid) { appointmentDao.update(appointment); }
+        if (valid) {
+            appointmentRepository.save(appointment);
+        }
 
         return valid;
     }
     @Override
     public Appointment delete(Appointment appointment) {
-        return appointmentDao.delete(appointment);
+        appointmentRepository.delete(appointment);
+        return appointment;
     }
 
     @Override
     public Appointment findById(Long id) {
-        return appointmentDao.findById(id).get();
+        Optional<Appointment> appointment = appointmentRepository.findById(id);
+        return appointment.orElse(null);
     }
 
     @Override
     public List<Appointment> findAll() {
-        return appointmentDao.findAll();
+        return appointmentRepository.findAll();
     }
 
     @Override
     public List<Appointment> findByClinicId(Long clinic_id) {
-        return appointmentDao.findByClinicId(clinic_id);
+        return appointmentRepository.findByClinicId(clinic_id);
     }
 
     @Override
     public List<Appointment> findFreeByClinicId(Long clinic_id) {
-        return appointmentDao.findFreeByClinicId(clinic_id);
+        return appointmentRepository.findFreeByClinicId(clinic_id);
     }
 
     @Override
     public List<Appointment> findFreeByDoctor(Long doctor_id) {
-        return appointmentDao.findFreeByDoctor(doctor_id);
+        return appointmentRepository.findFreeByDoctor(doctor_id);
     }
 
 
