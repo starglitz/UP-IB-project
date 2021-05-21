@@ -40,7 +40,7 @@ public class ClinicApiImpl implements ClinicApi {
     }
 
     @Override
-    public ResponseEntity update(@Valid Clinic clinic) {
+    public ResponseEntity update(Long id, @Valid Clinic clinic) {
         return  new ResponseEntity(clinicService.update(clinic), HttpStatus.OK);
     }
 
