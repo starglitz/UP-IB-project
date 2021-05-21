@@ -14,6 +14,7 @@ import java.util.Date;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface ClinicApi {
 
+
     @GetMapping(value = "/allClinics",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllClinics();

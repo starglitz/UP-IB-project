@@ -29,7 +29,7 @@ public class PatientBookDaoImpl implements PatientBookDao {
         PatientBook patientBook = patientBookRepo.findById(id).get();
 
         patientBook.setPatient(patientBookParam.getPatient());
-        patientBook.setRecipes(patientBookParam.getRecipes());
+//        patientBook.setRecipes(patientBookParam.getRecipes());
 
         return patientBookRepo.save(patientBook);
     }

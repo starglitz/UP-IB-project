@@ -57,16 +57,16 @@ public class RecipeApiImpl implements RecipeApi {
         return new ResponseEntity(recipes, HttpStatus.OK);
     }
 
-    public void initializeTestData() {
-        Nurse nurse =  new Nurse("email@gmail.com", "pass123", "Clark", "Johnson",
-                "Address Street 16a", "Novi Sad", "Serbia", "012345678");
-
-        Recipe recipe1 = new Recipe(1L, false, nurse, "Opatanol x2", LocalDate.now());
-        Recipe recipe2 = new Recipe(2L, false, nurse, "Opatanol x2", LocalDate.now());
-        Recipe recipe3 = new Recipe(3L, false, nurse, "Opatanol x2", LocalDate.now());
-
-        recipeService.addRecipe(recipe1);
-        recipeService.addRecipe(recipe2);
-        recipeService.addRecipe(recipe3);
-    }
+//    public void initializeTestData() {
+//        Nurse nurse =  new Nurse("email@gmail.com", "pass123", "Clark", "Johnson",
+//                "Address Street 16a", "Novi Sad", "Serbia", "012345678");
+//
+//        Recipe recipe1 = new Recipe(1L, false, nurse, "Opatanol x2", LocalDate.now());
+//        Recipe recipe2 = new Recipe(2L, false, nurse, "Opatanol x2", LocalDate.now());
+//        Recipe recipe3 = new Recipe(3L, false, nurse, "Opatanol x2", LocalDate.now());
+//
+//        recipeService.addRecipe(recipe1);
+//        recipeService.addRecipe(recipe2);
+//        recipeService.addRecipe(recipe3);
+//    }
 }
