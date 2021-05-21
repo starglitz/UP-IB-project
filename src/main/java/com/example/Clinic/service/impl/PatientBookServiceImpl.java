@@ -39,7 +39,7 @@ public class PatientBookServiceImpl implements PatientBookService {
     private boolean checkValid(PatientBook patientBook) {
         boolean valid = true;
         if (patientBook.getPatient() == null) { valid = false; }
-        if (patientBook.getRecipes() == null) { valid = false; }
+//        if (patientBook.getRecipes() == null) { valid = false; }
         return valid;
     }
 }

@@ -33,19 +33,19 @@ public class PatientDaoImpl implements PatientDao {
 
         Patient pat = patientRepository.findById(id).get();
 
-        pat.setEmail(patient.getEmail());
-        pat.setName(patient.getName());
-        pat.setLastName(patient.getLastName());
-        pat.setEmail(patient.getEmail());
-        pat.setAddress(patient.getAddress());
-        pat.setCity(patient.getCity());
-        pat.setCountry(patient.getCountry());
-        pat.setPhoneNumber(patient.getPhoneNumber());
-        pat.setLbo(patient.getLbo());
-        pat.setApproved(patient.isApproved());
-        if(patient.getPassword().length() > 1){
-            pat.setPassword(patient.getPassword());
-        }
+//        pat.setEmail(patient.getEmail());
+//        pat.setName(patient.getName());
+//        pat.setLastName(patient.getLastName());
+//        pat.setEmail(patient.getEmail());
+//        pat.setAddress(patient.getAddress());
+//        pat.setCity(patient.getCity());
+//        pat.setCountry(patient.getCountry());
+//        pat.setPhoneNumber(patient.getPhoneNumber());
+//        pat.setLbo(patient.getLbo());
+//        pat.setApproved(patient.isApproved());
+//        if(patient.getPassword().length() > 1){
+//            pat.setPassword(patient.getPassword());
+//        }
         pat.setEnabled(patient.isEnabled());
         return patientRepository.save(pat);
     }
