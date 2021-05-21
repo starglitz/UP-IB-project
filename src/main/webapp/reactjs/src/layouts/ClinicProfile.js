@@ -7,6 +7,9 @@ import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import PatientsTable from "../components/patients/PatientsTable";
 import Location from "../components/Location";
+import {AppointmentService} from "../services/AppointmentService";
+import {ClinicService} from "../services/ClinicService";
+import {DoctorService} from "../services/DoctorService";
 
 const ClinicProfile = () => {
 
@@ -22,8 +25,8 @@ const ClinicProfile = () => {
         lng:''
     });
 
-    const [address, setAddress] = useState({
-    });
+    // const [address, setAddress] = useState({
+    // });
 
     const [doctors, setDoctors] = useState([]);
 
@@ -41,43 +44,81 @@ const ClinicProfile = () => {
         fetchData()
         fetchDoctors()
         fetchAppointments()
-        fetchAddress()
+        // fetchAddress()
         console.log(address)
     }, []);
 
+    // async function fetchData() {
+    //     const res = await fetch("http://localhost:8080/clinic/1");
+    //     res
+    //         .json()
+    //         .then(res => setClinic(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/clinic/1");
-        res
-            .json()
-            .then(res => setClinic(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await ClinicService.get(1);
+            setClinic(response.data)
+        } catch (error) {
+            console.error(`Error loading clinic !: ${error}`);
+        }
     }
+
+    // async function fetchDoctors() {
+    //     const res = await fetch("http://localhost:8080/doctorByClinic/1");
+    //     res
+    //         .json()
+    //         .then(res => setDoctors(res))
+    //         .catch(err => setErrors(err));
+    // }
 
     async function fetchDoctors() {
-        const res = await fetch("http://localhost:8080/doctorByClinic/1");
-        res
-            .json()
-            .then(res => setDoctors(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await DoctorService.getByClinicId(1)
+            setDoctors(response.data)
+        } catch (error) {
+            console.error(`Error loading doctors !: ${error}`);
+        }
     }
+
+
+    // async function fetchAppointments() {
+    //     const res = await fetch("http://localhost:8080/appointments/free/clinic/1");
+    //     res
+    //         .json()
+    //         .then(res => res.filter(app => app.deleted === false))
+    //         .then(res => setAppointments(res))
+    //         .catch(err => setErrors(err));
+    // }
 
     async function fetchAppointments() {
-        const res = await fetch("http://localhost:8080/appointments/free/clinic/1");
-        res
-            .json()
-            .then(res => res.filter(app => app.deleted === false))
-            .then(res => setAppointments(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await AppointmentService.getByClinicId(1);
+            setAppointments(response.data)
+        } catch (error) {
+            console.error(`Error loading appointments !: ${error}`);
+        }
     }
 
-    async function fetchAddress() {
-        const res = await fetch("http://localhost:8080/address/clinic/1");
-        res
-            .json()
-            .then(res => setAddress(res))
-            .then(res => console.log(res))
-            .catch(err => setErrors(err));
-    }
+    // async function fetchAddress() {
+    //     const res = await fetch("http://localhost:8080/address/clinic/1");
+    //     res
+    //         .json()
+    //         .then(res => setAddress(res))
+    //         .then(res => console.log(res))
+    //         .catch(err => setErrors(err));
+    // }
+    //
+    // async function fetchAddress() {
+    //     try {
+    //         const response = await
+    //         const response = await AppointmentService.getByClinicId(id);
+    //         setRequests(response.data)
+    //     } catch (error) {
+    //         console.error(`Error loading appointments !: ${error}`);
+    //     }
+    // }
 
 
 
@@ -87,8 +128,10 @@ const ClinicProfile = () => {
         let appointment = {deleted:true, appointment_id:appointment_id};
         setAppointments(appointments.filter(app => app.deleted === false))
         setRandom(Math.random())
-        sendDataDelete(appointment);
+        sendDataDelete(appointment_id);
     }
+
+
 
     const update_appointment = (appointment_id) => {
         history.push({
@@ -98,21 +141,13 @@ const ClinicProfile = () => {
         });
     };
 
-    const sendDataDelete = (data) => {
-        fetch('http://localhost:8080/deleteAppointment', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response)
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    async function sendDataDelete(appointment_id) {
+            try {
+                await AppointmentService.deleteAppointment(appointment_id)
+                setAppointments((appointments) => appointments.filter((appointment) => appointment.appointment_id !== appointment_id));
+            } catch (error) {
+                console.error(`Error ocurred while deleting appointment : ${error}`);
+            }
     }
 
 
@@ -127,29 +162,30 @@ const ClinicProfile = () => {
         }
     }
 
-    const handleSaveData = () => {
+    async function handleSaveData(){
         let name = document.getElementById('name').value;
         let description = document.getElementById('description').value;
         let rating = document.getElementById('rating').value;
 
         let hospital = {clinic_id:'1', name:name, description: description, rating: rating}
 
-        fetch('http://localhost:8080/clinic', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(hospital),
-        })
-            .then(response => response.json())
-            .then(hospital => {
-                console.log('Success:', hospital);
-                window.location.reload();
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        // fetch('http://localhost:8080/clinic', {
+        //     method: 'PUT',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(hospital),
+        // })
+        //     .then(response => response.json())
+        //     .then(hospital => {
+        //         console.log('Success:', hospital);
+        //         window.location.reload();
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
 
+        await ClinicService.update(hospital.clinic_id, hospital);
     }
 
 

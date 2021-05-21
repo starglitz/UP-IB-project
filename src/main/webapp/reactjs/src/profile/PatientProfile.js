@@ -3,6 +3,8 @@ import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
+import {AppointmentService} from "../services/AppointmentService";
+import {PatientService} from "../services/PatientService";
 
 const PatientProfile = () => {
 
@@ -23,12 +25,21 @@ const PatientProfile = () => {
 
     const [hasError, setErrors] =  useState(false);
 
+    // async function fetchData() {
+    //     const res = await fetch("http://localhost:8080/patient/" + location.state.detail);
+    //     res
+    //         .json()
+    //         .then(res => setPatient(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/patient/" + location.state.detail);
-        res
-            .json()
-            .then(res => setPatient(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await PatientService.get(location.state.detail)
+            setPatient(response.data)
+        } catch (error) {
+            console.error(`Error loading patient !: ${error}`);
+        }
     }
 
     useEffect(() => {

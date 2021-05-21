@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MUIDataTable from "mui-datatables";
+import {AppointmentService} from "../../services/AppointmentService";
+import {PatientService} from "../../services/PatientService";
 
 export const PatientTable = () => {
 
@@ -8,13 +10,22 @@ export const PatientTable = () => {
 
     useEffect(() => {
         fetchData()
-            .then(res => setRequests(res))
-            .catch(err => setError(err));
+            // .then(res => setRequests(res))
+            // .catch(err => setError(err));
     },[])
 
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/allPatients',);
+    //     return res.json()
+    // }
+
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/allPatients',);
-        return res.json()
+        try {
+            const response = await PatientService.getAll()
+            setRequests(response.data)
+        } catch (error) {
+            console.error(`Error loading patients !: ${error}`);
+        }
     }
 
     console.log(requests)

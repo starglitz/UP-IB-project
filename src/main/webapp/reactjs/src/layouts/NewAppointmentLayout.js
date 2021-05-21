@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import RegisterRequestRow from "../components/registerRequestRow";
+import {AppointmentService} from "../services/AppointmentService";
+import {DoctorService} from "../services/DoctorService";
+import {NurseService} from "../services/NurseService";
 
 const NewAppointmentLayout = () => {
 
@@ -12,20 +15,47 @@ const NewAppointmentLayout = () => {
         fetchNurses();
     }, []);
 
+    // async function fetchDoctors() {
+    //     const res = await fetch("http://localhost:8080/allDoctors");
+    //     res
+    //         .json()
+    //         .then(res => setDoctors(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchDoctors() {
-        const res = await fetch("http://localhost:8080/allDoctors");
-        res
-            .json()
-            .then(res => setDoctors(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await DoctorService.getAll()
+            setDoctors(response.data)
+        } catch (error) {
+            console.error(`Error loading doctors !: ${error}`);
+        }
     }
 
+    // async function fetchNurses() {
+    //     const res = await fetch("http://localhost:8080/allNurses");
+    //     res
+    //         .json()
+    //         .then(res => setNurses(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchNurses() {
-        const res = await fetch("http://localhost:8080/allNurses");
-        res
-            .json()
-            .then(res => setNurses(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await NurseService.getAll()
+            setNurses(response.data)
+        } catch (error) {
+            console.error(`Error loading nurses !: ${error}`);
+        }
+    }
+
+    async function addAppointment(appointment) {
+        try {
+            await AppointmentService.create(appointment)
+        }
+        catch (error) {
+            console.error(`Error while adding new appointment: ${error}`);
+        }
     }
 
     const sendData = ()  => {
@@ -55,20 +85,23 @@ const NewAppointmentLayout = () => {
             };
             console.log(appointment);
             console.log(JSON.stringify(appointment));
-            fetch('http://localhost:8080/addAppointment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(appointment),
-            })
-                // .then(response => response.json())
-                .then(user => {
-                    console.log('Success:', user);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+            addAppointment(appointment);
+            // fetch('http://localhost:8080/addAppointment', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(appointment),
+            // })
+            //     // .then(response => response.json())
+            //     .then(user => {
+            //         console.log('Success:', user);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //     });
+
+
 
         }
 

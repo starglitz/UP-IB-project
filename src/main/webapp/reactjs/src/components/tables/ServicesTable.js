@@ -1,17 +1,28 @@
 import React, {useEffect, useState} from "react";
 import AppointmentRow from "../AppointmentRow";
+import {AppointmentService} from "../../services/AppointmentService";
+import {ServiceService} from "../../services/ServiceService";
 
 const ServicesTable = (props) => {
 
     const [services, setServices] = useState([]);
     const [hasError, setErrors] =  useState(false);
 
+    // async function fetchData() {
+        // const res = await fetch("http://localhost:8080/services/clinic/1");
+        // res
+        //     .json()
+        //     .then(res => setServices(res))
+        //     .catch(err => setErrors(err));
+    // }
+
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/services/clinic/1");
-        res
-            .json()
-            .then(res => setServices(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await ServiceService.getByClinicId(1)
+            setServices(response.data)
+        } catch (error) {
+            console.error(`Error loading services !: ${error}`);
+        }
     }
 
     useEffect(() => {

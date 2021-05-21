@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ScheduleComponent, Day, Week, Month, Year, Inject, ViewsDirective, ViewDirective } from '@syncfusion/ej2-react-schedule';
 import {useEffect, useState} from "react";
+import {AppointmentService} from "../../services/AppointmentService";
 
 export function Calendar() {
 
@@ -9,13 +10,22 @@ export function Calendar() {
 
     useEffect(() => {
         fetchData()
-            .then(res => setAppointments(res))
-            .catch(err => setError(err));
+            // .then(res => setAppointments(res))
+            // .catch(err => setError(err));
     },[])
 
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/allAppointments');
+    //     return res.json()
+    // }
+
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/allAppointments');
-        return res.json()
+        try {
+            const response = await AppointmentService.getAll();
+            setAppointments(response.data)
+        } catch (error) {
+            console.error(`Error loading appointments !: ${error}`);
+        }
     }
 
     const data = []

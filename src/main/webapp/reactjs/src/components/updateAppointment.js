@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {useHistory, useLocation} from "react-router-dom";
 import $ from 'jquery';
+import {AppointmentService} from "../services/AppointmentService";
+import {DoctorService} from "../services/DoctorService";
+import {NurseService} from "../services/NurseService";
 
 
 const UpdateAppointment = () => {
@@ -35,29 +38,58 @@ const UpdateAppointment = () => {
     }, [location]);
 
 
+    // async function fetchDoctors() {
+    //     const res = await fetch("http://localhost:8080/allDoctors");
+    //     res
+    //         .json()
+    //         .then(res => setDoctors(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchDoctors() {
-        const res = await fetch("http://localhost:8080/allDoctors");
-        res
-            .json()
-            .then(res => setDoctors(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await DoctorService.getAll()
+            setDoctors(response.data)
+        } catch (error) {
+            console.error(`Error loading doctors !: ${error}`);
+        }
     }
 
-    async function fetchNurses() {
-        const res = await fetch("http://localhost:8080/allNurses");
-        res
-            .json()
-            .then(res => setNurses(res))
-            .catch(err => setErrors(err));
+    // async function fetchNurses() {
+    //     const res = await fetch("http://localhost:8080/allNurses");
+    //     res
+    //         .json()
+    //         .then(res => setNurses(res))
+    //         .catch(err => setErrors(err));
+    // }
+
+    async function fetchData() {
+        try {
+            const response = await NurseService.getAll()
+            setResponse(response.data)
+        } catch (error) {
+            console.error(`Error loading nurses !: ${error}`);
+        }
     }
 
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/appointment/" + location.state.detail);
-        res
-            .json()
-            .then(res => setAppointment(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await AppointmentService.get(location.state.detail)
+            setAppointment(response.data)
+        } catch (error) {
+            console.error(`Error loading appointment !: ${error}`);
+        }
     }
+
+    // async function fetchData() {
+    //     const res = await fetch("http://localhost:8080/appointment/" + location.state.detail);
+    //     res
+    //         .json()
+    //         .then(res => setAppointment(res))
+    //         .catch(err => setErrors(err));
+    // }
+
+
      $('#doctor').val(JSON.stringify(appointment.doctor));
      $('#nurse').val(JSON.stringify(appointment.nurse));
 
@@ -90,26 +122,34 @@ const UpdateAppointment = () => {
             };
             console.log(appointment);
             console.log(JSON.stringify(appointmentModified));
-            fetch('http://localhost:8080/updateAppointment', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(appointmentModified),
-            })
-                // .then(response => response.json())
-                .then(user => {
-                    console.log('Success:', user);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+            // fetch('http://localhost:8080/updateAppointment', {
+            //     method: 'PUT',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(appointmentModified),
+            // })
+            //     // .then(response => response.json())
+            //     .then(user => {
+            //         console.log('Success:', user);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //     });
+            update(appointmentModified.appointment_id, appointmentModified)
 
             let path = `/appointments`;
             history.push(path);
 
         }
 
+    }
+    async function update(id, appointment) {
+        try {
+            await AppointmentService.update(id, appointment)
+        } catch (error) {
+            console.error(`Error ocurred while updating the appointment: ${error}`);
+        }
     }
 
     const valid = (date, start, end, price) => {

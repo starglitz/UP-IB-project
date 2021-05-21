@@ -3,6 +3,8 @@ import MUIDataTable, { TableFilterList }  from "mui-datatables";
 import {useHistory} from "react-router-dom";
 import {Tooltip} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
+import {AppointmentService} from "../../services/AppointmentService";
+import {PatientService} from "../../services/PatientService";
 
 const PatientsTable = () => {
 
@@ -15,16 +17,26 @@ const PatientsTable = () => {
 
 
     useEffect(() => {
-        fetchData("http://localhost:8080/allPatients")
-            .then(res => setPatients(res))
-            .catch(err => setError(err));
+        // fetchData("http://localhost:8080/allPatients")
+        //     .then(res => setPatients(res))
+        //     .catch(err => setError(err));
+        fetchData()
     },[])
 
 
-    async function fetchData(url) {
-        const res = await fetch(url,);
-        return res.json()
+    async function fetchData() {
+        try {
+            const reponse = await PatientService.getAll()
+            setPatients(response.data)
+        } catch (error) {
+            console.error(`Error loading patients !: ${error}`);
+        }
     }
+
+    // async function fetchData(url) {
+    //     const res = await fetch(url,);
+    //     return res.json()
+    // }
 
     const listenerHandler = (e) => {
         if(!filter){

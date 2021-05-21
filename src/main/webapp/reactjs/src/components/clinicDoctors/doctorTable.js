@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import MUIDataTable from "mui-datatables";
 import {useParams} from "react-router-dom";
 import DoctorAppointmentsTable from "./doctorAppointmentsTable";
+import {AppointmentService} from "../../services/AppointmentService";
+import {DoctorService} from "../../services/DoctorService";
 
 function DoctorTable() {
     const [requests, setRequests] = useState([])
@@ -11,8 +13,8 @@ function DoctorTable() {
 
     useEffect(() => {
         fetchData()
-            .then(res => setRequests(res))
-            .catch(err => setError(err));
+            // .then(res => setRequests(res))
+            // .catch(err => setError(err));
     }, [])
 
 
@@ -20,21 +22,42 @@ function DoctorTable() {
     const {clinicId} = useParams();
     const {date} = useParams();
 
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/doctors/' + clinicId + "/" + date,);
+    //     return res.json()
+    // }
+
+
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/doctors/' + clinicId + "/" + date,);
-        return res.json()
+        try {
+            const response = await DoctorService.getByClinicAndDate(clinicId, date)
+            setRequests(response.data)
+        } catch (error) {
+            console.error(`Error loading appointments !: ${error}`);
+        }
     }
+
+    async function fetchDataAppointments(doctor_id) {
+        try {
+            const response = await AppointmentService.getFreeByDoctorId(doctor_id)
+            setAppointments(response.data)
+        } catch (error) {
+            console.error(`Error loading appointments !: ${error}`);
+        }
+    }
+
 
     const clickHandler = (e) => {
 
-        async function fetchDataAppointments() {
-            const res = await fetch('http://localhost:8080/doctorAppointments/' + e[0],);
-            return res.json()
-        }
-
-        fetchDataAppointments()
-            .then(res => setAppointments(res))
-            .catch(err => setError(err));
+        // async function fetchDataAppointments() {
+        //     const res = await fetch('http://localhost:8080/doctorAppointments/' + e[0],);
+        //     return res.json()
+        // }
+        //
+        // fetchDataAppointments()
+        //     .then(res => setAppointments(res))
+        //     .catch(err => setError(err));
+        fetchDataAppointments(doctor_id)
     }
 
 console.log(requests)

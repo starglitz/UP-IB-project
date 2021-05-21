@@ -1,6 +1,8 @@
 import React, { useEffect, useState} from 'react';
 import RegisterRequestRow from "../components/registerRequestRow";
 import {useHistory} from "react-router-dom";
+import {AppointmentService} from "../services/AppointmentService";
+import {RegisterRequestService} from "../services/RegisterRequestService";
 
 
 const RegisterRequests = () => {
@@ -15,13 +17,22 @@ const RegisterRequests = () => {
             fetchData();
     }, [random]); // [] as second argument makes it load only once
 
+    // async function fetchData() {
+    //     const res = await fetch("http://localhost:8080/allRegisteringRequests");
+    //     res
+    //         .json()
+    //         .then(res => res.filter(req => req.status === "PENDING"))
+    //         .then(res => setRequests(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/allRegisteringRequests");
-        res
-            .json()
-            .then(res => res.filter(req => req.status === "PENDING"))
-            .then(res => setRequests(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await RegisterRequestService.getAll()
+            setRequests(response.data.filter(req => req.status === "PENDING"))
+        } catch (error) {
+            console.error(`Error loading requests !: ${error}`);
+        }
     }
 
 
@@ -36,24 +47,30 @@ const RegisterRequests = () => {
         let request = {status:"DECLINED", register_request_id:register_request_id};
         setRequests(requests.filter(req => req.status === "PENDING"))
         setRandom(Math.random())
-        sendData(request);
+        sendData(register_request_id, request);
     }
 
-    const sendData = (data) => {
-        fetch('http://localhost:8080/updateRequest', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response)
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+   async function sendData(register_request_id, request){
+        try {
+            await RegisterRequestService.update(register_request_id, request)
+        }
+        catch(error) {
+            console.log(error)
+        }
+        // fetch('http://localhost:8080/updateRequest', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(data),
+        // })
+        //     .then(response => response)
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
     }
 
     const reRender = () => setRandom(Math.random());

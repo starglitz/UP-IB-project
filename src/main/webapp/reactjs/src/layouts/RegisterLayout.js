@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory } from "react-router-dom";
+import {PatientService} from "../services/PatientService";
 
 
 const RegisterLayout = () => {
@@ -16,6 +17,15 @@ const RegisterLayout = () => {
     const routeChange = () =>{
         let path = `/`;
         history.push(path);
+    }
+
+    async function register(user) {
+        try {
+            await PatientService.create(user);
+        }
+        catch (error) {
+            console.error(`Error creating user! : ${error}`);
+        }
     }
 
     const sendData = ()  => {
@@ -47,20 +57,21 @@ const RegisterLayout = () => {
             "patientBookId": Math.floor(Math.random() * 100000)
         };
         console.log(user);
-        fetch('http://localhost:8080/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        })
-            .then(response => response.json())
-            .then(user => {
-                console.log('Success:', user);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        register(user)
+        // fetch('http://localhost:8080/registration', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(user),
+        // })
+        //     .then(response => response.json())
+        //     .then(user => {
+        //         console.log('Success:', user);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
 
          }
     }

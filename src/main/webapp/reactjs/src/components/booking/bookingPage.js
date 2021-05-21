@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import {AppointmentService} from "../../services/AppointmentService";
 
 function BookingPage() {
 
@@ -16,17 +17,25 @@ function BookingPage() {
 
     useEffect(() => {
         fetchData()
-            .then(res => setAppointment(res))
-            .catch(err => setError(err));
     },[])
 
     const {id} = useParams();
 
-    async function fetchData() {
-        const res = await fetch('http://localhost:8080/appointment/' + id);
-        return res.json()
-    }
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/appointment/' + id);
+    //     return res.json()
+    // }
 
+
+
+    async function fetchData() {
+        try {
+            const response = await AppointmentService.get(id);
+            setAppointment(response.data);
+        } catch (error) {
+            console.error(`Error loading appointment !: ${error}`);
+        }
+    }
 
     return (
         <>
