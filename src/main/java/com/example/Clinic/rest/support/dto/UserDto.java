@@ -1,10 +1,15 @@
 package com.example.Clinic.rest.support.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
+@Data
+@NoArgsConstructor
 public class UserDto {
     private Long id;
 

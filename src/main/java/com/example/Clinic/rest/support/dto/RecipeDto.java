@@ -13,7 +13,7 @@ public class RecipeDto {
 
     private Long recipe_id;
 
-    private Boolean validated;
+    private boolean validated;
 
     private NurseDto nurseDto;
 

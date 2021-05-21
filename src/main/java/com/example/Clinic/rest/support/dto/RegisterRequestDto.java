@@ -12,9 +12,9 @@ public class RegisterRequestDto {
 
     private Long register_request_id;
 
-    private PatientDto patientDto = new PatientDto();
+    private PatientDto patientDto;
 
     private RequestStatus status;
 
-    private boolean visitedMail = false;
+    private boolean visitedMail;
 }

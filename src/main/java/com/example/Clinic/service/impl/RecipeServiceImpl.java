@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -35,6 +36,11 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         return valid;
+    }
+
+    @Override
+    public Optional<Recipe> findOne(Long id) {
+        return recipeRepository.findById(id);
     }
 
     @Override
