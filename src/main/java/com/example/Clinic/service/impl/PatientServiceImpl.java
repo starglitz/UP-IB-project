@@ -1,7 +1,6 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.PatientBookDao;
-import com.example.Clinic.dao.PatientDao;
+
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.Recipe;
@@ -20,8 +19,6 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
-    @Autowired
-    private PatientBookDao patientBookDao;
 
     @Override
     public boolean addPatient(Patient patient) {

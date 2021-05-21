@@ -1,6 +1,5 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.RegisterRequestDao;
 import com.example.Clinic.model.RegisterRequest;
 import com.example.Clinic.model.RequestStatus;
 import com.example.Clinic.repository.RegisterRequestRepository;

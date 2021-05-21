@@ -1,6 +1,6 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.NurseDao;
+
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.repository.DoctorRepository;
 import com.example.Clinic.repository.NurseRepository;
