@@ -2,19 +2,15 @@ package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.RegisterRequest;
-import com.example.Clinic.model.RequestStatus;
+import com.example.Clinic.model.enumerations.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.RegisterRequestService;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;

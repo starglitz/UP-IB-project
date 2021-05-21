@@ -1,4 +1,4 @@
-package com.example.Clinic.enumerations;
+package com.example.Clinic.model.enumerations;
 
 public enum UserRole {
 

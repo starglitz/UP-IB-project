@@ -1,6 +1,6 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.enumerations.UserRole;
+import com.example.Clinic.model.enumerations.UserRole;
 import com.example.Clinic.model.User;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.example.Clinic.model;
+package com.example.Clinic.model.enumerations;
 
 public enum RequestStatus {
     APPROVED,

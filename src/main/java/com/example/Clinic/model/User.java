@@ -1,14 +1,12 @@
 package com.example.Clinic.model;
 
-import com.example.Clinic.enumerations.UserRole;
+import com.example.Clinic.model.enumerations.UserRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

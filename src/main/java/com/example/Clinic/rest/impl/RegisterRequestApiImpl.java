@@ -1,8 +1,6 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.RegisterRequest;
-import com.example.Clinic.model.RequestStatus;
 import com.example.Clinic.rest.RegisterRequestApi;
 import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.RegisterRequestService;
