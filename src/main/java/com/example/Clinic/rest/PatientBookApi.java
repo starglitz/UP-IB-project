@@ -9,17 +9,17 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/patientBooks")
 public interface PatientBookApi {
 
-    @PostMapping(value = "/addPatientBook",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<PatientBook> addPatientBook(@Valid @RequestBody PatientBook patientBook);
 
-    @GetMapping(value = "/getPatientBook/{id}",
+    @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatientBook(@PathVariable("id") Long id);
 
-    @PutMapping(value = "/updatePatientBook/{id}",
+    @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<PatientBook> updatePatientBook(@Valid @RequestBody PatientBook patientBook, @PathVariable("id") Long id);

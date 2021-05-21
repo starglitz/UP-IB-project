@@ -5,16 +5,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/registerRequests")
 public interface RegisterRequestApi {
 
-    @GetMapping(value = "/allRegisteringRequests",
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllRequests();
 
-    @PostMapping(value = "/updateRequest",
+    @PostMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<RegisterRequest> updateRequest(@RequestBody RegisterRequest request);
+    ResponseEntity<RegisterRequest> updateRequest(@PathParam("id") Long id, @RequestBody RegisterRequest request);
 
 }

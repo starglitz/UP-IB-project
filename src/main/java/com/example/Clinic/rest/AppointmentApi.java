@@ -10,26 +10,25 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/appointments")
 public interface AppointmentApi {
 
-    @PostMapping(value = "/addAppointment",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment);
 
-    @GetMapping(value = "/allAppointments",
-            produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllAppointments();
 
-    @GetMapping(value = "/appointment/{id}",
+    @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAppointment(@PathVariable("id") Long id);
 
-    @GetMapping(value = "/clinicAppointments/{id}",
+    @GetMapping(value = "/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicAppointments(@PathVariable long id);
 
 
-    @GetMapping(value = "/appointments/free/clinic/{id}",
+    @GetMapping(value = "/free/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getFreeClinicAppointments(@PathVariable long id);
 
@@ -42,8 +41,8 @@ public interface AppointmentApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> updateAppointment(@Valid @RequestBody Appointment appointment, @PathVariable("id") Long id);
 
-    @DeleteMapping(value = "/deleteAppointment",
+    @DeleteMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Appointment> deleteAppointment( @RequestBody Appointment appointment);
+    ResponseEntity<Appointment> deleteAppointment(@PathVariable("id") Long id);
 
 }
