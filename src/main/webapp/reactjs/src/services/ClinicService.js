@@ -26,5 +26,5 @@ async function create(clinic) {
 }
 
 async function getByDate(date) {
-    return await AxiosClient.get(`http://localhost:8080/clinics/${date}`);
+    return await AxiosClient.get(`http://localhost:8080/clinics/date/${date}`);
 }

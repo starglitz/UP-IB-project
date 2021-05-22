@@ -18,7 +18,7 @@ const ServicesTable = (props) => {
 
     async function fetchData() {
         try {
-            const response = await ServiceService.getByClinicId(1)
+            const response = await ServiceService.getByClinicId(17)
             setServices(response.data)
         } catch (error) {
             console.error(`Error loading services !: ${error}`);

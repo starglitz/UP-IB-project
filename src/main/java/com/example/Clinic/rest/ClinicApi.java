@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/clinics")
 public interface ClinicApi {
 
@@ -19,11 +19,11 @@ public interface ClinicApi {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllClinics();
 
-    @GetMapping(value = "/clinic/{id}",
+    @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinic(@PathVariable("id") Long id);
 
-    @GetMapping(value = "/{date}",
+    @GetMapping(value = "/date/{date}",
                 produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicsByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
 
