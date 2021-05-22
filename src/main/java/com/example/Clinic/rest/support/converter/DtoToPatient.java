@@ -14,6 +14,9 @@ public class DtoToPatient implements Converter<PatientDto, Patient> {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private DtoToUser dtoToUser;
+
     @Override
     public Patient convert(PatientDto source) {
         Patient target = null;
@@ -29,7 +32,7 @@ public class DtoToPatient implements Converter<PatientDto, Patient> {
         target.setEnabled(source.isEnabled());
         target.setLbo(source.getLbo());
         target.setPatientBookId(source.getPatientBookId());
-//        target.setUser(source.getUserDto());
+        target.setUser(dtoToUser.convert(source.getUserDto()));
 
         return target;
     }

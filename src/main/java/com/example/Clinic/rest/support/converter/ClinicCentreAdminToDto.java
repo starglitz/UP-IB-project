@@ -2,20 +2,27 @@ package com.example.Clinic.rest.support.converter;
 
 import com.example.Clinic.model.ClinicCenterAdmin;
 import com.example.Clinic.rest.support.dto.ClinicCentreAdminDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ClinicCentreAdminToDto implements Converter<ClinicCentreAdminDto, ClinicCenterAdmin> {
+public class ClinicCentreAdminToDto implements Converter<ClinicCenterAdmin, ClinicCentreAdminDto> {
+
+    @Autowired
+    private ClinicCentreToDto clinicCentreToDto;
+
+    @Autowired
+    private UserToDto userToDto;
+
     @Override
-    public ClinicCenterAdmin convert(ClinicCentreAdminDto dto) {
-        ClinicCenterAdmin clinicCenterAdmin = new ClinicCenterAdmin();
+    public ClinicCentreAdminDto convert(ClinicCenterAdmin clinicCenterAdmin) {
+        ClinicCentreAdminDto dto = new ClinicCentreAdminDto();
 
-        clinicCenterAdmin.setId(dto.getId());
+        dto.setId(dto.getId());
+        dto.setClinicCenter(clinicCentreToDto.convert(clinicCenterAdmin.getClinicCenter()));
+        dto.setUser(userToDto.convert(clinicCenterAdmin.getUser()));
 
-//        clinicCenterAdmin.setClinicCenter();TODO: convert to dto
-//        clinicCenterAdmin.setUser();TODO: convert to dto
-
-        return clinicCenterAdmin;
+        return dto;
     }
 }

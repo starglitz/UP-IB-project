@@ -20,16 +20,7 @@ public class ClinicDto {
     @NotBlank
     private String description;
 
-    @NotNull
-    private List<DoctorDto> doctors;
-
-    @NotNull
-    private List<ServiceDto> services;
-
     private float rating;
-
-    @NotNull
-    private AddressDto address;
 
     @NotBlank
     private String addressName;

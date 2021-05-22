@@ -14,19 +14,18 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private DtoToPatient dtoToPatient;
+
+    @Autowired
+    private DtoToNurse dtoToNurse;
+
+    @Autowired
+    private DtoToDoctor dtoToDoctor;
+
     @Override
     public Appointment convert(AppointmentDto dto) {
         Appointment appointment = new Appointment();
-
-        appointment.setAppointment_id(dto.getAppointment_id());
-        appointment.setDate(dto.getDate());
-        appointment.setDeleted(dto.isDeleted());
-        appointment.setStart(dto.getStart());
-        appointment.setEnd(dto.getEnd());
-        appointment.setPrice(dto.getPrice());
-//      appointment.setPatient(); // TODO: convert to patient
-//      appointment.setNurse(); // TODO: covert to nurse
-//      appointment.setDoctor(); // TODO: convert to doctor
 
         if (appointment.getAppointment_id() != null) {
             appointment = (Appointment) this.appointmentService.findById(appointment.getAppointment_id());
@@ -35,6 +34,17 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
         if (appointment == null) {
             appointment = new Appointment();
         }
+
+        appointment.setAppointment_id(dto.getAppointment_id());
+        appointment.setDate(dto.getDate());
+        appointment.setDeleted(dto.isDeleted());
+        appointment.setStart(dto.getStart());
+        appointment.setEnd(dto.getEnd());
+        appointment.setPrice(dto.getPrice());
+        appointment.setPatient(dtoToPatient.convert(dto.getPatient())); // TODO: convert to patient
+        appointment.setNurse(dtoToNurse.convert(dto.getNurse())); // TODO: covert to nurse
+        appointment.setDoctor(dtoToDoctor.convert(dto.getDoctor())); // TODO: convert to doctor
+
 
         return appointment;
     }

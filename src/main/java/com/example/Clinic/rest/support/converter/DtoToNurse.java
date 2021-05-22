@@ -15,6 +15,12 @@ public class DtoToNurse implements Converter<NurseDto, Nurse> {
     @Autowired
     private NurseService nurseService;
 
+    @Autowired
+    private DtoToUser dtoToUser;
+
+    @Autowired
+    private DtoToClinic dtoToClinic;
+
     @Override
     public Nurse convert(NurseDto source) {
         Nurse target = null;
@@ -26,8 +32,8 @@ public class DtoToNurse implements Converter<NurseDto, Nurse> {
             target = new Nurse();
         }
 
-//        target.setClinic(source.getClinicDto());
-//        target.setUser(source.getUserDto());
+        target.setClinic(dtoToClinic.convert(source.getClinicDto()));
+        target.setUser(dtoToUser.convert(source.getUserDto()));
 
         return target;
     }
