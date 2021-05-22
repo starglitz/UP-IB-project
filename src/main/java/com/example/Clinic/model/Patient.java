@@ -1,5 +1,6 @@
 package com.example.Clinic.model;
 
+import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ public class Patient {
     private String lbo;
     private boolean enabled = true;
     private boolean approved = false;
+
+    @Nullable
     private long patientBookId;
 
     @OneToOne(cascade = CascadeType.ALL)
