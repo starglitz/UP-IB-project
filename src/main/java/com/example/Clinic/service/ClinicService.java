@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public interface ClinicService {
     List<Clinic> findAll();
-    Clinic findById(Long id);
+    Optional<Clinic> findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);
     Clinic update(Clinic clinic);
 }

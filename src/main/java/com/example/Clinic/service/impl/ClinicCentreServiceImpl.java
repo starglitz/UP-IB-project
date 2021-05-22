@@ -16,8 +16,7 @@ public class ClinicCentreServiceImpl implements ClinicCentreService {
     private ClinicCenterRepository clinicCenterRepository;
 
     @Override
-    public ClinicCenter findById(Long id) {
-        Optional<ClinicCenter> clinicCenter = clinicCenterRepository.findById(id);
-        return clinicCenter.orElse(null);
+    public Optional<ClinicCenter> findById(Long id) {
+        return clinicCenterRepository.findById(id);
     }
 }

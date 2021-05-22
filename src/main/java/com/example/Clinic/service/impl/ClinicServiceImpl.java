@@ -27,9 +27,8 @@ public class ClinicServiceImpl implements ClinicService {
     }
 
     @Override
-    public Clinic findById(Long id) {
-        Optional<Clinic> clinic = clinicRepository.findById(id);
-        return clinic.orElse(null);
+    public Optional<Clinic> findById(Long id) {
+        return clinicRepository.findById(id);
     }
 
     @Override
