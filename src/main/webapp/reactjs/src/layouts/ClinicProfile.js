@@ -45,7 +45,7 @@ const ClinicProfile = () => {
         fetchDoctors()
         fetchAppointments()
         // fetchAddress()
-        console.log(address)
+        //console.log(address)
     }, []);
 
     // async function fetchData() {
@@ -58,8 +58,9 @@ const ClinicProfile = () => {
 
     async function fetchData() {
         try {
-            const response = await ClinicService.get(1);
+            const response = await ClinicService.get(17);
             setClinic(response.data)
+            console.log(response.data)
         } catch (error) {
             console.error(`Error loading clinic !: ${error}`);
         }
@@ -75,8 +76,9 @@ const ClinicProfile = () => {
 
     async function fetchDoctors() {
         try {
-            const response = await DoctorService.getByClinicId(1)
+            const response = await DoctorService.getByClinicId(17)
             setDoctors(response.data)
+            console.log(response.data);
         } catch (error) {
             console.error(`Error loading doctors !: ${error}`);
         }
@@ -94,8 +96,8 @@ const ClinicProfile = () => {
 
     async function fetchAppointments() {
         try {
-            const response = await AppointmentService.getByClinicId(1);
-            setAppointments(response.data)
+            const response = await AppointmentService.getByClinicId(17);
+            setAppointments(response.data.filter((app) => app.deleted == false && app.status == 'FREE'))
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
         }
@@ -307,7 +309,7 @@ const ClinicProfile = () => {
                         </thead>
                         <tbody>
 
-                        {appointments.filter(app => app.deleted === false).map((app) =>
+                        {appointments.filter(app => app.deleted === false && app.status == 'FREE').map((app) =>
                             <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
                                             status={app.status} key={app.appointment_id} date={app.date} start={app.start}
                                             end={app.end} id={app.appointment_id} doctor={app.doctor}

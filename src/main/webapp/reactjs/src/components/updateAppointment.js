@@ -63,10 +63,10 @@ const UpdateAppointment = () => {
     //         .catch(err => setErrors(err));
     // }
 
-    async function fetchData() {
+    async function fetchNurses() {
         try {
             const response = await NurseService.getAll()
-            setResponse(response.data)
+            setNurses(response.data)
         } catch (error) {
             console.error(`Error loading nurses !: ${error}`);
         }

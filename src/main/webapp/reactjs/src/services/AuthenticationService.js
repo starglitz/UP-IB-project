@@ -1,4 +1,4 @@
-import SprintsAxiosClient from "./SprintsAxiosClient";
+import AxiosClient from "./clients/AxiosClient";
 import { TokenService } from "./TokenService";
 
 export const AuthenticationService = {
@@ -11,7 +11,7 @@ async function login(userCredentials) {
 
     console.log(userCredentials)
     let status = "200";
-    const response = await SprintsAxiosClient.post(
+    const response = await AxiosClient.post(
         "http://localhost:8080/login",
         userCredentials
     ).catch(function (error) {

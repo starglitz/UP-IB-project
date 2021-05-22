@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
-import {UserService} from "../../services/UserService";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import {AppointmentService} from "../../services/AppointmentService";
 import {RecipeService} from "../../services/RecipeService";
@@ -44,7 +43,7 @@ async function fetchAppointment() {
     async function postAppointment() {
         console.log("entered")
             try {
-                await AppointmentService.update(id, appointment)
+                await AppointmentService.update(appointment.appointment_id, appointment)
                 //history.push("/home")
             } catch (error) {
                 console.error(`Error ocurred while updating the appointment: ${error}`);

@@ -5,5 +5,5 @@ export const ServiceService = {
 };
 
 async function getByClinicId(id) {
-    return await AxiosClient.get(`http://localhost:8080/doctors/services/clicic/${id}`);
+    return await AxiosClient.get(`http://localhost:8080/services/clinic/${id}`);
 }

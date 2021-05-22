@@ -57,7 +57,7 @@ function DoctorTable() {
         // fetchDataAppointments()
         //     .then(res => setAppointments(res))
         //     .catch(err => setError(err));
-        fetchDataAppointments(doctor_id)
+        fetchDataAppointments(e[0])
     }
 
 console.log(requests)

@@ -2,6 +2,8 @@ package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Clinic;
 import com.example.Clinic.rest.ClinicApi;
+import com.example.Clinic.rest.support.converter.ClinicToDto;
+import com.example.Clinic.rest.support.dto.ClinicDto;
 import com.example.Clinic.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class ClinicApiImpl implements ClinicApi {
     @Autowired
     private ClinicService clinicService;
 
+    @Autowired
+    private ClinicToDto clinicToDto;
+
     @Override
     public ResponseEntity getAllClinics() {
         return new ResponseEntity(clinicService.findAll(), HttpStatus.OK);
@@ -25,8 +30,10 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Override
     public ResponseEntity getClinic(Long id) {
-        if(clinicService.findById(id) != null) {
-            return new ResponseEntity(clinicService.findById(id), HttpStatus.OK);
+        Clinic clinic = clinicService.findById(id);
+        if(clinic != null) {
+            ClinicDto dto = clinicToDto.convert(clinic);
+            return new ResponseEntity(dto, HttpStatus.OK);
         }
         return new ResponseEntity("No such hospital ", HttpStatus.BAD_REQUEST);
     }
