@@ -2,6 +2,7 @@ package com.example.Clinic.rest;
 
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.rest.support.dto.AppointmentDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 public interface AppointmentApi {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment);
+    ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointment);
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllAppointments();

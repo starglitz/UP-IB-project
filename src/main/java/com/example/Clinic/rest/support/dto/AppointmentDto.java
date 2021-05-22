@@ -36,7 +36,6 @@ public class AppointmentDto {
     @NotNull
     private NurseDto nurse;
 
-    @NotNull
     private PatientDto patient;
 
     @NotNull

@@ -2,8 +2,12 @@ package com.example.Clinic.rest.support.converter;
 
 import com.example.Clinic.model.Address;
 import com.example.Clinic.model.Appointment;
+import com.example.Clinic.model.Doctor;
+import com.example.Clinic.model.Nurse;
 import com.example.Clinic.rest.support.dto.AppointmentDto;
 import com.example.Clinic.service.AppointmentService;
+import com.example.Clinic.service.DoctorService;
+import com.example.Clinic.service.NurseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -13,6 +17,12 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
 
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private NurseService nurseService;
+
+    @Autowired
+    private DoctorService doctorService;
 
     @Autowired
     private DtoToPatient dtoToPatient;
@@ -35,15 +45,25 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
             appointment = new Appointment();
         }
 
+        if(dto.getPatient() != null) {
+            appointment.setPatient(dtoToPatient.convert(dto.getPatient()));
+        }
+
+        Nurse nurse = nurseService.findById(dto.getNurse().getId()).orElse(null);
+        appointment.setNurse(nurse);
+
+        Doctor doctor = doctorService.findById(dto.getDoctor().getId()).orElse(null);
+        appointment.setDoctor(doctor);
+
         appointment.setAppointment_id(dto.getAppointment_id());
         appointment.setDate(dto.getDate());
         appointment.setDeleted(dto.isDeleted());
         appointment.setStart(dto.getStart());
         appointment.setEnd(dto.getEnd());
         appointment.setPrice(dto.getPrice());
-        appointment.setPatient(dtoToPatient.convert(dto.getPatient())); // TODO: convert to patient
-        appointment.setNurse(dtoToNurse.convert(dto.getNurse())); // TODO: covert to nurse
-        appointment.setDoctor(dtoToDoctor.convert(dto.getDoctor())); // TODO: convert to doctor
+        //appointment.setPatient(dtoToPatient.convert(dto.getPatient())); // TODO: convert to patient
+//        appointment.setNurse(dtoToNurse.convert(dto.getNurse())); // TODO: covert to nurse
+//        appointment.setDoctor(dtoToDoctor.convert(dto.getDoctor())); // TODO: convert to doctor
 
 
         return appointment;

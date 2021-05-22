@@ -33,6 +33,7 @@ public class Appointment {
     private Nurse nurse;
 
     @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = true)
     private Patient patient;
     
     private int price;
