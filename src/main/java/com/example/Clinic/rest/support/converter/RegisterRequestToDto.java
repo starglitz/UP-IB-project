@@ -15,8 +15,10 @@ import java.util.List;
 @Component
 public class RegisterRequestToDto implements Converter<RegisterRequest, RegisterRequestDto> {
 
+
+
     @Autowired
-    private PatientToDto patientToDto;
+    private PatientToListDto patientToDto;
 
     @Override
     public RegisterRequestDto convert(RegisterRequest source) {
@@ -25,7 +27,7 @@ public class RegisterRequestToDto implements Converter<RegisterRequest, Register
         retVal.setRegister_request_id(source.getRegister_request_id());
         retVal.setStatus(source.getStatus());
         retVal.setVisitedMail(source.isVisitedMail());
-        retVal.setPatientDto(patientToDto.convert(source.getPatient()));
+        retVal.setPatient(patientToDto.convert(source.getPatient()));
 
         return retVal;
     }

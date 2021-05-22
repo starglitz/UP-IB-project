@@ -12,7 +12,7 @@ public class RegisterRequestDto {
 
     private Long register_request_id;
 
-    private PatientDto patientDto;
+    private PatientListDto patient;
 
     private RequestStatus status;
 

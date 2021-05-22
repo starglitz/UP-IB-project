@@ -6,10 +6,7 @@ import com.example.Clinic.service.RegisterRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-
+import java.util.*;
 
 
 @Service
@@ -25,8 +22,8 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
     }
 
     @Override
-    public Set<RegisterRequest> getAll() {
-        return  new HashSet<RegisterRequest>(registerRequestRepository.findAll());
+    public List<RegisterRequest> getAll() {
+        return  new ArrayList<RegisterRequest>(registerRequestRepository.findAll());
     }
 
     @Override
@@ -38,9 +35,7 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
     @Override
     public RegisterRequest update(RegisterRequest request) {
 
-//        RegisterRequest requestJpa = registerRequestDao.findById(request.getRegister_request_id()).get();
-//        requestJpa.setStatus(request.getStatus());
-//        requestJpa.setVisitedMail(request.isVisitedMail());
+
         RegisterRequest requestJpa = findById(request.getRegister_request_id()).get();
         requestJpa.setStatus(request.getStatus());
         requestJpa.setVisitedMail(request.isVisitedMail());

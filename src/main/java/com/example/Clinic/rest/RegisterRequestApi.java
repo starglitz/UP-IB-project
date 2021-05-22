@@ -1,6 +1,7 @@
 package com.example.Clinic.rest;
 
 import com.example.Clinic.model.RegisterRequest;
+import com.example.Clinic.rest.support.dto.RegisterRequestDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +16,8 @@ public interface RegisterRequestApi {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllRequests();
 
-    @PostMapping(value = "/{id}",
+    @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<RegisterRequest> updateRequest(@PathParam("id") Long id, @RequestBody RegisterRequest request);
+    ResponseEntity<RegisterRequest> updateRequest(@PathParam("id") Long id, @RequestBody RegisterRequestDto request);
 
 }

@@ -12,5 +12,5 @@ async function getAll() {
 }
 
 async function update(id, request) {
-    return await AxiosClient.put(`http://localhost:8080/RegisterRequests/${id}`, request);
+    return await AxiosClient.put(`http://localhost:8080/registerRequests/${id}`, request);
 }
