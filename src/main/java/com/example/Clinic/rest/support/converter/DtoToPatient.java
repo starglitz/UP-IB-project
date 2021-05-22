@@ -31,7 +31,7 @@ public class DtoToPatient implements Converter<PatientDto, Patient> {
         target.setApproved(source.isApproved());
         target.setEnabled(source.isEnabled());
         target.setLbo(source.getLbo());
-        target.setPatientBookId(source.getPatientBookId());
+        //target.setPatientBookId(source.getPatientBookId());
         target.setUser(dtoToUser.convert(source.getUserDto()));
 
         return target;

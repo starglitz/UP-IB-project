@@ -1,6 +1,7 @@
 package com.example.Clinic.rest;
 
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.rest.support.dto.PatientDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ import javax.validation.Valid;
 public interface PatientApi {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Patient> registerUser(@Valid @RequestBody Patient patient);
+    ResponseEntity<Patient> registerUser(@Valid @RequestBody PatientDto patient);
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllPatients();
