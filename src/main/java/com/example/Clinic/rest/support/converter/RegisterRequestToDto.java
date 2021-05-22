@@ -4,6 +4,7 @@ import com.example.Clinic.model.Recipe;
 import com.example.Clinic.model.RegisterRequest;
 import com.example.Clinic.rest.support.dto.RecipeDto;
 import com.example.Clinic.rest.support.dto.RegisterRequestDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,10 @@ import java.util.List;
 
 @Component
 public class RegisterRequestToDto implements Converter<RegisterRequest, RegisterRequestDto> {
+
+    @Autowired
+    private PatientToDto patientToDto;
+
     @Override
     public RegisterRequestDto convert(RegisterRequest source) {
 
@@ -20,7 +25,7 @@ public class RegisterRequestToDto implements Converter<RegisterRequest, Register
         retVal.setRegister_request_id(source.getRegister_request_id());
         retVal.setStatus(source.getStatus());
         retVal.setVisitedMail(source.isVisitedMail());
-//        retVal.setPatientDto(source.getPatient());
+        retVal.setPatientDto(patientToDto.convert(source.getPatient()));
 
         return retVal;
     }

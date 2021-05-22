@@ -14,6 +14,9 @@ public class DtoToRegisterRequest implements Converter<RegisterRequestDto, Regis
     @Autowired
     private RegisterRequestService registerRequestService;
 
+    @Autowired
+    private DtoToPatient dtoToPatient;
+
     @Override
     public RegisterRequest convert(RegisterRequestDto source) {
         RegisterRequest target = null;
@@ -25,7 +28,7 @@ public class DtoToRegisterRequest implements Converter<RegisterRequestDto, Regis
             target = new RegisterRequest();
         }
 
-//        target.setPatient(source.getPatientDto());
+        target.setPatient(dtoToPatient.convert(source.getPatientDto()));
         target.setStatus(source.getStatus());
         target.setVisitedMail(source.isVisitedMail());
         return target;

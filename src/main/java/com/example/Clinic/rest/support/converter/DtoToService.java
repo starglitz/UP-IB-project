@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 public class DtoToService implements Converter<ServiceDto, Service> {
 
     @Autowired
+    private DtoToClinic dtoToClinic;
+
+    @Autowired
     private ServiceService serviceService;
 
     @Override
@@ -26,7 +29,7 @@ public class DtoToService implements Converter<ServiceDto, Service> {
 
         target.setName(source.getName());
         target.setPrice(source.getPrice());
-//        target.setClinic(source.getClinicDto());
+        target.setClinic(dtoToClinic.convert(source.getClinicDto()));
 
         return target;
     }
