@@ -27,8 +27,8 @@ public class NurseToDto implements Converter<Nurse, NurseDto> {
         NurseDto retVal = new NurseDto();
 
         retVal.setId(source.getId());
-        retVal.setUserDto(userToDto.convert(source.getUser()));
-        retVal.setClinicDto(clinicToDto.convert(source.getClinic()));
+        retVal.setUser(userToDto.convert(source.getUser()));
+        retVal.setClinic(clinicToDto.convert(source.getClinic()));
 
         return retVal;
     }

@@ -1,8 +1,10 @@
 package com.example.Clinic.rest.support.converter;
 
+import com.example.Clinic.model.Clinic;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.rest.support.dto.NurseDto;
+import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.NurseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -14,6 +16,9 @@ public class DtoToNurse implements Converter<NurseDto, Nurse> {
 
     @Autowired
     private NurseService nurseService;
+
+    @Autowired
+    private ClinicService clinicService;
 
     @Autowired
     private DtoToUser dtoToUser;
@@ -32,8 +37,11 @@ public class DtoToNurse implements Converter<NurseDto, Nurse> {
             target = new Nurse();
         }
 
-        target.setClinic(dtoToClinic.convert(source.getClinicDto()));
-        target.setUser(dtoToUser.convert(source.getUserDto()));
+        Clinic clinic = clinicService.findById(source.getClinic().getClinic_id()).orElse(null);
+        target.setClinic(clinic);
+
+        target.setClinic(dtoToClinic.convert(source.getClinic()));
+        target.setUser(dtoToUser.convert(source.getUser()));
 
         return target;
     }

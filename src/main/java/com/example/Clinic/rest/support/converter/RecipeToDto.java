@@ -25,7 +25,7 @@ public class RecipeToDto implements Converter<Recipe, RecipeDto> {
         retVal.setRecipe_id(source.getRecipe_id());
         retVal.setDescription(source.getDescription());
         retVal.setIssueDate(source.getIssueDate());
-        retVal.setNurseDto(nurseToDto.convert(source.getNurse()));
+        retVal.setNurse(nurseToDto.convert(source.getNurse()));
         retVal.setValidated(source.getValidated());
         retVal.setPatientBookId(source.getPatientBookId());
 

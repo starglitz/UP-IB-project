@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ClinicDto {
 
+    private Long clinic_id;
+
     @NotBlank
     private String name;
 

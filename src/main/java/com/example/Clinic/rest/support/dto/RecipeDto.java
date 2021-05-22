@@ -15,7 +15,7 @@ public class RecipeDto {
 
     private boolean validated;
 
-    private NurseDto nurseDto;
+    private NurseDto nurse;
 
     private String description;
 

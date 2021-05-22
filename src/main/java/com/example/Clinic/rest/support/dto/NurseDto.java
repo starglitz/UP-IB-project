@@ -9,7 +9,7 @@ public class NurseDto {
 
     private Long id;
 
-    private ClinicDto clinicDto;
+    private ClinicDto clinic;
 
-    private UserDto userDto;
+    private UserDto user;
 }

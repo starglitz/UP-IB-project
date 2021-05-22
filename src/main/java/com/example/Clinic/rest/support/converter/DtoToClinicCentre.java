@@ -22,7 +22,7 @@ public class DtoToClinicCentre implements Converter<ClinicCentreDto, ClinicCente
         ClinicCenter clinicCenter = new ClinicCenter();
 
         if (clinicCenter.getClinic_center_id() != null) {
-            clinicCenter = (ClinicCenter) this.clinicCentreService.findById(clinicCenter.getClinic_center_id());
+            clinicCenter = (ClinicCenter) this.clinicCentreService.findById(clinicCenter.getClinic_center_id()).get();
         }
 
         if (clinicCenter == null) {
