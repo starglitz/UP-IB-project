@@ -1,27 +1,27 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import  profil_img from '../assets/profil-img.png'
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import {useLocation} from "react-router-dom";
 
-class PatientProfilLayout extends Component {
+const PatientProfilLayout = () => {
 
-    state = {
-        loading: true,
-        patient: null,
-        disabled: true
-    }
 
-    async componentDidMount() {
-        const url = "http://localhost:8080/patient/2";
-        const response = await fetch(url);
-        const data = await response.json();
-        this.setState({loading: false, patient: data});
-        console.log(this.state.patient)
-    }
 
-    handleEnableClik() {
-        this.setState( {disabled: !this.state.disabled} )
+    const [loading, setLoading] =  useState(true);
+    const [patient, setPatient] =  useState(null);
+    const [disabled, setDisabled] =  useState(true);
+
+    // async componentDidMount() {
+    //     const url = "http://localhost:8080/patient/2";
+    //     const response = await fetch(url);
+    //     const data = await response.json();
+    //     this.setState({loading: false, patient: data});
+    //     console.log(this.state.patient)
+    // }
+
+    const handleEnableClik = () => {
+        this.setState( {disabled: !disabled} )
         let saveBtn = document.getElementById('save-btn');
         if (saveBtn.style.display === "initial") {
             saveBtn.style.display = "none";
@@ -30,18 +30,18 @@ class PatientProfilLayout extends Component {
         }
     }
 
-    changeInputHandler = (event, prop) => {
+    const changeInputHandler = (event, prop) => {
 
         const person = {
-            ...this.state.patient
+            ...patient
         };
         person[prop] = event.target.value;
 
-        this.setState({patient: person});
+        setPatient({patient: person});
     }
 
 
-    validateForm = (email, newPass, confirmPass, name, surname, address, city, state, contact, lbo)  => {
+    const validateForm = (email, newPass, confirmPass, name, surname, address, city, state, contact, lbo)  => {
         let ok = true;
         if(email === "" || name === "" || surname === "" || address === ""
             || city === "" || state === "" || contact === "" || lbo === "") {
@@ -67,7 +67,7 @@ class PatientProfilLayout extends Component {
     }
 
 
-    validateEmail = (email)  => {
+    const validateEmail = (email)  => {
         let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         if(email.match(mailformat)) {
             return true;
@@ -75,7 +75,7 @@ class PatientProfilLayout extends Component {
         return false;
     }
 
-    handleSaveData = ()  => {
+    const handleSaveData = ()  => {
         let email = document.getElementById('email').value;
         let name = document.getElementById('name').value;
         let surname = document.getElementById('surname').value;
@@ -118,14 +118,6 @@ class PatientProfilLayout extends Component {
     }
 
 
-            render() {
-        if (this.state.loading) {
-            return <div style={{textAlign:'center'}}>loading...</div>;
-        }
-
-        if (!this.state.patient) {
-            return <div style={{textAlign:'center'}}>Can't find your profile :/</div>;
-        }
 
         const imgStyle = {
             display: 'block',
@@ -136,6 +128,15 @@ class PatientProfilLayout extends Component {
             margin: '10px auto 10px auto',
             textAlign: 'center'
         };
+
+        if (loading) {
+            return <div style={{textAlign:'center'}}>loading...</div>;
+        }
+
+        if (!patient) {
+            return <div style={{textAlign:'center'}}>Can't find your profile :/</div>;
+        }
+
         return (
 
             <>
@@ -153,38 +154,38 @@ class PatientProfilLayout extends Component {
 
 
                     <label htmlFor="email" className="label-profilInfo">Email:</label>
-                    <input id="email" type="text" value={this.state.patient.email}   className="input-profilInfo "
+                    <input id="email" type="text" value={patient.email}   className="input-profilInfo "
                            disabled/>
 
                     <label htmlFor="name" className="label-profilInfo">Name:</label>
-                    <input id="name" type="text" value={this.state.patient.name} className="input-profilInfo "
+                    <input id="name" type="text" value={patient.name} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'name')}/>
+                           onChange={(event) => changeInputHandler(event, 'name')}/>
 
                     <label htmlFor="surname" className="label-profilInfo">Surame:</label>
                     <input id="surname" type="text"  value={this.state.patient.lastName} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'lastName')}/>
+                           onChange={(event) => changeInputHandler(event, 'lastName')}/>
 
                     <label htmlFor="address" className="label-profilInfo">Home address:</label>
                     <input id="address" type="text" value={this.state.patient.address} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'address')}/>
+                           onChange={(event) => changeInputHandler(event, 'address')}/>
 
                     <label htmlFor="city" className="label-profilInfo">City:</label>
                     <input id="city" type="text"  value={this.state.patient.city} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'city')}/>
+                           onChange={(event) => changeInputHandler(event, 'city')}/>
 
                     <label htmlFor="state" className="label-profilInfo">State:</label>
                     <input id="state" type="text" value={this.state.patient.country} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'country')}/>
+                           onChange={(event) => changeInputHandler(event, 'country')}/>
 
                     <label htmlFor="contact" className="label-profilInfo">Contact:</label>
                     <input id="contact" type="text" value={this.state.patient.phoneNumber} className="input-profilInfo "
                            disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'phoneNumber')}/>
+                           onChange={(event) => changeInputHandler(event, 'phoneNumber')}/>
 
                     <label htmlFor="lbo" className="label-profilInfo">LBO:</label>
                     <input id="lbo" type="text" value={this.state.patient.lbo}  className="input-profilInfo "
@@ -192,19 +193,19 @@ class PatientProfilLayout extends Component {
 
                     <label htmlFor="newPassword" className="label-profilInfo">New password:</label>
                     <input id="newPassword" type="text"   className="input-profilInfo " placeholder="Enter new password"
-                           disabled = {(this.state.disabled)? "disabled" : ""}
+                           disabled = {(disabled)? "disabled" : ""}
                            />
 
                     <label htmlFor="confirmPass" className="label-profilInfo">Confirm password:</label>
                     <input id="confirmPass" type="text"  className="input-profilInfo " placeholder="Enter new password again"
-                           disabled = {(this.state.disabled)? "disabled" : ""}
+                           disabled = {(disabled)? "disabled" : ""}
                            />
 
                     <div style={btnStyle}>
-                        <Button  onClick = {this.handleEnableClik.bind(this)}
+                        <Button  onClick = {handleEnableClik}
                                  variant="contained" color="primary"  size="medium"> Edit </Button>
 
-                        <Button id="save-btn" onClick={this.handleSaveData}
+                        <Button id="save-btn" onClick={handleSaveData}
                                 variant="contained"
                                 color="primary"
                                 size="medium"
@@ -216,7 +217,6 @@ class PatientProfilLayout extends Component {
                 </div>
             </>
         );
-    }
 }
 
 export default PatientProfilLayout;
