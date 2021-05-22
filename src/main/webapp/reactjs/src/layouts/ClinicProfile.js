@@ -45,7 +45,7 @@ const ClinicProfile = () => {
         fetchDoctors()
         fetchAppointments()
         // fetchAddress()
-        console.log(address)
+        //console.log(address)
     }, []);
 
     // async function fetchData() {

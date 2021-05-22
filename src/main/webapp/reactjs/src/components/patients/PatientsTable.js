@@ -26,7 +26,7 @@ const PatientsTable = () => {
 
     async function fetchData() {
         try {
-            const reponse = await PatientService.getAll()
+            const response = await PatientService.getAll()
             setPatients(response.data)
         } catch (error) {
             console.error(`Error loading patients !: ${error}`);
