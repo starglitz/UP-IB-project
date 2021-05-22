@@ -15,10 +15,12 @@ public class DtoToRegisterRequest implements Converter<RegisterRequestDto, Regis
     private RegisterRequestService registerRequestService;
 
     @Autowired
-    private DtoToPatient dtoToPatient;
+    private ListDtoToPatient dtoToPatient;
 
     @Override
     public RegisterRequest convert(RegisterRequestDto source) {
+        System.out.println("!!!!!!!");
+        System.out.println(source);
         RegisterRequest target = null;
         if (source.getRegister_request_id() != null) {
             target = (RegisterRequest) this.registerRequestService.findById(source.getRegister_request_id()).get();
@@ -28,7 +30,7 @@ public class DtoToRegisterRequest implements Converter<RegisterRequestDto, Regis
             target = new RegisterRequest();
         }
 
-        target.setPatient(dtoToPatient.convert(source.getPatientDto()));
+        target.setPatient(dtoToPatient.convert(source.getPatient()));
         target.setStatus(source.getStatus());
         target.setVisitedMail(source.isVisitedMail());
         return target;

@@ -6,6 +6,10 @@ import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.rest.AppointmentApi;
+import com.example.Clinic.rest.support.converter.DoctorToDto;
+import com.example.Clinic.rest.support.converter.DtoToAppointment;
+import com.example.Clinic.rest.support.converter.NurseToDto;
+import com.example.Clinic.rest.support.dto.AppointmentDto;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
 import com.example.Clinic.service.NurseService;
@@ -33,6 +37,16 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private DoctorToDto doctorToDto;
+
+    @Autowired
+    private NurseToDto nurseToDto;
+
+
+    @Autowired
+    private DtoToAppointment dtoToAppointment;
 
     @Override
     public ResponseEntity getAllAppointments() {
@@ -64,7 +78,21 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment) {
+    public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
+        System.out.println("!!!!");
+        System.out.println(appointmentDto);
+//        Nurse nurse = nurseService.findById(appointmentDto.getNurse().getId()).orElse(null);
+//        Doctor doctor = doctorService.findById(appointmentDto.getDoctor().getId()).orElse(null);
+//        if(nurse == null || doctor == null) {
+//            return new ResponseEntity("Bad request", HttpStatus.BAD_REQUEST);
+//        }
+//        appointmentDto.setDoctor(doctorToDto.convert(doctor));
+//        appointmentDto.setNurse(nurseToDto.convert(nurse));
+//        appointmentDto.setNurse(appointmentDto.getNurse());
+//        appointmentDto.setDoctor(appointmentDto.getDoctor());
+
+        Appointment appointment = dtoToAppointment.convert(appointmentDto);
+
         return new ResponseEntity(appointmentService.add(appointment), HttpStatus.OK);
     }
 

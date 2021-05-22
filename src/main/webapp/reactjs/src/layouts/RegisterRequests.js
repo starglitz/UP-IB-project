@@ -30,47 +30,38 @@ const RegisterRequests = () => {
         try {
             const response = await RegisterRequestService.getAll()
             setRequests(response.data.filter(req => req.status === "PENDING"))
+            console.log(response.data.filter(req => req.status === "PENDING"))
         } catch (error) {
             console.error(`Error loading requests !: ${error}`);
         }
     }
 
 
-    let accept = (register_request_id) => {
-        let request = {status:"APPROVED", register_request_id:register_request_id};
-        setRequests(requests.filter(req => req.status === "PENDING"))
+    let accept = (register_request_id, patientid) => {
+        let request = {status:"APPROVED", register_request_id:register_request_id, patient: {id:patientid}};
         setRandom(Math.random())
-        sendData(request);
+        console.log(register_request_id)
+        sendData(register_request_id, request);
     }
 
-    let decline = (register_request_id) => {
-        let request = {status:"DECLINED", register_request_id:register_request_id};
-        setRequests(requests.filter(req => req.status === "PENDING"))
+    let decline = (register_request_id, patientid) => {
+        let request = {status:"DECLINED", register_request_id:register_request_id, patient: {id:patientid}};
         setRandom(Math.random())
+        console.log(register_request_id)
         sendData(register_request_id, request);
     }
 
    async function sendData(register_request_id, request){
         try {
+            console.log("id: " + register_request_id)
+            console.log("req: " + request)
             await RegisterRequestService.update(register_request_id, request)
+            setRandom(Math.random())
         }
         catch(error) {
             console.log(error)
         }
-        // fetch('http://localhost:8080/updateRequest', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data),
-        // })
-        //     .then(response => response)
-        //     .then(data => {
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
+
     }
 
     const reRender = () => setRandom(Math.random());
@@ -86,7 +77,7 @@ const RegisterRequests = () => {
                        <th colSpan="2">Accept or decline a request</th>
                    </tr>
                    {requests.filter(req => req.status === "PENDING").map((req) =>
-                        <RegisterRequestRow accept={accept} decline={decline} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id} name={req.patient.name} patientid={req.patient.id}/>
+                        <RegisterRequestRow accept={accept} decline={decline} name={req.patient.name} status={req.status} key={req.register_request_id} email={req.patient.email} id={req.register_request_id}  patientid={req.patient.id}/>
                        )}
                 </tbody>
            </table>

@@ -33,6 +33,7 @@ public class Appointment {
     private Nurse nurse;
 
     @ManyToOne
+    @Nullable
     private Patient patient;
     
     private int price;
