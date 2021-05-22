@@ -36,8 +36,9 @@ export const RecipeTable = () => {
     async function approveRecipe(recipe) {
         recipe.validated = true
         try {
+            console.log(recipe)
             await RecipeService.approve(recipe.recipe_id.toString(), recipe)
-            //history.push("/home")
+            window.location.reload();
         } catch (error) {
             console.error(`Error ocurred while updating the recipe: ${error}`);
         }

@@ -3,6 +3,8 @@ package com.example.Clinic.rest.impl;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.rest.RecipeApi;
+import com.example.Clinic.rest.support.converter.DtoToRecipe;
+import com.example.Clinic.rest.support.dto.RecipeDto;
 import com.example.Clinic.service.RecipeService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,25 +24,31 @@ public class RecipeApiImpl implements RecipeApi {
     @Autowired
     private RecipeService recipeService;
 
+    @Autowired
+    private DtoToRecipe dtoToRecipe;
+
     @Override
-    public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid Recipe recipe) {
-        boolean valid = recipeService.addRecipe(recipe);
+    public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid RecipeDto dto) {
+        Recipe newRecipe = dtoToRecipe.convert(dto);
+        boolean valid = recipeService.addRecipe(newRecipe);
 
-        if (valid)
-            return new ResponseEntity(recipe, HttpStatus.OK);
-
-        return new ResponseEntity(recipe, HttpStatus.BAD_REQUEST);
+        if (valid) {
+            recipeService.addRecipe(newRecipe);
+            return new ResponseEntity(newRecipe, HttpStatus.CREATED);
+        }
+        return new ResponseEntity(newRecipe, HttpStatus.BAD_REQUEST);
     }
 
     @Override
-    public ResponseEntity approveRecipe(Recipe recipe, Long recipe_id) {
-
-        boolean valid = recipeService.updateRecipe(recipe, recipe_id);
+    public ResponseEntity approveRecipe(RecipeDto dto, Long recipe_id) {
+        System.out.println(dto);
+        Recipe newRecipe = dtoToRecipe.convert(dto);
+        boolean valid = recipeService.updateRecipe(newRecipe, recipe_id);
 
         if(valid)
-            return new ResponseEntity(recipe, HttpStatus.OK);
+            return new ResponseEntity(newRecipe, HttpStatus.OK);
 
-        return new ResponseEntity(recipe, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(newRecipe, HttpStatus.BAD_REQUEST);
     }
 
     @Override
@@ -56,17 +64,4 @@ public class RecipeApiImpl implements RecipeApi {
         List<Recipe> recipes = recipeService.getNotApprovedRecipes();
         return new ResponseEntity(recipes, HttpStatus.OK);
     }
-
-//    public void initializeTestData() {
-//        Nurse nurse =  new Nurse("email@gmail.com", "pass123", "Clark", "Johnson",
-//                "Address Street 16a", "Novi Sad", "Serbia", "012345678");
-//
-//        Recipe recipe1 = new Recipe(1L, false, nurse, "Opatanol x2", LocalDate.now());
-//        Recipe recipe2 = new Recipe(2L, false, nurse, "Opatanol x2", LocalDate.now());
-//        Recipe recipe3 = new Recipe(3L, false, nurse, "Opatanol x2", LocalDate.now());
-//
-//        recipeService.addRecipe(recipe1);
-//        recipeService.addRecipe(recipe2);
-//        recipeService.addRecipe(recipe3);
-//    }
 }

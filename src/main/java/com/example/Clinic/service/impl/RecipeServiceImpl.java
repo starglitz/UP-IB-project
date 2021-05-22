@@ -52,10 +52,9 @@ public class RecipeServiceImpl implements RecipeService {
     private boolean checkValid(Recipe recipe) {
         boolean valid = true;
 
-        if (recipe.getDescription().isEmpty() || recipe.getDescription() == null) { valid = false; }
+        if (recipe.getDescription().isEmpty() && recipe.getDescription() == null) { valid = false; }
         if (recipe.getIssueDate() == null) { valid = false; }
         if (recipe.getNurse() == null) { valid = false; }
-        if (recipe.getRecipe_id() == null) { valid = false; }
         if (recipe.getValidated() == null) { valid = false; }
 
         return valid;

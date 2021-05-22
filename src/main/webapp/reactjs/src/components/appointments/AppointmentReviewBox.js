@@ -33,7 +33,7 @@ function AppointmentTable(appointmentParam) { // trebalo bi da se pasuje appoint
 
 async function fetchAppointment() {
         try {
-            const response = await AppointmentService.get(17);
+            const response = await AppointmentService.get(7);
             setAppointment(response.data);
         } catch (error) {
             console.error(`Error loading appointment !: ${error}`);
@@ -87,7 +87,7 @@ async function fetchAppointment() {
                 "issueDate": appointment.date,
                 "nurse": appointment.nurse,
                 "validated": false,
-                "patientBookId": appointment.patient.patientBookId
+                "patientBookId": 1
             };
 
             if (recipe.description !== "") {
@@ -111,6 +111,7 @@ async function fetchAppointment() {
         })
         document.getElementById("recipeList").value = ""
     }
+    console.log(appointment)
 
     return (
     <>

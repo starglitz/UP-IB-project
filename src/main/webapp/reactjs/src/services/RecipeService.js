@@ -16,7 +16,7 @@ async function getNotApproved() {
 }
 
 async function approve(recipe_id, recipe) {
-    return await AxiosClient.put(`http://localhost:8080/recipes/${recipe_id}`, recipe);
+    return await AxiosClient.put(`http://localhost:8080/recipes/approve/${recipe_id}`, recipe);
 }
 
 async function create(recipe) {

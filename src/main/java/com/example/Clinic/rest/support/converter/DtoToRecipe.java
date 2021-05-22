@@ -24,15 +24,12 @@ public class DtoToRecipe implements Converter<RecipeDto, Recipe> {
 
     @Override
     public Recipe convert(RecipeDto source) {
-        Recipe target = null;
-        if (source.getRecipe_id() != null) {
-            target = (Recipe) this.recipeService.findOne(source.getRecipe_id()).get();
-        }
+        Recipe target = new Recipe();
 
         if (target == null) {
             target = new Recipe();
         }
-
+        System.out.println(source);
         Nurse nurse = nurseService.findById(source.getNurse().getId()).orElse(null);
         target.setNurse(nurse);
 
@@ -40,6 +37,7 @@ public class DtoToRecipe implements Converter<RecipeDto, Recipe> {
         target.setIssueDate(source.getIssueDate());
         target.setValidated(source.isValidated());
         target.setPatientBookId(source.getPatientBookId());
+        System.out.println(target);
 
         return target;
     }
