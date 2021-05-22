@@ -39,7 +39,7 @@ export function Calendar() {
         let calendarAppointment =
             {
                 Id: i,
-                Subject: "Nurse: " + appointment.nurse.name + "<br> Doctor: " + appointment.doctor.name,
+                Subject: "Nurse: " + appointment.nurse.user.name + "<br> Doctor: " + appointment.doctor.user.name,
                 Description: "Price: " + appointment.price,
                 StartTime: new Date(datePieces[0], datePieces[1] - 1, datePieces[2], startPieces[0], startPieces[1]),
                 EndTime: new Date(datePieces[0], datePieces[1] - 1, datePieces[2], endPieces[0], endPieces[1]),

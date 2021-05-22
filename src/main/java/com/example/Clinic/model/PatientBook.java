@@ -1,5 +1,6 @@
 package com.example.Clinic.model;
 
+import com.sun.istack.Nullable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +18,7 @@ public class PatientBook {
     @Column(name = "patient_book_id")
     private Long id;
 
-    @NotNull
+    @Nullable
     @ManyToOne
     private Patient patient;
 }

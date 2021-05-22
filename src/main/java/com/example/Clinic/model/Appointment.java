@@ -1,6 +1,7 @@
 package com.example.Clinic.model;
 
 import com.example.Clinic.model.enumerations.AppointmentStatus;
+import com.sun.istack.Nullable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
