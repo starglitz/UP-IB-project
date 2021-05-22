@@ -16,10 +16,8 @@ public class Clinic {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long clinic_id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String description;
   //  private List<Doctor> doctors;
 //    @OneToMany
