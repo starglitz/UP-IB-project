@@ -282,8 +282,8 @@ const ClinicProfile = () => {
                         </thead>
                         <tbody>
                         {doctors.map((doctor) =>
-                            <DoctorRow key={doctor.id} id={doctor.id} name={doctor.name + " " + doctor.lastName}
-                            email={doctor.email} phoneNumber={doctor.phoneNumber}/>
+                            <DoctorRow key={doctor.user.id} id={doctor.user.id} name={doctor.user.name + " " + doctor.user.lastName}
+                            email={doctor.user.email} phoneNumber={doctor.user.phoneNumber}/>
                         )}
                         </tbody>
                     </table>
