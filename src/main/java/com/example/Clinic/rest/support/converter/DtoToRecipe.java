@@ -14,6 +14,8 @@ public class DtoToRecipe implements Converter<RecipeDto, Recipe> {
     @Autowired
     private RecipeService recipeService;
 
+    @Autowired
+    private DtoToNurse dtoToNurse;
 
     @Override
     public Recipe convert(RecipeDto source) {
@@ -28,7 +30,7 @@ public class DtoToRecipe implements Converter<RecipeDto, Recipe> {
 
         target.setDescription(source.getDescription());
         target.setIssueDate(source.getIssueDate());
-//        target.setNurse(source.getNurseDto());
+        target.setNurse(dtoToNurse.convert(source.getNurseDto()));
         target.setValidated(source.isValidated());
         target.setPatientBookId(source.getPatientBookId());
 

@@ -4,6 +4,7 @@ import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.rest.support.dto.PatientBookDto;
 import com.example.Clinic.rest.support.dto.PatientDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,9 @@ import java.util.List;
 @Component
 public class PatientToDto implements Converter<Patient, PatientDto> {
 
+    @Autowired
+    private UserToDto userToDto;
+
     @Override
     public PatientDto convert(Patient source) {
 
@@ -23,7 +27,7 @@ public class PatientToDto implements Converter<Patient, PatientDto> {
         retVal.setEnabled(source.isEnabled());
         retVal.setPatientBookId(source.getPatientBookId());
         retVal.setLbo(source.getLbo());
-//        retVal.setUserDto(source.getUser());
+        retVal.setUserDto(userToDto.convert(source.getUser()));
 
 
         return retVal;
