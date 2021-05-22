@@ -44,7 +44,6 @@ public class AppointmentApiImpl implements AppointmentApi {
     @Autowired
     private NurseToDto nurseToDto;
 
-
     @Autowired
     private DtoToAppointment dtoToAppointment;
 
@@ -81,15 +80,6 @@ public class AppointmentApiImpl implements AppointmentApi {
     public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
         System.out.println("!!!!");
         System.out.println(appointmentDto);
-//        Nurse nurse = nurseService.findById(appointmentDto.getNurse().getId()).orElse(null);
-//        Doctor doctor = doctorService.findById(appointmentDto.getDoctor().getId()).orElse(null);
-//        if(nurse == null || doctor == null) {
-//            return new ResponseEntity("Bad request", HttpStatus.BAD_REQUEST);
-//        }
-//        appointmentDto.setDoctor(doctorToDto.convert(doctor));
-//        appointmentDto.setNurse(nurseToDto.convert(nurse));
-//        appointmentDto.setNurse(appointmentDto.getNurse());
-//        appointmentDto.setDoctor(appointmentDto.getDoctor());
 
         Appointment appointment = dtoToAppointment.convert(appointmentDto);
 
@@ -97,26 +87,13 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity<Appointment> updateAppointment(@Valid Appointment appointmentParam, Long id) {
-        boolean valid = appointmentService.update(appointmentParam);
-        Appointment appointment = appointmentService.findById(id);
-        if (valid) {
-            Doctor doctor = doctorService.findById(appointmentParam.getDoctor().getId()).get();
-            appointment.setDoctor(doctor);
-            Nurse nurse = nurseService.findById(appointmentParam.getNurse().getId()).get();
-            appointment.setNurse(nurse);
-            Patient patient = patientService.getPatientById(appointmentParam.getPatient().getId()).get();
-            appointment.setPatient(patient);
+    public ResponseEntity updateAppointment(@Valid AppointmentDto appointmentParam, Long id) {
 
-            appointment.setStart(appointmentParam.getStart());
-            appointment.setEnd(appointmentParam.getEnd());
-            appointment.setStatus(appointmentParam.getStatus());
-            appointment.setDeleted(appointmentParam.isDeleted());
-            appointment.setPrice(appointmentParam.getPrice());
+        Appointment appointment = dtoToAppointment.convert(appointmentParam);
 
-            return new ResponseEntity(appointmentService.update(appointment), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(appointment, HttpStatus.BAD_REQUEST);
+        boolean valid = appointmentService.update(appointment);
+
+        return new ResponseEntity(appointmentParam, HttpStatus.OK);
     }
 
     @Override

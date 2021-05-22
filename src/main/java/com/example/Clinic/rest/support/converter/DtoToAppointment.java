@@ -33,6 +33,7 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
     @Autowired
     private DtoToDoctor dtoToDoctor;
 
+
     @Override
     public Appointment convert(AppointmentDto dto) {
         Appointment appointment = new Appointment();
@@ -60,6 +61,7 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
         appointment.setDeleted(dto.isDeleted());
         appointment.setStart(dto.getStart());
         appointment.setEnd(dto.getEnd());
+        appointment.setStatus(dto.getStatus());
         appointment.setPrice(dto.getPrice());
         //appointment.setPatient(dtoToPatient.convert(dto.getPatient())); // TODO: convert to patient
 //        appointment.setNurse(dtoToNurse.convert(dto.getNurse())); // TODO: covert to nurse

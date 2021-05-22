@@ -116,26 +116,17 @@ const UpdateAppointment = () => {
         if(valid(date,start,end,price)) {
 
             let appointmentModified = {"appointment_id": appointment.appointment_id,
-                "date": date, "start": start, "end": end,
+                "date": date, "start": start, "end": end, "status": appointment.status,
                 "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
                 "price": price
             };
-            console.log(appointment);
-            console.log(JSON.stringify(appointmentModified));
-            // fetch('http://localhost:8080/updateAppointment', {
-            //     method: 'PUT',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(appointmentModified),
-            // })
-            //     // .then(response => response.json())
-            //     .then(user => {
-            //         console.log('Success:', user);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //     });
+
+           // let appointmentModified = {...appointment}
+
+            // console.log(appointment);
+            // console.log(JSON.stringify(appointmentModified));
+            console.log(appointment)
+            console.log(appointmentModified);
             update(appointmentModified.appointment_id, appointmentModified)
 
             let path = `/appointments`;
@@ -164,6 +155,11 @@ const UpdateAppointment = () => {
         return true;
     }
 
+    const handleFormInputChange = (name) => (event) => {
+        const val = event.target.value;
+        setAppointment({ ...appointment, [name]: val });
+    }
+
 
     return (
         <>
@@ -177,27 +173,26 @@ const UpdateAppointment = () => {
                 <div className="register-form">
 
                     <label htmlFor="date" className="label-register">Date:</label>
-                    <input defaultValue={appointment.date} id="date" type="date"  className="input-register"/>
+                    <input defaultValue={appointment.date} onChange={handleFormInputChange("date")} id="date" type="date"  className="input-register"/>
 
                     <label htmlFor="start" className="label-register">Start time:</label>
-                    <input defaultValue={appointment.start} required id="start" type="time"  min="09:00" max="18:00" className="input-register"/>
+                    <input defaultValue={appointment.start} onChange={handleFormInputChange("start")} required id="start" type="time"  min="09:00" max="18:00" className="input-register"/>
 
 
                     <label htmlFor="end" className="label-register">End time:</label>
-                    <input defaultValue={appointment.end} required id="end" type="time"  min="09:00" max="18:00" className="input-register"/>
+                    <input defaultValue={appointment.end} required onChange={handleFormInputChange("end")} id="end" type="time"  min="09:00" max="18:00" className="input-register"/>
 
                     <label htmlFor="doctor" className="label-register">Doctor:</label>
                     <select name="doctor" id="doctor" className="input-register">
                         {doctors.map((doctor) =>
-                            // JSON.stringify(doctor)
-                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.name + " " + doctor.lastName}</option>
+                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.user.name + " " + doctor.user.lastName}</option>
                         )}
                     </select>
 
                     <label htmlFor="nurse" className="label-register">Nurse:</label>
                     <select name="nurse" id="nurse" className="input-register">
                         {nurses.map((nurse) =>
-                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.name + " " + nurse.lastName}</option>
+                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.user.name + " " + nurse.user.lastName}</option>
                         )}
                     </select>
 

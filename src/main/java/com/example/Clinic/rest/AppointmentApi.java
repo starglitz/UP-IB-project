@@ -38,12 +38,11 @@ public interface AppointmentApi {
     ResponseEntity getFreeDoctorAppointemnts(@PathVariable("id") Long id);
 
 
-    @PutMapping(value = "/updateAppointment/{id}",
+    @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Appointment> updateAppointment(@Valid @RequestBody Appointment appointment, @PathVariable("id") Long id);
+    ResponseEntity<Appointment> updateAppointment(@Valid @RequestBody AppointmentDto appointment, @PathVariable("id") Long id);
 
-    @DeleteMapping(
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping(value = "/{id}")
     ResponseEntity<Appointment> deleteAppointment(@PathVariable("id") Long id);
 
 }
