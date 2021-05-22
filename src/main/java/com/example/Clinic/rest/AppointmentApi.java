@@ -3,11 +3,13 @@ package com.example.Clinic.rest;
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.rest.support.dto.AppointmentDto;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -33,9 +35,11 @@ public interface AppointmentApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getFreeClinicAppointments(@PathVariable long id);
 
-    @GetMapping(value = "/doctorAppointments/{id}",
+    @GetMapping(value = "/free/doctor/{id}/date/{date}",
     produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity getFreeDoctorAppointemnts(@PathVariable("id") Long id);
+    ResponseEntity getFreeDoctorAppointemntsByDate(@PathVariable("id") Long id, @PathVariable("date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+            LocalDate date);
 
 
     @PutMapping(value = "/{id}",

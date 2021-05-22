@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,8 +86,8 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> findFreeByDoctor(Long doctor_id) {
-        return appointmentRepository.findFreeByDoctor(doctor_id);
+    public List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date) {
+        return appointmentRepository.findFreeByDoctorAndDate(doctor_id, date);
     }
 
 

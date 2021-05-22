@@ -7,7 +7,7 @@ export const AppointmentService = {
     create,
     getByClinicId,
     getFreeByClinicId,
-    getFreeByDoctorId,
+    getFreeByDoctorIdAndDate,
     deleteAppointment
 };
 
@@ -36,8 +36,8 @@ async function getFreeByClinicId(id) {
     return await AxiosClient.get(`http://localhost:8080/appointments/free/clinic/${id}`);
 }
 
-async function getFreeByDoctorId(id) {
-    return await AxiosClient.get(`http://localhost:8080/appointments/free/doctor/${id}`);
+async function getFreeByDoctorIdAndDate(id, date) {
+    return await AxiosClient.get(`http://localhost:8080/appointments/free/doctor/${id}/date/${date}`);
 }
 
 async function deleteAppointment(id) {

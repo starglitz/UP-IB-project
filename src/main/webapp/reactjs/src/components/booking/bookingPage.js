@@ -8,7 +8,11 @@ function BookingPage() {
 
     const [appointment, setAppointment] = useState({
         appointment_id: '',
-        doctor:'',
+        doctor: {
+            user:{
+                name: ''
+            }
+        },
         date: '',
         start: '',
         price: ''
@@ -36,7 +40,7 @@ function BookingPage() {
             console.error(`Error loading appointment !: ${error}`);
         }
     }
-
+    console.log(appointment)
     return (
         <>
 
@@ -48,7 +52,7 @@ function BookingPage() {
                 <ul>
                     <li className="info-row">
                         <p>Doctor name:</p>
-                        <p>{appointment.doctor.name}</p>
+                        <p>{appointment.doctor.user.name}</p>
                     </li>
                     <li className="info-row">
                         <p>Date:</p>

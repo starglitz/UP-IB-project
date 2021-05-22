@@ -36,7 +36,7 @@ function ClinicsTable() {
         //     .catch(err => setError(err));
         fetchData()
     },[date])
-
+console.log(requests)
 
     async function fetchData() {
         try {
@@ -44,6 +44,7 @@ function ClinicsTable() {
             setRequests(response.data)
         } catch (error) {
             console.error(`Error loading clinics !: ${error}`);
+            setRequests([])
         }
     }
 

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class ClinicApiImpl implements ClinicApi {
@@ -40,10 +42,11 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Override
     public ResponseEntity getClinicsByDate(LocalDate date) {
-        if(clinicService.findClinicsByDate(date).size() > 0) {
-            return new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.OK);
+        List<Clinic> clinics = clinicService.findClinicsByDate(date);
+        if(clinics.size() > 0) {
+            return new ResponseEntity(clinics, HttpStatus.OK);
         }
-        return new ResponseEntity(clinicService.findClinicsByDate(date), HttpStatus.NOT_FOUND);
+        return new ResponseEntity(clinics, HttpStatus.NOT_FOUND);
     }
 
     @Override

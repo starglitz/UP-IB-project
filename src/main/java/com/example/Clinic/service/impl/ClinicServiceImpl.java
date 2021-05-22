@@ -35,15 +35,12 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public List<Clinic> findClinicsByDate(LocalDate date) {
         List<Clinic> clinics = clinicRepository.findClinicsByDate(date);
-        System.out.println(clinics);
-        if(clinics.size() > 0){
-            return clinics;
-        }
-        else if(date.equals(LocalDate.of(2000, 01, 01))){
+
+        if(date.equals(LocalDate.of(2000, 01, 01))){
             return clinicRepository.findAll();
         }
-        else
-            return new ArrayList<Clinic>();
+        return clinics;
+
     }
 
     @Override

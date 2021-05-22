@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Component
@@ -71,8 +72,8 @@ public class AppointmentApiImpl implements AppointmentApi {
         return new ResponseEntity(appointmentService.findFreeByClinicId(id), HttpStatus.OK);
     }
     @Override
-    public ResponseEntity getFreeDoctorAppointemnts(Long doctorId) {
-        return new ResponseEntity(appointmentService.findFreeByDoctor(doctorId), HttpStatus.OK);
+    public ResponseEntity getFreeDoctorAppointemntsByDate(Long doctorId, LocalDate date) {
+        return new ResponseEntity(appointmentService.findFreeByDoctorAndDate(doctorId, date), HttpStatus.OK);
 
     }
 

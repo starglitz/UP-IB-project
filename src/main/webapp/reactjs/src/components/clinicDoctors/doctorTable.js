@@ -4,6 +4,7 @@ import {useParams} from "react-router-dom";
 import DoctorAppointmentsTable from "./doctorAppointmentsTable";
 import {AppointmentService} from "../../services/AppointmentService";
 import {DoctorService} from "../../services/DoctorService";
+import {Typography} from "@material-ui/core";
 
 function DoctorTable() {
     const [requests, setRequests] = useState([])
@@ -37,9 +38,9 @@ function DoctorTable() {
         }
     }
 
-    async function fetchDataAppointments(doctor_id) {
+    async function fetchDataAppointments(doctor_id, date) {
         try {
-            const response = await AppointmentService.getFreeByDoctorId(doctor_id)
+            const response = await AppointmentService.getFreeByDoctorIdAndDate(doctor_id, date)
             setAppointments(response.data)
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
@@ -57,7 +58,7 @@ function DoctorTable() {
         // fetchDataAppointments()
         //     .then(res => setAppointments(res))
         //     .catch(err => setError(err));
-        fetchDataAppointments(e[0])
+        fetchDataAppointments(e[0], date)
     }
 
 console.log(requests)
@@ -75,18 +76,28 @@ console.log(requests)
         },
         {
             label: 'Name',
-            name: 'name',
+            name: 'user',
             options: {
                 filter: true,
                 sort: true,
+                customBodyRender: (value, tableMeta, updateValue) => (
+                    <Typography>
+                        {value.name}
+                    </Typography>
+                )
             }
         },
         {
             label: 'Lastname',
-            name: 'lastName',
+            name: 'user',
             options: {
                 filter: true,
                 sort: true,
+                customBodyRender: (value, tableMeta, updateValue) => (
+                    <Typography>
+                        {value.name}
+                    </Typography>
+                )
             }
         },
         {
