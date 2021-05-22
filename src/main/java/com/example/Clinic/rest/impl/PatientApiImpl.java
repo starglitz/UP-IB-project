@@ -6,7 +6,9 @@ import com.example.Clinic.model.RegisterRequest;
 import com.example.Clinic.model.enumerations.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.rest.support.converter.DtoToPatient;
+import com.example.Clinic.rest.support.converter.RegisterDtoToPatient;
 import com.example.Clinic.rest.support.dto.PatientDto;
+import com.example.Clinic.rest.support.dto.PatientRegisterDto;
 import com.example.Clinic.service.PatientBookService;
 import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.RegisterRequestService;
@@ -34,12 +36,12 @@ public class PatientApiImpl implements PatientApi {
     private PatientBookService patientBookService;
 
     @Autowired
-    private DtoToPatient dtoToPatient;
+    private RegisterDtoToPatient registerDtoToPatient;
 
     @Override
-    public ResponseEntity registerUser(@RequestBody @Valid PatientDto patientDto) {
+    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) {
         System.out.println(patientDto);
-        Patient patient = dtoToPatient.convert(patientDto);
+        Patient patient = registerDtoToPatient.convert(patientDto);
 
         Patient patientJpa = patientService.addPatient(patient);
 
