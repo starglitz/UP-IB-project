@@ -1,8 +1,9 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import  profil_img from '../assets/profil-img.png'
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import {useLocation} from "react-router-dom";
+import {PatientService} from "../services/PatientService";
 
 const PatientProfilLayout = () => {
 
@@ -19,6 +20,21 @@ const PatientProfilLayout = () => {
     //     this.setState({loading: false, patient: data});
     //     console.log(this.state.patient)
     // }
+
+    useEffect(() => {
+        fetchPatient();
+    }, []);
+
+    async function fetchPatient() {
+        try {
+            const response = await PatientService.get(2);
+            setPatient(response.data);
+            setLoading(false);
+            console.log(response.data);
+        } catch (error) {
+            console.error(`Error loading your profile !: ${error}`);
+        }
+    }
 
     const handleEnableClik = () => {
         this.setState( {disabled: !disabled} )
