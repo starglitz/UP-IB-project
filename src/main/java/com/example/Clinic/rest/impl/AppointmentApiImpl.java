@@ -4,6 +4,7 @@ import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Doctor;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.rest.AppointmentApi;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
@@ -62,14 +63,8 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     }
 
-
     @Override
     public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment) {
-        Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
-        appointment.setDoctor(doctor);
-        Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
-        appointment.setNurse(nurse);
-
         return new ResponseEntity(appointmentService.add(appointment), HttpStatus.OK);
     }
 

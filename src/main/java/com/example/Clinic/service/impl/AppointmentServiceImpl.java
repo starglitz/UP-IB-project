@@ -1,12 +1,15 @@
 package com.example.Clinic.service.impl;
 
 
-import com.example.Clinic.model.Appointment;
-import com.example.Clinic.model.Recipe;
+import com.example.Clinic.model.*;
+import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.repository.AppointmentRepository;
 import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.AppointmentService;
+import com.example.Clinic.service.DoctorService;
+import com.example.Clinic.service.NurseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,11 +21,26 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
+    private NurseService nurseService;
+
     @Override
     public boolean add(Appointment appointment) {
         boolean valid = checkValid(appointment);
 
         if (valid) {
+            Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
+            Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
+
+            appointment.setDoctor(doctor);
+            appointment.setNurse(nurse);
+            appointment.setPatient(null);
+            appointment.setStatus(AppointmentStatus.FREE);
+
+            System.out.println(appointment);
             appointmentRepository.save(appointment);
         }
 
@@ -80,7 +98,6 @@ public class AppointmentServiceImpl implements AppointmentService {
         if (appointment.getEnd() == null) { valid = false; }
         if (appointment.getDoctor() == null) { valid = false; }
         if (appointment.getNurse() == null) { valid = false; }
-        if (appointment.getPatient() == null) { valid = false; }
 
         return valid;
     }

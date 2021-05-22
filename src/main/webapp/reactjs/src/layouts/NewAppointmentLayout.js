@@ -80,7 +80,8 @@ const NewAppointmentLayout = () => {
 
             let appointment = {
                 "date": date, "start": start, "end": end,
-                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id}, "patient": null,
+                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
+                "patient": null,
                 "price": price
             };
             console.log(appointment);
@@ -100,12 +101,8 @@ const NewAppointmentLayout = () => {
             //     .catch((error) => {
             //         console.error('Error:', error);
             //     });
-
-
-
         }
-
-        }
+    }
 
     const valid = (date, time, duration, price) => {
         if(date === null || time === null || duration === "" || price === "") {
@@ -148,14 +145,14 @@ const NewAppointmentLayout = () => {
                     <select name="doctor" id="doctor" className="input-register">
                         {doctors.map((doctor) =>
                             // JSON.stringify(doctor)
-                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.name + " " + doctor.lastName}</option>
+                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.user.name + " " + doctor.user.lastName}</option>
                         )}
                     </select>
 
                     <label htmlFor="nurse" className="label-register">Nurse:</label>
                     <select name="nurse" id="nurse" className="input-register">
                         {nurses.map((nurse) =>
-                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.name + " " + nurse.lastName}</option>
+                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.user.name + " " + nurse.user.lastName}</option>
                         )}
                     </select>
 

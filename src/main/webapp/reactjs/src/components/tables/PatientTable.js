@@ -22,7 +22,11 @@ export const PatientTable = () => {
     async function fetchData() {
         try {
             const response = await PatientService.getAll()
-            setRequests(response.data)
+            const patients = []
+            for (let i = 0; i < response.data.length; i++) {
+                patients.push(response.data[i].user);
+            }
+            setRequests(patients)
         } catch (error) {
             console.error(`Error loading patients !: ${error}`);
         }
@@ -84,14 +88,6 @@ export const PatientTable = () => {
             name: 'city',
             options: {
                 filter: true,
-                sort: true,
-            }
-        },
-        {
-            label: 'LBO',
-            name: 'lbo',
-            options: {
-                filter: false,
                 sort: true,
             }
         }]
