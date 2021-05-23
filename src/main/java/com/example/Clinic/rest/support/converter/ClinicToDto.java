@@ -25,7 +25,7 @@ public class ClinicToDto implements Converter<Clinic, ClinicDto> {
     @Override
     public ClinicDto convert(Clinic clinic) {
         ClinicDto dto = new ClinicDto();
-
+        dto.setClinic_id(clinic.getClinic_id());
         dto.setName(clinic.getName());
         dto.setDescription(clinic.getDescription());
         dto.setRating(clinic.getRating());

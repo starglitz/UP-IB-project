@@ -19,7 +19,7 @@ public class AppointmentDto {
     private Long appointment_id;
 
     @NotNull
-    private AppointmentStatus status = AppointmentStatus.FREE;
+    private AppointmentStatus status;
 
     @NotNull
     private LocalDate date;

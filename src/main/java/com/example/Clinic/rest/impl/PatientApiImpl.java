@@ -6,6 +6,7 @@ import com.example.Clinic.model.RegisterRequest;
 import com.example.Clinic.model.enumerations.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.rest.support.converter.DtoToPatient;
+import com.example.Clinic.rest.support.converter.PatientToDto;
 import com.example.Clinic.rest.support.converter.RegisterDtoToPatient;
 import com.example.Clinic.rest.support.dto.PatientDto;
 import com.example.Clinic.rest.support.dto.PatientRegisterDto;
@@ -34,6 +35,12 @@ public class PatientApiImpl implements PatientApi {
 
     @Autowired
     private PatientBookService patientBookService;
+
+    @Autowired
+    private PatientToDto patientToDto;
+
+    @Autowired
+    private DtoToPatient dtoToPatient;
 
     @Autowired
     private RegisterDtoToPatient registerDtoToPatient;
@@ -71,14 +78,14 @@ public class PatientApiImpl implements PatientApi {
     public ResponseEntity getPatient(Long id) {
 
         Optional<Patient> patient = patientService.getPatientById(id);
-        return  new ResponseEntity(patient, HttpStatus.OK);
+        return  new ResponseEntity(patientToDto.convert(patient.get()), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Patient> updatePatient(Long id,@Valid Patient patient) {
-        Patient patientJpa = patientService.updatePatient(patient, id);
+    public ResponseEntity<PatientDto> updatePatient(Long id,@Valid PatientDto patientDto) {
+        Patient patientJpa = patientService.updatePatient(dtoToPatient.convert(patientDto), id);
 
-        return new ResponseEntity<>(patient, HttpStatus.OK);
+        return new ResponseEntity<>(patientToDto.convert(patientJpa), HttpStatus.OK);
     }
 
 

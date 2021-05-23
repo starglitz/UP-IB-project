@@ -44,9 +44,9 @@ public class ClinicApiImpl implements ClinicApi {
     public ResponseEntity getClinicsByDate(LocalDate date) {
         List<Clinic> clinics = clinicService.findClinicsByDate(date);
         if(clinics.size() > 0) {
-            return new ResponseEntity(clinics, HttpStatus.OK);
+            return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.OK);
         }
-        return new ResponseEntity(clinics, HttpStatus.NOT_FOUND);
+        return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.NOT_FOUND);
     }
 
     @Override

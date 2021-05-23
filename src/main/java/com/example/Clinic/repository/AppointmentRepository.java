@@ -18,7 +18,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             nativeQuery = true)
     List<Appointment> findFreeByClinicId(Long clinic_id);
 
-    @Query(value = "SELECT * FROM appointment WHERE doctor_id =?1 and date = ?2",
+    @Query(value = "SELECT * FROM appointment WHERE doctor_id =?1 and date = ?2 and  status = 'FREE'",
             nativeQuery = true)
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
 

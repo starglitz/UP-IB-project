@@ -26,7 +26,7 @@ function AppointmentTable() {
 
     async function fetchData() {
         try {
-            const response = await AppointmentService.getByClinicId(id);
+            const response = await AppointmentService.getFreeByClinicId(id);
             setRequests(response.data)
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);

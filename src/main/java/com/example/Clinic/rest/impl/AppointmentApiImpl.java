@@ -6,6 +6,7 @@ import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.rest.AppointmentApi;
+import com.example.Clinic.rest.support.converter.AppointmentToDto;
 import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToAppointment;
 import com.example.Clinic.rest.support.converter.NurseToDto;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -48,6 +50,9 @@ public class AppointmentApiImpl implements AppointmentApi {
     @Autowired
     private DtoToAppointment dtoToAppointment;
 
+    @Autowired
+    private AppointmentToDto appointmentToDto;
+
     @Override
     public ResponseEntity getAllAppointments() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + appointmentService.findAll());
@@ -56,24 +61,28 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Override
     public ResponseEntity getAppointment(Long id) {
-        if(appointmentService.findById(id) != null) {
-            return new ResponseEntity(appointmentService.findById(id), HttpStatus.OK);
+        Appointment appointment = appointmentService.findById(id);
+        if(appointment != null) {
+            return new ResponseEntity(appointmentToDto.convert(appointment), HttpStatus.OK);
         }
-        return new ResponseEntity("No such appointment", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("No such appointment", HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ResponseEntity getClinicAppointments(long id) {
-        return new ResponseEntity(appointmentService.findByClinicId(id), HttpStatus.OK);
+        List<Appointment> appointments = appointmentService.findByClinicId(id);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity getFreeClinicAppointments(long id) {
-        return new ResponseEntity(appointmentService.findFreeByClinicId(id), HttpStatus.OK);
+        List<Appointment> appointments = appointmentService.findFreeByClinicId(id);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
     }
     @Override
     public ResponseEntity getFreeDoctorAppointemntsByDate(Long doctorId, LocalDate date) {
-        return new ResponseEntity(appointmentService.findFreeByDoctorAndDate(doctorId, date), HttpStatus.OK);
+        List<Appointment> appointments = appointmentService.findFreeByDoctorAndDate(doctorId, date);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
 
     }
 

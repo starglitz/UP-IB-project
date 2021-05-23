@@ -20,17 +20,19 @@ public class PatientToDto implements Converter<Patient, PatientDto> {
 
     @Override
     public PatientDto convert(Patient source) {
+        if(source != null) {
+            PatientDto retVal = new PatientDto();
+            retVal.setId(source.getId());
+            retVal.setApproved(source.isApproved());
+            retVal.setEnabled(source.isEnabled());
+            //retVal.setPatientBookId(source.getPatientBookId());
+            retVal.setLbo(source.getLbo());
+            retVal.setUserDto(userToDto.convert(source.getUser()));
 
-        PatientDto retVal = new PatientDto();
-        retVal.setId(source.getId());
-        retVal.setApproved(source.isApproved());
-        retVal.setEnabled(source.isEnabled());
-        //retVal.setPatientBookId(source.getPatientBookId());
-        retVal.setLbo(source.getLbo());
-        retVal.setUserDto(userToDto.convert(source.getUser()));
 
-
-        return retVal;
+            return retVal;
+        }
+        return null;
     }
 
     public List<PatientDto> convert(List<Patient> source) {

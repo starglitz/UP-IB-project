@@ -13,6 +13,7 @@ function DoctorAppointmentsTable({appointments}) {
         const id = e[0];
         history.push("/booking/" + id)
     }
+    console.log(appointments)
 
     const columns = [
         {

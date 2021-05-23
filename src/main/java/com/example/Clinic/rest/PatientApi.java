@@ -24,5 +24,5 @@ public interface PatientApi {
     ResponseEntity getPatient(@PathVariable("id") Long id);
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Patient> updatePatient(@PathVariable("id") Long id ,@Valid @RequestBody Patient patient);
+    ResponseEntity<PatientDto> updatePatient(@PathVariable("id") Long id ,@Valid @RequestBody PatientDto patientDto);
 }
