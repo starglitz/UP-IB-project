@@ -3,6 +3,7 @@ package com.example.Clinic.rest.impl;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.RegisterRequest;
+import com.example.Clinic.model.User;
 import com.example.Clinic.model.enumerations.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.rest.support.converter.DtoToPatient;
@@ -16,11 +17,15 @@ import com.example.Clinic.service.RegisterRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,10 +50,26 @@ public class PatientApiImpl implements PatientApi {
     @Autowired
     private RegisterDtoToPatient registerDtoToPatient;
 
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) {
         System.out.println(patientDto);
-        Patient patient = registerDtoToPatient.convert(patientDto);
+
+        User user = new User(patientDto.getUserDto().getEmail(), passwordEncoder.encode(patientDto.getUserDto().getPassword()),
+                patientDto.getUserDto().getName(), patientDto.getUserDto().getLastName(),
+                patientDto.getUserDto().getAddress(), patientDto.getUserDto().getCity(), patientDto.getUserDto().getCountry(),
+                patientDto.getUserDto().getPhoneNumber());
+
+      //  Patient patient = registerDtoToPatient.convert(patientDto);
+//        @NotEmpty(message = "last name is mandatory")
+//        @NotBlank(message = "cant be blank")
+//        @NotNull(message = "cant be null") String lbo,
+//        boolean enabled, boolean approved, User user)
+        Patient patient = new Patient(patientDto.getLbo(), true, false, user);
+
 
         Patient patientJpa = patientService.addPatient(patient);
 

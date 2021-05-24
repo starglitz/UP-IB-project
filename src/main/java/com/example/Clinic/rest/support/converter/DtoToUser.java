@@ -6,6 +6,7 @@ import com.example.Clinic.rest.support.dto.UserDto;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,6 +14,9 @@ public class DtoToUser implements Converter<UserDto, User> {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User convert(UserDto source) {

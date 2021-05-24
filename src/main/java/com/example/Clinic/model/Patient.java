@@ -44,5 +44,13 @@ public class Patient {
         this.enabled = true;
     }
 
-
+    public Patient(@NotEmpty(message = "last name is mandatory")
+                   @NotBlank(message = "cant be blank")
+                   @NotNull(message = "cant be null") String lbo,
+                   boolean enabled, boolean approved, User user) {
+        this.lbo = lbo;
+        this.enabled = enabled;
+        this.approved = approved;
+        this.user = user;
+    }
 }
