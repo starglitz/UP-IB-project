@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -7,82 +7,84 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory } from "react-router-dom";
+import {PatientService} from "../services/PatientService";
 
 
 const RegisterLayout = () => {
 
     const history = useHistory();
+    const [user, setUser] = useState({
+            address: '',
+            city:'',
+            country:'',
+            email:'',
+            lastName:'',
+            name:'',
+            password:'',
+            phoneNumber:''
+    })
+
+    const [patient, setPatient] = useState( {
+        lbo: '',
+        enabled: true,
+        approved: false
+    })
+
 
     const routeChange = () =>{
         let path = `/`;
         history.push(path);
     }
 
-    const sendData = ()  => {
-        let email = document.getElementById('email').value;
-        let password = document.getElementById('password').value;
-        let confirm = document.getElementById('confirm').value;
-        let name = document.getElementById('name').value;
-        let surname = document.getElementById('surname').value;
-        let address = document.getElementById('address').value;
-        let city = document.getElementById('city').value;
-        let state = document.getElementById('state').value;
-        let contact = document.getElementById('contact').value;
-        let lbo = document.getElementById('lbo').value;
+    async function register(user) {
+        try {
+            await PatientService.create(user);
+        }
+        catch (error) {
+            console.error(`Error creating user! : ${error}`);
+        }
+    }
 
-         if(validateForm(email,password,confirm,name,surname,address,city,state,contact,lbo)) {
+    const sendData = ()  => {
+
+         let confirm = document.getElementById('confirm').value;
+
+        console.log(user);
+        console.log(patient)
+         if(validateForm(confirm)) {
         handleClickOpen();
 
-        let user = {
-            "email":email,
-            "password":password,
-            "name":name,
-            "lastName":surname,
-            "address":address,
-            "city":city,
-            "country":state,
-            "phoneNumber":contact,
-            "lbo":lbo,
-            "enabled":true,
-            "patientBookId": Math.floor(Math.random() * 100000)
-        };
         console.log(user);
-        fetch('http://localhost:8080/registration', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        })
-            .then(response => response.json())
-            .then(user => {
-                console.log('Success:', user);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        console.log(patient)
+
+        let copy = {...patient, "userDto": user}
+        console.log(copy)
+
+        register(copy)
 
          }
     }
 
-        const validateForm = (email, password,confirm, name, surname, address, city, state, contact, lbo)  => {
+        const validateForm = (confirm)  => {
             let ok = true;
-            if(email === "" || password === ""  || confirm === "" || name === "" || surname === "" || address === ""
-                || city === "" || state === "" || contact === "" || lbo === "") {
+            if(user.email === "" || user.password === ""  || confirm === "" ||
+                user.name === "" || user.lastName === "" || user.address === "" ||
+                user.city === "" || user.state === "" || user.phoneNumber === "" ||
+                patient.lbo === "") {
                 ok = false;
                 alert("Make sure to fill all fields!")
             }
 
-            else if(password.length < 8) {
+            else if(user.password.length < 8) {
                 ok = false;
                 alert("Password should be at least 8 characters long! 😡")
             }
-            else if(password !== confirm) {
+            else if(user.password !== confirm) {
                 ok = false;
                 alert("Passwords don't match!")
             }
 
-            else if(validateEmail(email) === false) {
+            else if(validateEmail(user.email) === false) {
                 ok = false;
                 alert("You have entered an invalid email address!")
             }
@@ -121,8 +123,6 @@ const RegisterLayout = () => {
     }
 
 
-    //next few lines is for success modal
-
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -133,6 +133,15 @@ const RegisterLayout = () => {
         setOpen(false);
     };
 
+    const handleFormInputChange = (name) => (event) => {
+        const val = event.target.value;
+        setPatient({ ...patient, [name]: val });
+    };
+
+    const handleFormInputChangeUser = (name) => (event) => {
+        const val = event.target.value;
+        setUser({ ...user, [name]: val });
+    };
 
     return (
         <>
@@ -146,12 +155,12 @@ const RegisterLayout = () => {
 
 
                     <label htmlFor="email" className="label-register">Email:</label>
-                    <input  id="email" type="text" placeholder="enter email here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("email")} id="email" type="text" placeholder="enter email here" className="input-register"/>
 
 
                     <label htmlFor="password" className="label-register">Password:</label>
                     <input name="password" id="password" type="password" placeholder="enter password here"
-                           maxLength="100" onKeyUp={passwordChanged} className="input-register"/>
+                           maxLength="100" onKeyUp={passwordChanged} onChange={handleFormInputChangeUser("password")} className="input-register"/>
                     <span id="strength">Type Password</span>
 
 
@@ -159,26 +168,26 @@ const RegisterLayout = () => {
                     <input  id="confirm" type="password" placeholder="confirm password" className="input-register"/>
 
                     <label htmlFor="name" className="label-register">Name:</label>
-                    <input  id="name" type="text" placeholder="enter your name here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("name")} id="name" type="text" placeholder="enter your name here" className="input-register"/>
 
                     <label htmlFor="surname" className="label-register">Surname:</label>
-                    <input  id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("lastName")} id="surname" type="text" placeholder="enter your surname here" className="input-register"/>
 
                     <label htmlFor="address" className="label-register">Home address:</label>
-                    <input  id="address" type="text" placeholder="enter your address here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("address")} id="address" type="text" placeholder="enter your address here" className="input-register"/>
 
                     <label htmlFor="city" className="label-register">City:</label>
-                    <input id="city" type="text" placeholder="enter your city here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("city")} id="city" type="text" placeholder="enter your city here" className="input-register"/>
 
                     <label htmlFor="state" className="label-register">State:</label>
-                    <input id="state" type="text" placeholder="enter your state here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("country")} id="state" type="text" placeholder="enter your state here" className="input-register"/>
 
 
                     <label htmlFor="contact" className="label-register">Contact:</label>
-                    <input id="contact" type="text" placeholder="enter your phone number here" className="input-register"/>
+                    <input onChange={handleFormInputChangeUser("phoneNumber")} id="contact" type="text" placeholder="enter your phone number here" className="input-register"/>
 
                     <label htmlFor="lbo" className="label-register">LBO:</label>
-                    <input id="lbo" type="text" placeholder="enter your LBO here" className="input-register"/>
+                    <input onChange={handleFormInputChange("lbo")} id="lbo" type="text" placeholder="enter your LBO here" className="input-register"/>
 
                     <button onClick={sendData} className="submit-register">Submit</button>
                 {/*</form>*/}

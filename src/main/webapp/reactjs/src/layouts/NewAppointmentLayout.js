@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import RegisterRequestRow from "../components/registerRequestRow";
+import {AppointmentService} from "../services/AppointmentService";
+import {DoctorService} from "../services/DoctorService";
+import {NurseService} from "../services/NurseService";
 
 const NewAppointmentLayout = () => {
 
@@ -12,20 +15,47 @@ const NewAppointmentLayout = () => {
         fetchNurses();
     }, []);
 
+    // async function fetchDoctors() {
+    //     const res = await fetch("http://localhost:8080/allDoctors");
+    //     res
+    //         .json()
+    //         .then(res => setDoctors(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchDoctors() {
-        const res = await fetch("http://localhost:8080/allDoctors");
-        res
-            .json()
-            .then(res => setDoctors(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await DoctorService.getAll()
+            setDoctors(response.data)
+        } catch (error) {
+            console.error(`Error loading doctors !: ${error}`);
+        }
     }
 
+    // async function fetchNurses() {
+    //     const res = await fetch("http://localhost:8080/allNurses");
+    //     res
+    //         .json()
+    //         .then(res => setNurses(res))
+    //         .catch(err => setErrors(err));
+    // }
+
     async function fetchNurses() {
-        const res = await fetch("http://localhost:8080/allNurses");
-        res
-            .json()
-            .then(res => setNurses(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await NurseService.getAll()
+            setNurses(response.data)
+        } catch (error) {
+            console.error(`Error loading nurses !: ${error}`);
+        }
+    }
+
+    async function addAppointment(appointment) {
+        try {
+            await AppointmentService.create(appointment)
+        }
+        catch (error) {
+            console.error(`Error while adding new appointment: ${error}`);
+        }
     }
 
     const sendData = ()  => {
@@ -50,29 +80,29 @@ const NewAppointmentLayout = () => {
 
             let appointment = {
                 "date": date, "start": start, "end": end,
-                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id}, "patient": null,
+                "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
+                "patient": null,
                 "price": price
             };
             console.log(appointment);
             console.log(JSON.stringify(appointment));
-            fetch('http://localhost:8080/addAppointment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(appointment),
-            })
-                // .then(response => response.json())
-                .then(user => {
-                    console.log('Success:', user);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-
+            addAppointment(appointment);
+            // fetch('http://localhost:8080/addAppointment', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(appointment),
+            // })
+            //     // .then(response => response.json())
+            //     .then(user => {
+            //         console.log('Success:', user);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //     });
         }
-
-        }
+    }
 
     const valid = (date, time, duration, price) => {
         if(date === null || time === null || duration === "" || price === "") {
@@ -115,14 +145,14 @@ const NewAppointmentLayout = () => {
                     <select name="doctor" id="doctor" className="input-register">
                         {doctors.map((doctor) =>
                             // JSON.stringify(doctor)
-                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.name + " " + doctor.lastName}</option>
+                            <option key={doctor.id} value={JSON.stringify(doctor)}>{doctor.user.name + " " + doctor.user.lastName}</option>
                         )}
                     </select>
 
                     <label htmlFor="nurse" className="label-register">Nurse:</label>
                     <select name="nurse" id="nurse" className="input-register">
                         {nurses.map((nurse) =>
-                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.name + " " + nurse.lastName}</option>
+                            <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.user.name + " " + nurse.user.lastName}</option>
                         )}
                     </select>
 

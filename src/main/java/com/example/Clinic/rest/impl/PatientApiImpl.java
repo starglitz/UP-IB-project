@@ -1,20 +1,23 @@
 package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.RegisterRequest;
-import com.example.Clinic.model.RequestStatus;
+import com.example.Clinic.model.enumerations.RequestStatus;
 import com.example.Clinic.rest.PatientApi;
+import com.example.Clinic.rest.support.converter.DtoToPatient;
+import com.example.Clinic.rest.support.converter.PatientToDto;
+import com.example.Clinic.rest.support.converter.RegisterDtoToPatient;
+import com.example.Clinic.rest.support.dto.PatientDto;
+import com.example.Clinic.rest.support.dto.PatientRegisterDto;
+import com.example.Clinic.service.PatientBookService;
 import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.RegisterRequestService;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
@@ -30,16 +33,37 @@ public class PatientApiImpl implements PatientApi {
     @Autowired
     private RegisterRequestService registerRequestService;
 
+    @Autowired
+    private PatientBookService patientBookService;
+
+    @Autowired
+    private PatientToDto patientToDto;
+
+    @Autowired
+    private DtoToPatient dtoToPatient;
+
+    @Autowired
+    private RegisterDtoToPatient registerDtoToPatient;
 
     @Override
-    public ResponseEntity<Patient> registerUser(@RequestBody @Valid Patient patient) {
-        boolean valid = patientService.addPatient(patient);
-        if(valid) {
-            RegisterRequest request = new RegisterRequest(patient, RequestStatus.PENDING, false);
-            registerRequestService.addRegisterRequest(request);
-            return new ResponseEntity<>(patient, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
+    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) {
+        System.out.println(patientDto);
+        Patient patient = registerDtoToPatient.convert(patientDto);
+
+        Patient patientJpa = patientService.addPatient(patient);
+
+
+        RegisterRequest request = new RegisterRequest(patientJpa, RequestStatus.PENDING, false);
+        PatientBook book = new PatientBook();
+        book.setPatient(patientJpa);
+        patientBookService.addPatientBook(book);
+        registerRequestService.addRegisterRequest(request);
+
+        patientJpa.setPatientBookId(book.getId());
+        patientService.updatePatient(patientJpa, patientJpa.getId());
+        System.out.println(patientJpa);
+        return new ResponseEntity<>(patient, HttpStatus.OK);
+
     }
 
 
@@ -54,16 +78,14 @@ public class PatientApiImpl implements PatientApi {
     public ResponseEntity getPatient(Long id) {
 
         Optional<Patient> patient = patientService.getPatientById(id);
-        return  new ResponseEntity(patient, HttpStatus.OK);
+        return  new ResponseEntity(patientToDto.convert(patient.get()), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Patient> updatePatient(@Valid Patient patient, Long id) {
-        boolean valid = patientService.updatePatient(patient, id);
-        if(valid){
-            return new ResponseEntity<>(patient, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(patient, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<PatientDto> updatePatient(Long id,@Valid PatientDto patientDto) {
+        Patient patientJpa = patientService.updatePatient(dtoToPatient.convert(patientDto), id);
+
+        return new ResponseEntity<>(patientToDto.convert(patientJpa), HttpStatus.OK);
     }
 
 

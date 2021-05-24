@@ -13,6 +13,7 @@ function DoctorAppointmentsTable({appointments}) {
         const id = e[0];
         history.push("/booking/" + id)
     }
+    console.log(appointments)
 
     const columns = [
         {
@@ -31,7 +32,7 @@ function DoctorAppointmentsTable({appointments}) {
                 sort: true,
                 customBodyRender: (value, tableMeta, updateValue) => (
                     <Typography>
-                        {value.name}
+                        {value.user.name}
                     </Typography>
                 )
             }

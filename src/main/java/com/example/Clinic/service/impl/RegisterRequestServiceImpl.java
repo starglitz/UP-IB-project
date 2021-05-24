@@ -1,47 +1,50 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.RegisterRequestDao;
 import com.example.Clinic.model.RegisterRequest;
-import com.example.Clinic.model.RequestStatus;
+import com.example.Clinic.repository.RegisterRequestRepository;
 import com.example.Clinic.service.RegisterRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
+import java.util.*;
 
 
 @Service
 public class RegisterRequestServiceImpl implements RegisterRequestService {
 
+
     @Autowired
-    private RegisterRequestDao registerRequestDao;
+    private RegisterRequestRepository registerRequestRepository;
 
     @Override
     public RegisterRequest addRegisterRequest(RegisterRequest request) {
-        return registerRequestDao.addRegisterRequest(request);
+        return registerRequestRepository.save(request);
     }
 
     @Override
-    public Set<RegisterRequest> getAll() {
-        return registerRequestDao.getAll();
+    public List<RegisterRequest> getAll() {
+        return  new ArrayList<RegisterRequest>(registerRequestRepository.findAll());
     }
 
     @Override
     public RegisterRequest findByPatientId(Long id) {
-        return registerRequestDao.findByPatientId(id);
+        return registerRequestRepository.findByPatientId(id);
     }
 
 
     @Override
     public RegisterRequest update(RegisterRequest request) {
 
-//        RegisterRequest requestJpa = registerRequestDao.findById(request.getRegister_request_id()).get();
-//        requestJpa.setStatus(request.getStatus());
-//        requestJpa.setVisitedMail(request.isVisitedMail());
-        return registerRequestDao.update(request);
+
+        RegisterRequest requestJpa = findById(request.getRegister_request_id()).get();
+        requestJpa.setStatus(request.getStatus());
+        requestJpa.setVisitedMail(request.isVisitedMail());
+        return registerRequestRepository.save(requestJpa);
+    }
+
+    @Override
+    public Optional<RegisterRequest> findById(Long id) {
+        return registerRequestRepository.findById(id);
     }
 
 

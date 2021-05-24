@@ -9,9 +9,5 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 public interface UserApi {
 
-    @PostMapping(value = "/loginData",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity checkUserLogin(@RequestBody LoginForm loginForm);
-
 
 }

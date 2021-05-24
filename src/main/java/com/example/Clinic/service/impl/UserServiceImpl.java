@@ -1,49 +1,30 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.DoctorDao;
-import com.example.Clinic.dao.NurseDao;
-import com.example.Clinic.dao.PatientDao;
+
 import com.example.Clinic.model.*;
 import com.example.Clinic.repository.UserRepository;
-import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 
 @Service
 public class UserServiceImpl  implements UserService {
 
-    @Autowired
-    private DoctorDao doctorDao;
-
-    @Autowired
-    private NurseDao nurseDao;
-
-    @Autowired
-    private PatientDao patientDao;
 
     @Autowired
     private UserRepository userRepository;
 
 
     @Override
-    public boolean checkPatientLogin(LoginForm loginForm) {
-
-        List<Patient> patients = patientDao.getAll();
-        for(Patient patient : patients){
-            if(loginForm.getEmail().equals(patient.getUser().getEmail()) && BCrypt.checkpw(loginForm.getPassword(), patient.getUser().getPassword())){
-                return true;
-            }
-        }
-        return false;
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     @Override
-    public Optional<User> findUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+    public Optional<User> findOne(Long id) {
+        return userRepository.findById(id);
     }
 }

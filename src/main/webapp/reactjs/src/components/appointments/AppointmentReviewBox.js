@@ -2,6 +2,9 @@ import * as React from 'react';
 import {useEffect, useState} from "react";
 import Button from "@material-ui/core/Button";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
+import {AppointmentService} from "../../services/AppointmentService";
+import {RecipeService} from "../../services/RecipeService";
+
 
 function AppointmentTable(appointmentParam) { // trebalo bi da se pasuje appointment ovde
 
@@ -21,32 +24,57 @@ function AppointmentTable(appointmentParam) { // trebalo bi da se pasuje appoint
 
     useEffect(() => {
         fetchAppointment()
-            .then(res => setAppointment(res))
-            .catch(err => setError(err));
     },[])
 
-    async function fetchAppointment() { // test fetch, umesto ovoga se passuje appoinntment iz pretrage
-        const res = await fetch("http://localhost:8080/appointment/17");
-        return res.json()
+//     async function fetchAppointment() { // test fetch, umesto ovoga se passuje appoinntment iz pretrage
+//         const res = await fetch("http://localhost:8080/appointment/17");
+//         return res.json()
+//     }
+
+async function fetchAppointment() {
+        try {
+            const response = await AppointmentService.get(7);
+            setAppointment(response.data);
+        } catch (error) {
+            console.error(`Error loading appointment !: ${error}`);
+        }
+    }
+
+    async function postAppointment() {
+        console.log("entered")
+            try {
+                await AppointmentService.update(appointment.appointment_id, appointment)
+                //history.push("/home")
+            } catch (error) {
+                console.error(`Error ocurred while updating the appointment: ${error}`);
+            }
     }
 
 
-    async function postAppointment() {
-        fetch('http://localhost:8080/updateAppointment/' + appointment.appointment_id, {
-            mode: 'no-cors',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(appointment),
-        })
-            .then(response => response.json())
-            .then(appointment => {
-                console.log('Success:', appointment);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+    // async function postAppointment() {
+    //     fetch('http://localhost:8080/updateAppointment/' + appointment.appointment_id, {
+    //         mode: 'no-cors',
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(appointment),
+    //     })
+    //         .then(response => response.json())
+    //         .then(appointment => {
+    //             console.log('Success:', appointment);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error:', error);
+    //         });
+    // }
+
+    async function addRecipe(recipe) {
+        try {
+            await RecipeService.create(recipe)
+        } catch (error) {
+            console.error(`Error adding a new recipe!: ${error}`);
+        }
     }
 
     const handleFinish = () => {
@@ -59,29 +87,31 @@ function AppointmentTable(appointmentParam) { // trebalo bi da se pasuje appoint
                 "issueDate": appointment.date,
                 "nurse": appointment.nurse,
                 "validated": false,
-                "patientBookId": appointment.patient.patientBookId
+                "patientBookId": 1
             };
 
             if (recipe.description !== "") {
                 console.log(recipe)
-                fetch('http://localhost:8080/addRecipe', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(recipe),
-                })
-                    .then(response => response.json())
-                    .then(recipe => {
-                        console.log('Success:', recipe);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
+                // fetch('http://localhost:8080/addRecipe', {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify(recipe),
+                // })
+                //     .then(response => response.json())
+                //     .then(recipe => {
+                //         console.log('Success:', recipe);
+                //     })
+                //     .catch((error) => {
+                //         console.error('Error:', error);
+                //     });
+                addRecipe(recipe)
             }
         })
         document.getElementById("recipeList").value = ""
     }
+    console.log(appointment)
 
     return (
     <>

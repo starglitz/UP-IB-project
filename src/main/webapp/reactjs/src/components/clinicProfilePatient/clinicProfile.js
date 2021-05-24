@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, Link} from "react-router-dom";
 import hospitalImg from "../../assets/hospital-clinicProfile.png";
+import {AppointmentService} from "../../services/AppointmentService";
+import {ClinicService} from "../../services/ClinicService";
 
 function ClinicProfile(){
 
@@ -22,12 +24,22 @@ function ClinicProfile(){
 
     const {id} = useParams();
 
+    // async function fetchData() {
+    //     const res = await fetch("http://localhost:8080/clinic/" + id);
+    //     res
+    //         .json()
+    //         .then(res => setClinic(res))
+    //         .catch(err => setErrors(err));
+    // }
+
+
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/clinic/" + id);
-        res
-            .json()
-            .then(res => setClinic(res))
-            .catch(err => setErrors(err));
+        try {
+            const response = await ClinicService.get(id);
+            setClinic(response.data);
+        } catch (error) {
+            console.error(`Error loading clinic !: ${error}`);
+        }
     }
 
     return (

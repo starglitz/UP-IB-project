@@ -4,7 +4,13 @@ import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Doctor;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.rest.AppointmentApi;
+import com.example.Clinic.rest.support.converter.AppointmentToDto;
+import com.example.Clinic.rest.support.converter.DoctorToDto;
+import com.example.Clinic.rest.support.converter.DtoToAppointment;
+import com.example.Clinic.rest.support.converter.NurseToDto;
+import com.example.Clinic.rest.support.dto.AppointmentDto;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
 import com.example.Clinic.service.NurseService;
@@ -16,6 +22,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,6 +41,18 @@ public class AppointmentApiImpl implements AppointmentApi {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private DoctorToDto doctorToDto;
+
+    @Autowired
+    private NurseToDto nurseToDto;
+
+    @Autowired
+    private DtoToAppointment dtoToAppointment;
+
+    @Autowired
+    private AppointmentToDto appointmentToDto;
+
     @Override
     public ResponseEntity getAllAppointments() {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!" + appointmentService.findAll());
@@ -41,63 +61,54 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Override
     public ResponseEntity getAppointment(Long id) {
-        if(appointmentService.findById(id) != null) {
-            return new ResponseEntity(appointmentService.findById(id), HttpStatus.OK);
+        Appointment appointment = appointmentService.findById(id);
+        if(appointment != null) {
+            return new ResponseEntity(appointmentToDto.convert(appointment), HttpStatus.OK);
         }
-        return new ResponseEntity("No such appointment", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity("No such appointment", HttpStatus.NOT_FOUND);
     }
 
     @Override
     public ResponseEntity getClinicAppointments(long id) {
-        return new ResponseEntity(appointmentService.findByClinicId(id), HttpStatus.OK);
+        List<Appointment> appointments = appointmentService.findByClinicId(id);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity getFreeClinicAppointments(long id) {
-        return new ResponseEntity(appointmentService.findFreeByClinicId(id), HttpStatus.OK);
+        List<Appointment> appointments = appointmentService.findFreeByClinicId(id);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
     }
     @Override
-    public ResponseEntity getFreeDoctorAppointemnts(Long doctorId) {
-        return new ResponseEntity(appointmentService.findFreeByDoctor(doctorId), HttpStatus.OK);
+    public ResponseEntity getFreeDoctorAppointemntsByDate(Long doctorId, LocalDate date) {
+        List<Appointment> appointments = appointmentService.findFreeByDoctorAndDate(doctorId, date);
+        return new ResponseEntity(appointmentToDto.convertList(appointments), HttpStatus.OK);
 
     }
 
-
     @Override
-    public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody Appointment appointment) {
-        Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
-        appointment.setDoctor(doctor);
-        Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
-        appointment.setNurse(nurse);
+    public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
+        System.out.println("!!!!");
+        System.out.println(appointmentDto);
+
+        Appointment appointment = dtoToAppointment.convert(appointmentDto);
 
         return new ResponseEntity(appointmentService.add(appointment), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Appointment> updateAppointment(@Valid Appointment appointmentParam, Long id) {
-        boolean valid = appointmentService.update(appointmentParam);
-        Appointment appointment = appointmentService.findById(id);
-        if (valid) {
-            Doctor doctor = doctorService.findById(appointmentParam.getDoctor().getId()).get();
-            appointment.setDoctor(doctor);
-            Nurse nurse = nurseService.findById(appointmentParam.getNurse().getId()).get();
-            appointment.setNurse(nurse);
-            Patient patient = patientService.getPatientById(appointmentParam.getPatient().getId()).get();
-            appointment.setPatient(patient);
+    public ResponseEntity updateAppointment(@Valid AppointmentDto appointmentParam, Long id) {
 
-            appointment.setStart(appointmentParam.getStart());
-            appointment.setEnd(appointmentParam.getEnd());
-            appointment.setStatus(appointmentParam.getStatus());
-            appointment.setDeleted(appointmentParam.isDeleted());
-            appointment.setPrice(appointmentParam.getPrice());
+        Appointment appointment = dtoToAppointment.convert(appointmentParam);
 
-            return new ResponseEntity(appointmentService.update(appointment), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(appointment, HttpStatus.BAD_REQUEST);
+        boolean valid = appointmentService.update(appointment);
+
+        return new ResponseEntity(appointmentParam, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Appointment> deleteAppointment(Appointment appointment) {
+    public ResponseEntity<Appointment> deleteAppointment(Long id) {
+        Appointment appointment = appointmentService.findById(id);
         return new ResponseEntity(appointmentService.delete(appointment), HttpStatus.OK);
     }
 }

@@ -1,13 +1,15 @@
 package com.example.Clinic.model;
 
 import jdk.jfr.Enabled;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
+@Data
+@NoArgsConstructor
 @Entity
 public class Address {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +23,4 @@ public class Address {
 
     @OneToOne
     private Clinic clinic;
-
-
-
-
 }

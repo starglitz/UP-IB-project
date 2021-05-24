@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import {AppointmentService} from "../../services/AppointmentService";
 
 function BookingPage() {
 
 
     const [appointment, setAppointment] = useState({
         appointment_id: '',
-        doctor:'',
+        doctor: {
+            user:{
+                name: ''
+            }
+        },
         date: '',
         start: '',
         price: ''
@@ -16,18 +21,26 @@ function BookingPage() {
 
     useEffect(() => {
         fetchData()
-            .then(res => setAppointment(res))
-            .catch(err => setError(err));
     },[])
 
     const {id} = useParams();
 
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/appointment/' + id);
+    //     return res.json()
+    // }
+
+
+
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/appointment/' + id);
-        return res.json()
+        try {
+            const response = await AppointmentService.get(id);
+            setAppointment(response.data);
+        } catch (error) {
+            console.error(`Error loading appointment !: ${error}`);
+        }
     }
-
-
+    console.log(appointment)
     return (
         <>
 
@@ -39,7 +52,7 @@ function BookingPage() {
                 <ul>
                     <li className="info-row">
                         <p>Doctor name:</p>
-                        <p>{appointment.doctor.name}</p>
+                        <p>{appointment.doctor.user.name}</p>
                     </li>
                     <li className="info-row">
                         <p>Date:</p>

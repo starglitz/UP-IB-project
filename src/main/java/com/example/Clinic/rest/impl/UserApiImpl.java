@@ -14,12 +14,5 @@ public class UserApiImpl implements UserApi {
     @Autowired
     private UserService userService;
 
-    @Override
-    public ResponseEntity checkUserLogin(LoginForm loginForm) {
-        if(userService.checkPatientLogin(loginForm)){
-            return new ResponseEntity(HttpStatus.OK);
-        }
 
-        return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-    }
 }

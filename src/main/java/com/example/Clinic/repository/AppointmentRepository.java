@@ -4,6 +4,7 @@ import com.example.Clinic.model.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -17,9 +18,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             nativeQuery = true)
     List<Appointment> findFreeByClinicId(Long clinic_id);
 
-    @Query(value = "SELECT * FROM appointment WHERE doctor_id =?",
+    @Query(value = "SELECT * FROM appointment WHERE doctor_id =?1 and date = ?2 and  status = 'FREE'",
             nativeQuery = true)
-    List<Appointment> findFreeByDoctor(Long doctor_id);
+    List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
 
 
 }

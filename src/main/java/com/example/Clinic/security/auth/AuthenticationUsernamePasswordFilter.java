@@ -1,7 +1,5 @@
 package com.example.Clinic.security.auth;
 
-import com.example.Clinic.enumerations.UserRole;
-import com.example.Clinic.security.salt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,8 +14,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AuthenticationUsernamePasswordFilter extends UsernamePasswordAuthenticationFilter {
 
