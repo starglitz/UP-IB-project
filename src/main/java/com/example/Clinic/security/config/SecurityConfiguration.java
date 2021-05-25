@@ -1,9 +1,13 @@
 package com.example.Clinic.security.config;
 
 import com.example.Clinic.security.auth.AuthenticationUsernamePasswordFilter;
+import com.example.Clinic.security.auth.RestAuthenticationEntryPoint;
+import com.example.Clinic.security.token.TokenAuthenticationFilter;
+import com.example.Clinic.security.token.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -15,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,6 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private TokenUtils tokenUtils;
+
 
     @Autowired
     public void configureAuthentication(
@@ -46,6 +54,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     @Bean
     @Override
@@ -68,13 +79,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(corsConfigurationSource());
         http.cors().and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/patients").permitAll()
                 .anyRequest().authenticated();
 
 
-//        http.addFilterBefore(authenticationTokenFilterBean(),
-//                UsernamePasswordAuthenticationFilter.class);
+            http.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userDetailsService),
+                BasicAuthenticationFilter.class);
 
 
 

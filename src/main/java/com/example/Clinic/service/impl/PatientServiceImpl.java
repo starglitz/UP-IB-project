@@ -8,6 +8,7 @@ import com.example.Clinic.repository.PatientRepository;
 import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,9 +20,13 @@ public class PatientServiceImpl implements PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
     public Patient addPatient(Patient patient) {
+
         return patientRepository.save(patient);
     }
 

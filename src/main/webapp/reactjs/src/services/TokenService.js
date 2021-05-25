@@ -31,5 +31,6 @@ function decodeToken(token) {
 function didTokenExpire() {
     const token = getToken();
     const decodedToken = token ? decodeToken(token) : null;
-    return decodedToken ? decodedToken.exp_date < Date.now() : null;
+    const expDate = new Date (decodedToken.exp * 1000)
+    return decodedToken ? expDate < Date.now() : null;
 }

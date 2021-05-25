@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from './components/navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { PrivateRoute } from "./components/PrivateRoute";
 import RegisterLayout from "./layouts/RegisterLayout";
 import NurseLayout from "./layouts/NurseLayout";
 import PatientProfilLayout from "./layouts/PatientProfilLayout";
@@ -31,6 +32,12 @@ function App() {
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/login" exact component={LoginLayout}/>
                 <Route path="/nursePage" exact component={NurseLayout}/>
+                {/*<PrivateRoute*/}
+                {/*    exact*/}
+                {/*    path="/login"*/}
+                {/*    component={PatientProfilLayout}*/}
+                {/*    roles={["PATIENT"]}*/}
+                {/*/>*/}
                 <Route path="/profile" exact component={PatientProfilLayout}/>
                 <Route path="/registerRequests" exact component={RegisterRequests}/>
                 <Route path="/recipes" exact component={RecipeLayout}/>
