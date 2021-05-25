@@ -1,13 +1,16 @@
 package com.example.Clinic.model;
 
 import com.example.Clinic.model.enumerations.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -34,9 +37,11 @@ public class User {
 
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection
-    private List<UserRole> userRole;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private Set<Authority> roles = new HashSet<>();
 
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
@@ -52,4 +57,6 @@ public class User {
         this.country = country;
         this.phoneNumber = phoneNumber;
     }
+
+
 }
