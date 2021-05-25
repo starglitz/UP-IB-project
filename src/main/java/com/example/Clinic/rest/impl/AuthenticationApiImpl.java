@@ -7,8 +7,11 @@ import com.example.Clinic.rest.support.dto.UserTokenState;
 import com.example.Clinic.security.services.UserDetailsImpl;
 import com.example.Clinic.security.token.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,21 +34,30 @@ public class AuthenticationApiImpl implements AuthenticationApi {
     public ResponseEntity createAuthenticationToken(JwtAuthenticationRequest authenticationRequest,
                                                                     HttpServletResponse response) {
 
+        try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                            authenticationRequest.getPassword()));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }catch (BadCredentialsException ex){
+            return ResponseEntity.status(404).build();
+        }catch (DisabledException ex ){
+            return ResponseEntity.status(403).build();
+        }
+
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
 
-        // Ubaci korisnika u trenutni security kontekst
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        // Kreiraj token za tog korisnika
         UserDetailsImpl user = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = user.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         String jwt = tokenUtils.generateToken(user.getUsername(), roles.toString());
 
-        // Vrati token kao odgovor na uspesnu autentifikaciju
         return ResponseEntity.ok(jwt);
+
+
     }
 }

@@ -26,7 +26,7 @@ public class TokenUtils {
     public String SECRET;
 
     // Period vazenja
-    @Value("100000")
+    @Value("600000")
     private int EXPIRES_IN;
 
     // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
@@ -63,7 +63,7 @@ public class TokenUtils {
         return new Date(new Date().getTime() + EXPIRES_IN);
     }
 
-    // Funkcija za refresh JWT tokena
+
     public String refreshToken(String token) {
         String refreshedToken;
         try {

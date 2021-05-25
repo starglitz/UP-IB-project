@@ -43,11 +43,13 @@ const LoginLayout = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-       login().catch(err => { setError(err) });
+        login()
+
     }
 
     const login = async () => {
-        await AuthenticationService.login(credentials);
+        const status = await AuthenticationService.login(credentials)
+        console.log(status)
     };
 
 

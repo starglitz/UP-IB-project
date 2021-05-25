@@ -17,7 +17,6 @@ async function login(userCredentials) {
         userCredentials
     ).catch(function (error) {
         if (error.response) {
-            console.log(error.response.status);
             if(error.response.status == '404') {
                 status = '404'
                 return '404'
@@ -31,7 +30,7 @@ async function login(userCredentials) {
     });
 
 
-    if(status != '403' && status != '404' && response) {
+    if(status != '403' && status != '404') {
         console.log('proslo')
         const decoded_token = TokenService.decodeToken(response.data);
         if (decoded_token) {
@@ -43,10 +42,8 @@ async function login(userCredentials) {
         }
     }
 
-    if(!response){
-        return Promise.reject('Wrong login data');
-    }
 
+    return status;
 
 }
 
