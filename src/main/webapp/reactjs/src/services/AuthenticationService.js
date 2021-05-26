@@ -32,10 +32,14 @@ async function login(userCredentials) {
 
     if(status != '403' && status != '404') {
         console.log('proslo')
-        const decoded_token = TokenService.decodeToken(response.data);
-        if (decoded_token) {
-            TokenService.setToken(response.data);
-            window.location.assign("/");
+        TokenService.removeToken()
+        const decoded_token = TokenService.decodeToken(response.data.accessToken);
+        const decoded_refresh_token = TokenService.decodeToken(response.data["refreshToken"]);
+        if (decoded_token && decoded_refresh_token) {
+            TokenService.setToken(response.data.accessToken);
+            TokenService.setRefreshToken(response.data["refreshToken"]);
+            // window.location.assign("/");
+            console.log(TokenService.getToken(), TokenService.getRefreshToken())
         } else {
             console.error("Invalid token");
 

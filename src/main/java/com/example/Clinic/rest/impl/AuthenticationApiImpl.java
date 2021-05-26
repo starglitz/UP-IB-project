@@ -6,6 +6,7 @@ import com.example.Clinic.rest.support.dto.JwtAuthenticationRequest;
 import com.example.Clinic.rest.support.dto.UserTokenState;
 import com.example.Clinic.security.services.UserDetailsImpl;
 import com.example.Clinic.security.token.TokenUtils;
+import com.example.Clinic.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,8 +32,11 @@ public class AuthenticationApiImpl implements AuthenticationApi {
     @Autowired
     private TokenUtils tokenUtils;
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     @Override
-    public ResponseEntity createAuthenticationToken(JwtAuthenticationRequest authenticationRequest,
+    public ResponseEntity<UserTokenState> createAuthenticationToken(JwtAuthenticationRequest authenticationRequest,
                                                                     HttpServletResponse response) {
 
         try {
@@ -55,9 +60,31 @@ public class AuthenticationApiImpl implements AuthenticationApi {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         String jwt = tokenUtils.generateToken(user.getUsername(), roles.toString());
+        String refreshJwt = tokenUtils.generateRefreshToken(jwt);
 
-        return ResponseEntity.ok(jwt);
+        return ResponseEntity.ok(new UserTokenState(jwt, refreshJwt));
 
 
     }
+
+    @Override
+    public ResponseEntity refreshAuthenticationToken(HttpServletRequest request) {
+
+
+        String token = tokenUtils.getToken(request);
+        String username = this.tokenUtils.getUsernameFromToken(token);
+        UserDetailsImpl user = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);
+
+        if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
+            String refreshedToken = tokenUtils.refreshToken(token);
+
+
+            return ResponseEntity.ok(refreshedToken);
+        } else {
+            UserTokenState userTokenState = new UserTokenState();
+            return ResponseEntity.badRequest().body(userTokenState);
+        }
+    }
+
+
 }
