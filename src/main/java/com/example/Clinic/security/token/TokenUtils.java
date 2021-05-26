@@ -2,9 +2,12 @@ package com.example.Clinic.security.token;
 
 import java.util.Date;
 
+import javax.security.auth.Subject;
 import javax.servlet.http.HttpServletRequest;
 
 import com.example.Clinic.security.services.UserDetailsImpl;
+import com.example.Clinic.service.impl.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenUtils {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+
     // Izdavac tokena
     @Value("dirty-vegans")
     private String APP_NAME;
@@ -26,8 +32,11 @@ public class TokenUtils {
     public String SECRET;
 
     // Period vazenja
-    @Value("600000")
+    @Value("60000")
     private int EXPIRES_IN;
+
+    @Value("200000")
+    private int REFRESH_EXPIRES_IN;
 
     // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
     @Value("Authorization")
@@ -54,6 +63,15 @@ public class TokenUtils {
                 .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
     }
 
+    // Funkcija za generisanje JWT token
+    public String generateRefreshToken(String token) {
+        Claims claims = getAllClaimsFromToken(token);
+        claims.setExpiration(generateExpirationDateRefresh());
+        return Jwts.builder()
+                .setClaims(claims)
+                .signWith(SIGNATURE_ALGORITHM, SECRET).compact();
+    }
+
     private String generateAudience() {
 
         return AUDIENCE_WEB;
@@ -61,6 +79,10 @@ public class TokenUtils {
 
     private Date generateExpirationDate() {
         return new Date(new Date().getTime() + EXPIRES_IN);
+    }
+
+    private Date generateExpirationDateRefresh() {
+        return new Date(new Date().getTime() + REFRESH_EXPIRES_IN);
     }
 
 
@@ -81,8 +103,11 @@ public class TokenUtils {
 
     public boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
         final Date created = this.getIssuedAtDateFromToken(token);
+        String username = getUsernameFromToken(token);
+        UserDetailsImpl user = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);
         return (!(this.isCreatedBeforeLastPasswordReset(created, lastPasswordReset))
-                && (!(this.isTokenExpired(token)) || this.ignoreTokenExpiration(token)));
+                && (!(this.isTokenExpired(token)) || this.ignoreTokenExpiration(token))
+                && user.isEnabled());
     }
 
     // Funkcija za validaciju JWT tokena
@@ -187,4 +212,6 @@ public class TokenUtils {
         }
         return claims;
     }
+
+
 }
