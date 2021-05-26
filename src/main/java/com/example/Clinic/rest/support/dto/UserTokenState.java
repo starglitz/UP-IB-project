@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 public class UserTokenState {
 
     private String accessToken;
-    private Long expiresIn;
+    private String refreshToken;
 
-    public UserTokenState(String accessToken, long expiresIn) {
+    public UserTokenState(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
+        this.refreshToken = refreshToken;
     }
+
 }
