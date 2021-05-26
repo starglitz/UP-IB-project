@@ -21,11 +21,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,7 +58,7 @@ public class PatientApiImpl implements PatientApi {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) {
+    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) throws ParserConfigurationException, SAXException, IOException {
         System.out.println(patientDto);
 
         User user = new User(patientDto.getUserDto().getEmail(), passwordEncoder.encode(patientDto.getUserDto().getPassword()),

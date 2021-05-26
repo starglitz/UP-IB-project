@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.Optional;
 
 @Component
@@ -19,7 +22,7 @@ public class PatientBookApiImpl implements PatientBookApi {
     private PatientBookService patientBookService;
 
     @Override
-    public ResponseEntity<PatientBook> addPatientBook(@Valid PatientBook patientBook) {
+    public ResponseEntity<PatientBook> addPatientBook(@Valid PatientBook patientBook) throws ParserConfigurationException, SAXException, IOException {
         boolean valid = patientBookService.addPatientBook(patientBook);
 
         if (valid)
@@ -29,8 +32,8 @@ public class PatientBookApiImpl implements PatientBookApi {
     }
 
     @Override
-    public ResponseEntity getPatientBook(Long id) {
-        Optional<PatientBook> patientBook = patientBookService.findById(id);
+    public ResponseEntity getPatientBook(Long id) throws ParserConfigurationException, SAXException, IOException {
+        PatientBook patientBook = patientBookService.findById(id);
         System.out.println(patientBook);
         return new ResponseEntity(patientBook, HttpStatus.OK);
     }
