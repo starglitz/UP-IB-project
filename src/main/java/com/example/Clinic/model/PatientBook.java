@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import java.io.File;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,13 +37,13 @@ public class PatientBook {
 
 
     @Transient
-    List<String> illnessHistory;
+    List<String> illnessHistory = new ArrayList<>();
 
     @Transient
-    List<String> drugs;
+    List<String> drugs = new ArrayList<>();
 
 
-    private String xml;
+    private String xml = toXML();
 
     public String toXML() {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";

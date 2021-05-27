@@ -25,6 +25,8 @@ public class UserRegisterDto {private Long id;
     @NotBlank
     private String password;
 
+    private String passwordValidate;
+
     @NotBlank
     private String city;
 

@@ -59,4 +59,17 @@ public class User {
     }
 
 
+    public User(Long id, String email, String password, String name,
+                String lastName, String address, String city, String country,
+                String phoneNumber) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+    }
 }
