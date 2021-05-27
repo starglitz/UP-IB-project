@@ -43,6 +43,7 @@ public class RecipeApiImpl implements RecipeApi {
     public ResponseEntity approveRecipe(RecipeDto dto, Long recipe_id) {
         System.out.println(dto);
         Recipe newRecipe = dtoToRecipe.convert(dto);
+        System.out.println(newRecipe);
         boolean valid = recipeService.updateRecipe(newRecipe, recipe_id);
 
         if(valid)
