@@ -5,7 +5,6 @@ import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.repository.PatientRepository;
-import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

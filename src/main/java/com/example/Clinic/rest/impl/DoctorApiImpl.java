@@ -2,15 +2,20 @@ package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Clinic;
 import com.example.Clinic.model.Doctor;
+import com.example.Clinic.model.Nurse;
+import com.example.Clinic.model.User;
 import com.example.Clinic.rest.DoctorApi;
 import com.example.Clinic.rest.support.converter.DoctorToDto;
+import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
+import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
 import com.example.Clinic.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +29,8 @@ public class DoctorApiImpl implements DoctorApi {
     @Autowired
     private DoctorToDto doctorToDto;
 
+    @Autowired
+    private DtoToDoctor dtoToDoctor;
 
     @Override
     public ResponseEntity getAllDoctors() {
@@ -66,5 +73,19 @@ public class DoctorApiImpl implements DoctorApi {
             dtos.add(dto);
         }
         return new ResponseEntity(dtos, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<RegisterDoctorDto> create(@Valid RegisterDoctorDto doctor) {
+        User user = new User(doctor.getUser().getEmail(), doctor.getUser().getPassword(),
+                doctor.getUser().getName(), doctor.getUser().getLastName(),
+                doctor.getUser().getAddress(),doctor.getUser().getCity(),
+                doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber());
+
+
+        Doctor doctor1 = new Doctor(user);
+        Doctor created = doctorService.create(doctor1);
+
+        return new ResponseEntity(doctorToDto.convert(created), HttpStatus.OK);
     }
 }

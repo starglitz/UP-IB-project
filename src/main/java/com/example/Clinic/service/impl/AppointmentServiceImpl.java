@@ -4,7 +4,6 @@ package com.example.Clinic.service.impl;
 import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.repository.AppointmentRepository;
-import com.example.Clinic.security.salt.BCrypt;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
 import com.example.Clinic.service.NurseService;
