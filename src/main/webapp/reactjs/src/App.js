@@ -21,6 +21,7 @@ import BookingPage from "./components/booking/bookingPage";
 import PatientProfile from "./profile/PatientProfile";
 import PatientsTable from "./components/patients/PatientsTable";
 import Location from "./components/Location";
+import RegisterStaff from "./layouts/RegisterStaff";
 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/patientProfile" exact component={PatientProfile}/>
                 <Route path="/patients" exact component={PatientsTable}/>
                 <Route path="/mapsTest" exact component={Location}/>
+                <Route path="/staffRegister" exact component={RegisterStaff}/>
             </Switch>
         </Router>
     </div>

@@ -12,7 +12,6 @@ public class RegisterDoctorDto {
 
     private float grade;
 
-    @NotNull
     private ClinicDto clinic;
 
     @NotNull

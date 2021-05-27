@@ -50,6 +50,6 @@ public class NurseApiImpl implements NurseApi {
         Nurse nurse = new Nurse(user);
         Nurse created = nurseService.create(nurse);
 
-        return new ResponseEntity(nurseToDto.convert(created), HttpStatus.OK);
+        return new ResponseEntity("Successfully created", HttpStatus.OK);
     }
 }

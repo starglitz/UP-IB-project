@@ -86,6 +86,6 @@ public class DoctorApiImpl implements DoctorApi {
         Doctor doctor1 = new Doctor(user);
         Doctor created = doctorService.create(doctor1);
 
-        return new ResponseEntity(doctorToDto.convert(created), HttpStatus.OK);
+        return new ResponseEntity("Success", HttpStatus.OK);
     }
 }
