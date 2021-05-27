@@ -67,12 +67,20 @@ public class PatientBookServiceImpl implements PatientBookService {
         return decipheredBook; }
 
     @Override
-    public boolean updatePatientBook(PatientBook patientBook, Long id) {
+    public boolean updatePatientBook(PatientBook patientBook, Long id) throws IOException, SAXException, ParserConfigurationException {
         boolean valid = checkValid(patientBook);
 
-        if (valid && patientBook.getId().equals(id))
-            patientBookRepository.save(patientBook);
+        PatientBook book = patientBookRepository.findById(id).orElse(null);
+        PatientBook decipheredBook = new PatientBook();
 
+
+        if (valid && patientBook.getId().equals(id)) {
+
+            String decipheredXml = AsymmetricKeyDecryption.decryptMain(book);
+            decipheredBook = new PatientBook(book.getId(), book.getPatient(), decipheredXml);
+
+            patientBookRepository.save(patientBook);
+        }
         return valid;
     }
 

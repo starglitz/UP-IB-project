@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface PatientBookService {
     boolean addPatientBook(PatientBook patient) throws IOException, SAXException, ParserConfigurationException;
     PatientBook findById(Long id) throws IOException, SAXException, ParserConfigurationException;
-    boolean updatePatientBook(PatientBook patient, Long id);
+    boolean updatePatientBook(PatientBook patient, Long id) throws IOException, SAXException, ParserConfigurationException;
 }

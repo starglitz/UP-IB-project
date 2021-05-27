@@ -70,7 +70,7 @@ public class PatientBook {
         this.id = id;
         this.patient = patient;
         this.xml = xml;
-        
+
         String drugs = StringUtils.substringBetween(xml, "<drugs>", "</drugs>");
 
         String[] drugsList = StringUtils.substringsBetween(drugs, "<drug>", "</drug>");

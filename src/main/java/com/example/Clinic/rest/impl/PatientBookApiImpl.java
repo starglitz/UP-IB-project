@@ -39,7 +39,7 @@ public class PatientBookApiImpl implements PatientBookApi {
     }
 
     @Override
-    public ResponseEntity<PatientBook> updatePatientBook(@Valid PatientBook patientBook, Long id) {
+    public ResponseEntity<PatientBook> updatePatientBook(@Valid PatientBook patientBook, Long id) throws ParserConfigurationException, SAXException, IOException {
         boolean valid = patientBookService.updatePatientBook(patientBook, id);
 
         if (valid)
