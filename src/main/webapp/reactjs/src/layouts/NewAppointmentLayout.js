@@ -82,7 +82,8 @@ const NewAppointmentLayout = () => {
                 "date": date, "start": start, "end": end,
                 "doctor": {"id": JSON.parse(doctor).id}, "nurse": {"id": JSON.parse(nurse).id},
                 "patient": null,
-                "price": price
+                "price": price,
+                "status": 'FREE'
             };
             console.log(appointment);
             console.log(JSON.stringify(appointment));
