@@ -1,12 +1,15 @@
 package com.example.Clinic.rest;
 
+import com.example.Clinic.rest.support.dto.DoctorDto;
+import com.example.Clinic.rest.support.dto.NurseDto;
+import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 import java.time.LocalDate;
 
 @RestController
@@ -34,5 +37,8 @@ public interface DoctorApi {
     @GetMapping(value = "/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getDoctorByClinicId(@PathVariable("id") Long id);
+
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<RegisterDoctorDto> create(@RequestBody @Valid RegisterDoctorDto doctor);
 
 }

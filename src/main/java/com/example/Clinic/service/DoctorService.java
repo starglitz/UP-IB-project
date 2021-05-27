@@ -14,4 +14,5 @@ public interface DoctorService {
     Optional<Doctor> findById(Long id);
     List<Doctor> findByClinicId(Long id);
     List<Doctor> findByClinicAndDate(Long id, LocalDate date);
+    Doctor create(Doctor doctor);
 }

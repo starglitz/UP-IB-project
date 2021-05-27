@@ -22,4 +22,8 @@ public class Doctor{
     @MapsId
     @JoinColumn(name = "id")
     private User user;
+
+    public Doctor(User user) {
+        this.user = user;
+    }
 }

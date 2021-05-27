@@ -7,7 +7,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
+
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -15,7 +19,7 @@ import javax.validation.Valid;
 public interface PatientApi {
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Patient> registerUser(@Valid @RequestBody PatientRegisterDto patient);
+    ResponseEntity<Patient> registerUser(@Valid @RequestBody PatientRegisterDto patient) throws ParserConfigurationException, SAXException, IOException;
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllPatients();

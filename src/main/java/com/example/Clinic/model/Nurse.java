@@ -19,7 +19,10 @@ public class Nurse {
 
     @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "id")
     private User user;
 
+    public Nurse(User user) {
+        this.user = user;
+    }
 }

@@ -1,10 +1,9 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Patient;
-import com.example.Clinic.model.PatientBook;
-import com.example.Clinic.model.RegisterRequest;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.RequestStatus;
+import com.example.Clinic.model.enumerations.UserRole;
+import com.example.Clinic.repository.AuthorityRepository;
 import com.example.Clinic.rest.PatientApi;
 import com.example.Clinic.rest.support.converter.DtoToPatient;
 import com.example.Clinic.rest.support.converter.PatientToDto;
@@ -21,13 +20,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class PatientApiImpl implements PatientApi {
@@ -54,8 +59,11 @@ public class PatientApiImpl implements PatientApi {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthorityRepository authorityRepository;
+
     @Override
-    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) {
+    public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) throws ParserConfigurationException, SAXException, IOException {
         System.out.println(patientDto);
 
         User user = new User(patientDto.getUserDto().getEmail(), passwordEncoder.encode(patientDto.getUserDto().getPassword()),
@@ -63,6 +71,14 @@ public class PatientApiImpl implements PatientApi {
                 patientDto.getUserDto().getAddress(), patientDto.getUserDto().getCity(), patientDto.getUserDto().getCountry(),
                 patientDto.getUserDto().getPhoneNumber());
 
+        user.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
+
+
+        Set<Authority> authorities = new HashSet<>(){{
+            add(authorityRepository.findByName(UserRole.PATIENT.toString()));
+        }};
+
+        user.setRoles(authorities);
       //  Patient patient = registerDtoToPatient.convert(patientDto);
 //        @NotEmpty(message = "last name is mandatory")
 //        @NotBlank(message = "cant be blank")
