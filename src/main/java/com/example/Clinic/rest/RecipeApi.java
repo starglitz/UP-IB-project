@@ -4,6 +4,7 @@ import com.example.Clinic.model.Recipe;
 import com.example.Clinic.rest.support.dto.RecipeDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -13,16 +14,19 @@ import javax.validation.Valid;
 @RequestMapping("/recipes")
 public interface RecipeApi {
 
+    @PreAuthorize("hasAnyAuthority('DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Recipe> addRecipe(@Valid @RequestBody RecipeDto recipe);
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllRecipes();
 
+    @PreAuthorize("hasAuthority('NURSE')")
     @GetMapping(value = "/notApproved",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getNotApprovedRecipes();
 
+    @PreAuthorize("hasAuthority('NURSE')")
     @PutMapping(value = "/approve/{recipe_id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
