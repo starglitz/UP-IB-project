@@ -6,6 +6,8 @@ import com.example.Clinic.repository.UserRepository;
 import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +63,16 @@ public class UserServiceImpl  implements UserService {
         }
 
         return ok;
+    }
+
+    @Override
+    public User getLoggedIn(Authentication authentication) {
+        UserDetails userPrincipal = (UserDetails)authentication.getPrincipal();
+        System.out.println("TRENUTNI ULOGOVANI usernname =" + userPrincipal.getUsername());
+        String username = userPrincipal.getUsername();
+
+        User user = userRepository.findUserByEmail(userPrincipal.getUsername()).orElse(null);
+        return user;
+
     }
 }

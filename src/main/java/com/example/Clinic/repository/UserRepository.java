@@ -12,4 +12,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             nativeQuery = true)
     Optional<User> findUserByEmail(String email);
     public Optional<User> findFirstByEmail(String email);
+
 }
