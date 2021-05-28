@@ -56,8 +56,12 @@ public class UserServiceImpl  implements UserService {
                 }
                 else {
                     ok = false;
+                    updated.setPassword(userJpa.getPassword());
                 }
             }
+            System.out.println(userJpa);
+            System.out.println(updated);
+            updated.setRoles(userJpa.getRoles());
             updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
             userRepository.save(updated);
         }

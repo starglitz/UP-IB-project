@@ -22,6 +22,7 @@ import PatientProfile from "./profile/PatientProfile";
 import PatientsTable from "./components/patients/PatientsTable";
 import Location from "./components/Location";
 import RegisterStaff from "./layouts/RegisterStaff";
+import ChangePassword from "./layouts/ChangePassword";
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/patients" exact component={PatientsTable}/>
                 <Route path="/mapsTest" exact component={Location}/>
                 <Route path="/staffRegister" exact component={RegisterStaff}/>
+                <Route path="/changePassword" exact component={ChangePassword}/>
             </Switch>
         </Router>
     </div>
