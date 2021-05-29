@@ -23,6 +23,7 @@ import PatientsTable from "./components/patients/PatientsTable";
 import Location from "./components/Location";
 import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
+import BlockUsers from "./layouts/BlockUsers";
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
                 <Route path="/mapsTest" exact component={Location}/>
                 <Route path="/staffRegister" exact component={RegisterStaff}/>
                 <Route path="/changePassword" exact component={ChangePassword}/>
+                <Route path="/blockUsers" exact component={BlockUsers}/>
             </Switch>
         </Router>
     </div>

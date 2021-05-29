@@ -2,7 +2,8 @@ import AxiosClient from "./clients/AxiosClient";
 
 export const UserService = {
     edit,
-    getMyInfo
+    getMyInfo,
+    getAll
 };
 
 async function edit(id, user) {
@@ -22,4 +23,8 @@ async function edit(id, user) {
 
 async function getMyInfo() {
     return await AxiosClient.get("http://localhost:8080/user/profile");
+}
+
+async function getAll() {
+    return await AxiosClient.get("http://localhost:8080/user")
 }

@@ -1,5 +1,6 @@
 package com.example.Clinic.rest.support.converter;
 
+import com.example.Clinic.model.Authority;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.support.dto.UserDto;
 import org.springframework.core.convert.converter.Converter;
@@ -23,6 +24,16 @@ public class UserToDto implements Converter<User, UserDto> {
         retVal.setCity(source.getCity());
         retVal.setCountry(source.getCountry());
         retVal.setPhoneNumber(source.getPhoneNumber());
+        retVal.setEnabled(source.isEnabled());
+
+        List<String> roles = new ArrayList<>();
+
+        for(Authority a : source.getRoles()) {
+            roles.add(a.getName().toString());
+        }
+
+        retVal.setRoles(roles);
+
         return retVal;
     }
 

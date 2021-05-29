@@ -36,6 +36,7 @@ public class DtoToUser implements Converter<UserDto, User> {
         target.setCity(source.getCity());
         target.setCountry(source.getCountry());
         target.setPhoneNumber(source.getPhoneNumber());
+        target.setEnabled(source.isEnabled());
 
         return target;
     }

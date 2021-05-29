@@ -317,10 +317,25 @@ register-form {
     margin-top:50px;
 }
 
-.btnChange {
 
+.styled-table-2 {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
+.styled-table-2 th,
+.styled-table-2 td {
+    padding: 12px 15px;
+}
+.styled-table-2 tbody tr {
+    border-bottom: 1px solid #353A40;
+}
 
-
+.styled-table-2 tbody tr:nth-of-type(even) {
+    background-color: #f59b42;
+}
 

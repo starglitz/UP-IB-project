@@ -42,5 +42,10 @@ public class UserApiImpl implements UserApi {
         return new ResponseEntity("no user in database", HttpStatus.NOT_FOUND);
     }
 
+    @Override
+    public ResponseEntity getAll() {
+       return new ResponseEntity(userToDto.convert(userService.getAll()), HttpStatus.OK);
+    }
+
 
 }

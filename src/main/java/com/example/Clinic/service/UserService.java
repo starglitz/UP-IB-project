@@ -5,6 +5,7 @@ import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,4 +18,6 @@ public interface UserService {
     boolean update(UserRegisterDto user, String validatePassword);
 
     User getLoggedIn(Authentication authentication);
+
+    List<User> getAll();
 }

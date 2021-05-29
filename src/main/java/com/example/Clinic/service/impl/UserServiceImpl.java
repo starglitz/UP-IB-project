@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -57,12 +58,12 @@ public class UserServiceImpl  implements UserService {
                 else {
                     ok = false;
                     updated.setPassword(userJpa.getPassword());
+                    updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
                 }
             }
             System.out.println(userJpa);
             System.out.println(updated);
             updated.setRoles(userJpa.getRoles());
-            updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
             userRepository.save(updated);
         }
 
@@ -78,5 +79,10 @@ public class UserServiceImpl  implements UserService {
         User user = userRepository.findUserByEmail(userPrincipal.getUsername()).orElse(null);
         return user;
 
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 }
