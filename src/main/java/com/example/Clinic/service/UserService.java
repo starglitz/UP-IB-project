@@ -20,4 +20,5 @@ public interface UserService {
     User getLoggedIn(Authentication authentication);
 
     List<User> getAll();
+
 }

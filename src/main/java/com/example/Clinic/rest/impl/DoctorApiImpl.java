@@ -80,7 +80,8 @@ public class DoctorApiImpl implements DoctorApi {
         User user = new User(doctor.getUser().getEmail(), doctor.getUser().getPassword(),
                 doctor.getUser().getName(), doctor.getUser().getLastName(),
                 doctor.getUser().getAddress(),doctor.getUser().getCity(),
-                doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber());
+                doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber(),
+                doctor.getUser().isEnabled());
 
 
         Doctor doctor1 = new Doctor(user);

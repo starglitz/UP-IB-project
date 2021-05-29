@@ -5,11 +5,12 @@ import {Button} from "@material-ui/core";
 const BlockUsers = () => {
 
     const [users, setUsers] = useState([]);
+    const [refresh, setRefresh] = useState(true);
 
     useEffect(() => {
         fetchData()
 
-    },[])
+    },[refresh])
 
 
     async function fetchData() {
@@ -25,6 +26,22 @@ const BlockUsers = () => {
         }
     }
 
+    async function update(id) {
+
+        const resp = await UserService.get(id);
+        const user = resp.data
+        console.log(user)
+        const updated = {...user, enabled:false};
+        console.log(updated)
+        try {
+            await UserService.edit(id, updated);
+            //await ArticlesService.editArticle(id, article);
+            setRefresh(!refresh)
+        } catch (error) {
+            console.error(`Error ocurred while blocking the user: ${error}`);
+        }
+    }
+
     return (
         <> <div className="flex-container">
 
@@ -33,7 +50,7 @@ const BlockUsers = () => {
                 <br/>
             <table className="styled-table-2">
                 <thead>
-                <tr>
+                <tr style={{backgroundColor:'#353A40', color:'wheat'}}>
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
@@ -49,7 +66,7 @@ const BlockUsers = () => {
                         <td>{u.name + " " +u.lastName}</td>
                         <td>{u.email}</td>
                         <td> {u.roles.map((r) => <p>{r}</p>)} </td>
-                        <td> <Button variant="contained" color="secondary">Block this user</Button> </td>
+                        <td> <Button variant="contained" color="secondary" onClick={() => update(u.id)}>Block this user</Button> </td>
                         <td>
                         {u.roles.includes("DOCTOR") || u.roles.includes("NURSE") ?
                             <Button variant="contained" color="primary"> Modify user profile </Button>

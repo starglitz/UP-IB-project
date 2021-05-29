@@ -1,6 +1,5 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.LoginForm;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.UserApi;
 import com.example.Clinic.rest.support.converter.UserToDto;
@@ -21,6 +20,7 @@ public class UserApiImpl implements UserApi {
 
     @Autowired
     private UserToDto userToDto;
+
 
     @Override
     public ResponseEntity<UserRegisterDto> update(Long id, UserRegisterDto userDto) {
@@ -45,6 +45,17 @@ public class UserApiImpl implements UserApi {
     @Override
     public ResponseEntity getAll() {
        return new ResponseEntity(userToDto.convert(userService.getAll()), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getUser(Long id) {
+        User user = userService.findOne(id).orElse(null);
+        System.out.println(user);
+        if(user == null) {
+            return new ResponseEntity("no user in database", HttpStatus.NOT_FOUND);
+        }
+        UserDto dto = userToDto.convert(user);
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 
 

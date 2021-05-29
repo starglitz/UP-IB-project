@@ -3,7 +3,8 @@ import AxiosClient from "./clients/AxiosClient";
 export const UserService = {
     edit,
     getMyInfo,
-    getAll
+    getAll,
+    get
 };
 
 async function edit(id, user) {
@@ -27,4 +28,8 @@ async function getMyInfo() {
 
 async function getAll() {
     return await AxiosClient.get("http://localhost:8080/user")
+}
+
+async function get(id) {
+    return await AxiosClient.get(`http://localhost:8080/user/${id}`);
 }

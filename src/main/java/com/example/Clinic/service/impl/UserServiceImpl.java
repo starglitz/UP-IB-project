@@ -34,6 +34,7 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public Optional<User> findOne(Long id) {
+        System.out.println(userRepository.findById(id));
         return userRepository.findById(id);
     }
 
@@ -46,25 +47,34 @@ public class UserServiceImpl  implements UserService {
         if (userJpa == null) {
             ok = false;
         } else {
-            User updated = new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(),
-                    user.getAddress(), user.getCity(), user.getCountry(), user.getPhoneNumber());
 
-            if (validatePassword != null && !validatePassword.equals("")) {
-                if (passwordEncoder.matches(validatePassword,
-                        userJpa.getPassword())) {
-                    updated.setPassword(passwordEncoder.encode(user.getPassword()));
-                    updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
-                }
-                else {
-                    ok = false;
-                    updated.setPassword(userJpa.getPassword());
-                    updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
-                }
+            if(!user.isEnabled()) {
+                userJpa.setEnabled(false);
+                userRepository.save(userJpa);
             }
-            System.out.println(userJpa);
-            System.out.println(updated);
-            updated.setRoles(userJpa.getRoles());
-            userRepository.save(updated);
+
+            else {
+
+
+                User updated = new User(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastName(),
+                        user.getAddress(), user.getCity(), user.getCountry(), user.getPhoneNumber());
+
+                if (validatePassword != null && !validatePassword.equals("")) {
+                    if (passwordEncoder.matches(validatePassword,
+                            userJpa.getPassword())) {
+                        updated.setPassword(passwordEncoder.encode(user.getPassword()));
+                        updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
+                        updated.setEnabled(userJpa.isEnabled());
+                    } else {
+                        ok = false;
+                        updated.setPassword(userJpa.getPassword());
+                        updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
+                        updated.setEnabled(userJpa.isEnabled());
+                    }
+                }
+                updated.setRoles(userJpa.getRoles());
+                userRepository.save(updated);
+            }
         }
 
         return ok;

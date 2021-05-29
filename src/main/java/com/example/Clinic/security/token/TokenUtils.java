@@ -32,7 +32,7 @@ public class TokenUtils {
     public String SECRET;
 
     // Period vazenja
-    @Value("60000")
+    @Value("600000")
     private int EXPIRES_IN;
 
     @Value("200000")

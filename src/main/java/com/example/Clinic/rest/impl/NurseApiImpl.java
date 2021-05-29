@@ -43,7 +43,8 @@ public class NurseApiImpl implements NurseApi {
         User user = new User(nurseDto.getUser().getEmail(), nurseDto.getUser().getPassword(),
                 nurseDto.getUser().getName(), nurseDto.getUser().getLastName(),
                 nurseDto.getUser().getAddress(), nurseDto.getUser().getCity(),
-                nurseDto.getUser().getCountry(), nurseDto.getUser().getPhoneNumber());
+                nurseDto.getUser().getCountry(), nurseDto.getUser().getPhoneNumber(),
+                nurseDto.getUser().isEnabled());
 
 
 
