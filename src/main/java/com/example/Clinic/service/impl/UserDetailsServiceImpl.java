@@ -7,6 +7,7 @@ import com.example.Clinic.security.services.UserDetailsImpl;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +34,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (user == null) {
             throw new UsernameNotFoundException(String.format("No user found with username '%s'.", email));
+        }
+
+        else if(user.isEnabled() == false) {
+            throw new DisabledException("This user is disabled");
         }
 
             return UserDetailsImpl.build(user);

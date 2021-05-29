@@ -12,6 +12,8 @@ const DEFAULT_LOGIN = {
     password: ''
 };
 
+
+
 const LoginLayout = () => {
 
     const useStyles = makeStyles((theme) => ({
@@ -50,6 +52,15 @@ const LoginLayout = () => {
     const login = async () => {
         const status = await AuthenticationService.login(credentials)
         console.log(status)
+        if(status == '401') {
+            setError("You are blocked from using this app!")
+        }
+        else if(status == '404') {
+            setError("Wrong username or password")
+        }
+        else if(status == '200') {
+            setError('ok!')
+        }
     };
 
 
