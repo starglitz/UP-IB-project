@@ -78,7 +78,13 @@ public class PatientBookServiceImpl implements PatientBookService {
 
             String decipheredXml = AsymmetricKeyDecryption.decryptMain(book);
             decipheredBook = new PatientBook(book.getId(), book.getPatient(), decipheredXml);
+            System.out.println("DECIPHERED BOOK: ");
+            System.out.println(decipheredBook);
 
+            decipheredBook.setDrugs(patientBook.getDrugs());
+            decipheredBook.setIllnessHistory(patientBook.getIllnessHistory());
+            decipheredBook.setXml(decipheredBook.toXML());
+            System.out.println(decipheredBook);
             patientBookRepository.save(patientBook);
         }
         return valid;

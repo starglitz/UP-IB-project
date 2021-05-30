@@ -24,18 +24,18 @@ public class TokenUtils {
     private UserDetailsServiceImpl userDetailsService;
 
     // Izdavac tokena
-    @Value("dirty-vegans")
+    @Value("tim2")
     private String APP_NAME;
 
     // Tajna koju samo backend aplikacija treba da zna kako bi mogla da generise i proveri JWT https://jwt.io/
-    @Value("dirtyvegans")
+    @Value("upib-tim2")
     public String SECRET;
 
     // Period vazenja
     @Value("600000")
     private int EXPIRES_IN;
 
-    @Value("200000")
+    @Value("2000000")
     private int REFRESH_EXPIRES_IN;
 
     // Naziv headera kroz koji ce se prosledjivati JWT u komunikaciji server-klijent
