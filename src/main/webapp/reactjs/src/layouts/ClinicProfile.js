@@ -331,8 +331,8 @@ const ClinicProfile = () => {
                         {appointments.filter(app => app.deleted === false && app.status == 'FREE').map((app) =>
                             <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
                                             status={app.status} key={app.appointment_id} date={app.date} start={app.start}
-                                            end={app.end} id={app.appointment_id} doctor={app.doctor}
-                                            nurse={app.nurse} price={app.price} deleted={app.deleted}/>
+                                            end={app.end} id={app.appointment_id} doctor={app.doctor.user}
+                                            nurse={app.nurse.user} price={app.price} deleted={app.deleted}/>
 
                         )}
                         </tbody>
