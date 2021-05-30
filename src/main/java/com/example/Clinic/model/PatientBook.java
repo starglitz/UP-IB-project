@@ -75,12 +75,18 @@ public class PatientBook {
         String drugs = StringUtils.substringBetween(xml, "<drugs>", "</drugs>");
 
         String[] drugsList = StringUtils.substringsBetween(drugs, "<drug>", "</drug>");
-
-        List<String> drugsArray = Arrays.asList(drugsList);
-
+        List<String> drugsArray = new ArrayList<>();
+        if(drugsList != null) {
+            drugsArray = Arrays.asList(drugsList);
+        }
         String illnesses = StringUtils.substringBetween(xml, "<illnessHistory", "</illnessHistory>");
+
         String[] illnessList = StringUtils.substringsBetween(illnesses, "<illness>", "</illness>");
-        List<String> illnessArray = Arrays.asList(illnessList);
+        List<String> illnessArray = new ArrayList<>();
+        if(illnessList != null) {
+            illnessArray = Arrays.asList(illnessList);
+        }
+
 
         this.drugs = drugsArray;
         this.illnessHistory = illnessArray;

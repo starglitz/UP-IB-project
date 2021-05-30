@@ -47,7 +47,7 @@ const UpdateStaff = () => {
         if(validate()) {
             try {
                 await UserService.edit(user.id, user);
-                history.push("/home")
+                history.push("/blockUsers")
             } catch (error) {
                 console.error(`Error ocurred while updating the user: ${error}`);
             }
