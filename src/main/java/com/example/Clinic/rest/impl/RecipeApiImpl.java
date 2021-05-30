@@ -30,13 +30,13 @@ public class RecipeApiImpl implements RecipeApi {
     @Override
     public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid RecipeDto dto) {
         Recipe newRecipe = dtoToRecipe.convert(dto);
-        boolean valid = recipeService.addRecipe(newRecipe);
 
-        if (valid) {
+        if (newRecipe != null) {
             recipeService.addRecipe(newRecipe);
-            return new ResponseEntity(newRecipe, HttpStatus.CREATED);
+            return new ResponseEntity<>(newRecipe, HttpStatus.CREATED);
         }
-        return new ResponseEntity(newRecipe, HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override
