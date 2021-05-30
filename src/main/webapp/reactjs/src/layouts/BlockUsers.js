@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {UserService} from "../services/UserService";
 import {Button} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
 
 const BlockUsers = () => {
 
     const [users, setUsers] = useState([]);
     const [refresh, setRefresh] = useState(true);
+
+    const history = useHistory();
 
     useEffect(() => {
         fetchData()
@@ -42,6 +45,10 @@ const BlockUsers = () => {
         }
     }
 
+    const editStaff = (id) => {
+        history.push("/updateStaff/" + id);
+    };
+
     return (
         <> <div className="flex-container">
 
@@ -69,7 +76,7 @@ const BlockUsers = () => {
                         <td> <Button variant="contained" color="secondary" onClick={() => update(u.id)}>Block this user</Button> </td>
                         <td>
                         {u.roles.includes("DOCTOR") || u.roles.includes("NURSE") ?
-                            <Button variant="contained" color="primary"> Modify user profile </Button>
+                            <Button variant="contained" color="primary" onClick={() => editStaff(u.id)}> Modify user profile </Button>
                             : <p> <b> Only clinic staff </b> info can be edited by admin</p>      }
                         </td>
                     </tr>

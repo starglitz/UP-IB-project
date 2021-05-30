@@ -51,6 +51,7 @@ public class UserServiceImpl  implements UserService {
             if(!user.isEnabled()) {
                 userJpa.setEnabled(false);
                 userRepository.save(userJpa);
+                return ok;
             }
 
             else {
@@ -65,13 +66,20 @@ public class UserServiceImpl  implements UserService {
                         updated.setPassword(passwordEncoder.encode(user.getPassword()));
                         updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
                         updated.setEnabled(userJpa.isEnabled());
+                        userRepository.save(updated);
+                        return ok;
                     } else {
                         ok = false;
                         updated.setPassword(userJpa.getPassword());
                         updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
                         updated.setEnabled(userJpa.isEnabled());
+                        userRepository.save(updated);
+                        return ok;
                     }
                 }
+                updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
+                updated.setPassword(userJpa.getPassword());
+                updated.setEnabled(true);
                 updated.setRoles(userJpa.getRoles());
                 userRepository.save(updated);
             }
