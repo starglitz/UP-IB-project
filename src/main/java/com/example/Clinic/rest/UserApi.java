@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 @RestController
@@ -21,8 +22,7 @@ public interface UserApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UserRegisterDto> update(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
 
-
-    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN, CLINIC_CENTER_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PermitAll
     @GetMapping(value = "/profile",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
