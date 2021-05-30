@@ -14,7 +14,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
     List<Doctor> findByClinicId(Long clinic_id);
 
     @Query(value = "SELECT * from  doctor WHERE clinic_id = ?1\n" +
-            "                        and id in (SELECT doctor_id from appointment where date = ?2)",
+            "                        and id in (SELECT doctor_id from appointment where date = ?2 AND status = 'FREE')",
             nativeQuery = true)
     List<Doctor> findByClinicAndDate(Long clinic_id, LocalDate date);
 }

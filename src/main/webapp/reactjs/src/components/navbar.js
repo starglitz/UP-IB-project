@@ -21,6 +21,7 @@ const navbar = () => {
     const newAppointmentElement = <Nav.Link key={key++}  href="addAppointment">New appointment</Nav.Link>
     const allAppointmentsAdminElement = <Nav.Link key={key++} href="appointments">All appointments (admin)</Nav.Link>
     const clinicProfileAdminElement = <Nav.Link key={key++}  href="clinicProfile">Clinic profile (admin)</Nav.Link>
+    const addClinic = <Nav.Link key={key++}  href="newClinic">Add clinic</Nav.Link>
     const addClinicAdmin = <Nav.Link key={key++}  href="newClinicAdmin">Add clinic admin</Nav.Link>
     const clinicsElement = <Nav.Link key={key++}  href="clinics">Clinics</Nav.Link>
     const updateAppointmentElement = <Nav.Link key={key++}  href="updateAppointment">Update appointment</Nav.Link>
@@ -65,6 +66,7 @@ const navbar = () => {
     clinicCentreAdmin.push(logoutLink)
     clinicCentreAdmin.push(registerReqEleement)
     clinicCentreAdmin.push(chandePassword)
+    clinicCentreAdmin.push(addClinic)
     clinicCentreAdmin.push(addClinicAdmin)
 
 

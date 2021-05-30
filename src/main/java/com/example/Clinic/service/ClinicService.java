@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service
 public interface ClinicService {
+    Clinic create(Clinic clinic);
     List<Clinic> findAll();
     Optional<Clinic> findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);

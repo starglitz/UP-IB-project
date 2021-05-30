@@ -26,6 +26,8 @@ import ChangePassword from "./layouts/ChangePassword";
 import BlockUsers from "./layouts/BlockUsers";
 import UpdateStaff from "./layouts/UpdateStaff";
 import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
+import ClinicCentreAdminLayout from "./layouts/ClinicCentreAdminLayout";
+import NewClinic from "./components/clinics/NewClinic";
 
 
 function App() {
@@ -175,6 +177,13 @@ function App() {
                     exact
                     path="/updateStaff/:id"
                     component={UpdateStaff}
+                    roles={['CLINIC_CENTRE_ADMIN']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/newClinic"
+                    component={NewClinic}
                     roles={['CLINIC_CENTRE_ADMIN']}
                 />
 

@@ -1,6 +1,7 @@
 package com.example.Clinic.rest;
 
 import com.example.Clinic.model.Clinic;
+import com.example.Clinic.rest.support.dto.ClinicDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,15 @@ public interface ClinicApi {
     ResponseEntity getClinicsByDate(@PathVariable("date") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date);
 
 
+    @PreAuthorize("hasAnyAuthority('CLINIC_CENTRE_ADMIN')")
+    @PostMapping(
+            produces = {MediaType.APPLICATION_JSON_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity create(@Valid @RequestBody ClinicDto dto);
+
     @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PutMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE},
-    consumes = {MediaType.APPLICATION_JSON_VALUE})
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity update(@PathVariable("id") Long id,@Valid @RequestBody Clinic clinic);
 
     @PreAuthorize("hasAuthority('CLINIC_ADMIN')")

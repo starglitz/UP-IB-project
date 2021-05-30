@@ -12,7 +12,7 @@ public interface ClinicRepository extends JpaRepository<Clinic, Long> {
 
     @Query(value = "SELECT * from  clinic where clinic_id in\n" +
             "(SELECT doctor.clinic_id from doctor where id in\n" +
-            "                             (SELECT doctor_id from appointment where date = ?1 and status = 'free'))",
+            "                             (SELECT doctor_id from appointment where date = ?1 and status = 'FREE'))",
     nativeQuery = true)
     List<Clinic> findClinicsByDate(LocalDate date);
 }

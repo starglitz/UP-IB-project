@@ -5,6 +5,7 @@ import com.example.Clinic.model.ClinicAdmin;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.ClinicApi;
 import com.example.Clinic.rest.support.converter.ClinicToDto;
+import com.example.Clinic.rest.support.converter.DtoToClinic;
 import com.example.Clinic.rest.support.dto.ClinicDto;
 import com.example.Clinic.service.ClinicAdminService;
 import com.example.Clinic.service.ClinicService;
@@ -26,6 +27,9 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Autowired
     private ClinicService clinicService;
+
+    @Autowired
+    private DtoToClinic toClinic;
 
     @Autowired
     private ClinicToDto clinicToDto;
@@ -58,6 +62,21 @@ public class ClinicApiImpl implements ClinicApi {
             return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.OK);
         }
         return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity create(@Valid ClinicDto dto) {
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        System.out.println(dto);
+        Clinic clinic = toClinic.convert(dto);
+        if (clinic != null)
+            return new ResponseEntity(clinicService.create(clinic), HttpStatus.CREATED);
+        return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
     }
 
     @Override

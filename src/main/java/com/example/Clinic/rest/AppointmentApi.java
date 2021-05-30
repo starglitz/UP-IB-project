@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 import java.time.LocalDate;
 
@@ -22,23 +23,27 @@ public interface AppointmentApi {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointment);
 
+    @PermitAll
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllAppointments();
 
+    @PermitAll
     @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAppointment(@PathVariable("id") Long id);
 
+    @PermitAll
     @GetMapping(value = "/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicAppointments(@PathVariable long id);
 
 
+    @PermitAll
     @GetMapping(value = "/free/clinic/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getFreeClinicAppointments(@PathVariable long id);
 
-    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
+    @PermitAll
     @GetMapping(value = "/free/doctor/{id}/date/{date}",
     produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getFreeDoctorAppointemntsByDate(@PathVariable("id") Long id, @PathVariable("date")

@@ -22,6 +22,11 @@ public class ClinicServiceImpl implements ClinicService {
     private ClinicRepository clinicRepository;
 
     @Override
+    public Clinic create(Clinic clinic) {
+        return clinicRepository.save(clinic);
+    }
+
+    @Override
     public List<Clinic> findAll() {
         return clinicRepository.findAll();
     }

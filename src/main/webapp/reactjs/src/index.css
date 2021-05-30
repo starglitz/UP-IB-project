@@ -33,10 +33,14 @@ register-form {
     float: right;
 }
 
+.input-margin {
+    margin-top: 10px !important;
+}
 
-
-
-
+.form-size {
+    margin: 1% 25%;
+    padding: 2% 8% 2% 8%;
+}
 
 .submit-register {
 
@@ -152,7 +156,6 @@ register-form {
 }
 /*-----------------------Clinic Profile-----------------------------------------*/
 .hospitalProfile-container h1{
-    font-family: "Noto Serif Georgian";
     text-align:center;
     margin:20px;
 }
@@ -190,7 +193,6 @@ register-form {
 
 .info-row p{
   margin-left: 20px;
-  font-family: "Noto Serif Georgian";
     font-size: 20px;
 }
 
