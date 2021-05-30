@@ -28,6 +28,28 @@ const PatientsTable = () => {
         try {
             const response = await PatientService.getAll()
             setPatients(response.data)
+            let pat = response.data
+
+            let list = []
+            pat.forEach(patient => {
+                list.push({approved: patient.approved,
+                    enabled: patient.enabled,
+                    lbo: patient.lbo,
+                    patientBookId: patient.patientBookId,
+                    address:patient.user.address,
+                    city: patient.user.city,
+                    country: patient.user.country,
+                    email: patient.user.email,
+                    id: patient.user.id,
+                    lastName: patient.user.lastName,
+                    lastPasswordResetDate: patient.user.lastPasswordResetDate,
+                    name: patient.user.name,
+                    phoneNumber: patient.user.phoneNumber,
+                    });
+
+            } )
+            setPatients(list)
+            console.log(list)
         } catch (error) {
             console.error(`Error loading patients !: ${error}`);
         }
