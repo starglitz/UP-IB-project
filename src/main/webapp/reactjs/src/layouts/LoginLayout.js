@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import loginImg from '../assets/login-img.jpg';
 import {useHistory} from 'react-router-dom';
 import { AuthenticationService } from '../services/AuthenticationService'
+import {TokenService} from "../services/TokenService";
 
 
 const DEFAULT_LOGIN = {
@@ -27,12 +28,17 @@ const LoginLayout = () => {
             },
         },
     }));
+    const history = useHistory();
+    const loggedUser = TokenService.getToken();
+    if(loggedUser && loggedUser !== 'undefined'){
+        history.push("/")
+    }
 
     const classes = useStyles();
 
     const [credentials, setCredentials] = useState(DEFAULT_LOGIN);
     const [error, setError] = useState('');
-    const history = useHistory();
+
     const handleChange = (event, prop) => {
         setCredentials({
             ...credentials,
