@@ -1,29 +1,62 @@
 package com.example.Clinic.service.impl;
 
-import com.example.Clinic.dao.RecipeDao;
+
 import com.example.Clinic.model.Recipe;
+import com.example.Clinic.repository.RecipeRepository;
 import com.example.Clinic.service.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
-    private RecipeDao recipeDao;
+    private RecipeRepository recipeRepository;
 
     @Override
-    public Recipe addRecipe(Recipe recipe) { return this.recipeDao.addRecipe(recipe); }
+    public  boolean addRecipe(Recipe recipe) {
+        boolean valid = checkValid(recipe);
+
+        if (valid) {
+            recipeRepository.save(recipe);
+        }
+
+        return valid;
+    }
 
     @Override
-    public List<Recipe> getAllRecipes() { return this.recipeDao.getAllRecipes(); }
+    public boolean updateRecipe(Recipe recipe, Long id) {
+        boolean valid = checkValid(recipe);
+
+        if (valid && recipe.getRecipe_id().equals(id)) {
+            recipeRepository.save(recipe);
+        }
+
+        return valid;
+    }
 
     @Override
-    public List<Recipe> getRecipesByDate(LocalDate date) { return this.recipeDao.getRecipesByDate(date); }
+    public Optional<Recipe> findOne(Long id) {
+        return recipeRepository.findById(id);
+    }
 
     @Override
-    public void updateRecipe(Recipe recipe) { recipeDao.updateRecipe(recipe); }
+    public List<Recipe> getAllRecipes() { return this.recipeRepository.findAll(); }
+
+    @Override
+    public List<Recipe> getNotApprovedRecipes() { return this.recipeRepository.findNotApproved(); }
+
+    private boolean checkValid(Recipe recipe) {
+        boolean valid = true;
+
+        if (recipe.getDescription().isEmpty() && recipe.getDescription() == null) { valid = false; }
+        if (recipe.getIssueDate() == null) { valid = false; }
+        if (recipe.getNurse() == null) { valid = false; }
+        if (recipe.getValidated() == null) { valid = false; }
+
+        return valid;
+    }
 }

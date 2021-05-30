@@ -9,8 +9,8 @@ import java.util.Optional;
 @Service
 public interface PatientService {
 
-   public boolean addPatient(Patient patient);
-   public List<Patient> getALl();
+   public Patient addPatient(Patient patient);
+   public List<Patient> getAll();
    public Optional<Patient> getPatientById(Long id);
-   public  boolean updatePatient(Patient patient, Long id);
+   public  Patient updatePatient(Patient patient, Long id);
 }

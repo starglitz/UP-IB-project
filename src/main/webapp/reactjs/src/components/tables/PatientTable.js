@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MUIDataTable from "mui-datatables";
+import {AppointmentService} from "../../services/AppointmentService";
+import {PatientService} from "../../services/PatientService";
 
 export const PatientTable = () => {
 
@@ -8,13 +10,26 @@ export const PatientTable = () => {
 
     useEffect(() => {
         fetchData()
-            .then(res => setRequests(res))
-            .catch(err => setError(err));
+            // .then(res => setRequests(res))
+            // .catch(err => setError(err));
     },[])
 
+    // async function fetchData() {
+    //     const res = await fetch('http://localhost:8080/allPatients',);
+    //     return res.json()
+    // }
+
     async function fetchData() {
-        const res = await fetch('http://localhost:8080/patients');
-        return res.json()
+        try {
+            const response = await PatientService.getAll()
+            const patients = []
+            for (let i = 0; i < response.data.length; i++) {
+                patients.push(response.data[i].user);
+            }
+            setRequests(patients)
+        } catch (error) {
+            console.error(`Error loading patients !: ${error}`);
+        }
     }
 
     console.log(requests)
@@ -73,14 +88,6 @@ export const PatientTable = () => {
             name: 'city',
             options: {
                 filter: true,
-                sort: true,
-            }
-        },
-        {
-            label: 'LBO',
-            name: 'lbo',
-            options: {
-                filter: false,
                 sort: true,
             }
         }]

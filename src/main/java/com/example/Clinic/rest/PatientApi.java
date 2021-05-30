@@ -1,30 +1,34 @@
 package com.example.Clinic.rest;
 
 import com.example.Clinic.model.Patient;
+import com.example.Clinic.rest.support.dto.PatientDto;
+import com.example.Clinic.rest.support.dto.PatientRegisterDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletResponse;
+import org.xml.sax.SAXException;
+
 import javax.validation.Valid;
-import java.util.List;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/patients")
 public interface PatientApi {
 
-    @PostMapping(value = "/registration",
-             consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Patient> registerUser(@Valid @RequestBody Patient patient);
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Patient> registerUser(@Valid @RequestBody PatientRegisterDto patient) throws ParserConfigurationException, SAXException, IOException;
 
-    @GetMapping(value = "/allPatients",
-        produces = {MediaType.APPLICATION_JSON_VALUE})
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllPatients();
 
-    @GetMapping(value = "/patient/{id}",
+    @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatient(@PathVariable("id") Long id);
 
-    @PutMapping(value = "/patient/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Patient> updatePatient(@Valid @RequestBody Patient patient, @PathVariable("id") Long id);
+    @PreAuthorize("hasAnyAuthority('PATIENT', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
+    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<PatientDto> updatePatient(@PathVariable("id") Long id ,@Valid @RequestBody PatientDto patientDto);
 }

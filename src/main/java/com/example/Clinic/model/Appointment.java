@@ -1,5 +1,7 @@
 package com.example.Clinic.model;
 
+import com.example.Clinic.model.enumerations.AppointmentStatus;
+import com.sun.istack.Nullable;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,15 +18,13 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appointment_id;
 
-    private AppointmentStatus status = AppointmentStatus.FREE;
+    private AppointmentStatus status;
 
-    @NotNull
     private LocalDate date;
-    private LocalTime time;
 
-    @NotEmpty
-    @NotNull
-    private String duration;
+    private LocalTime start;
+
+    private LocalTime end;
 
     @ManyToOne
     private Doctor doctor;
@@ -32,21 +32,25 @@ public class Appointment {
     @ManyToOne
     private Nurse nurse;
 
-    @Min(1)
-    @NotNull
+
+    @ManyToOne
+    @Nullable
+    private Patient patient;
+    
     private int price;
     private boolean deleted;
 
     public Appointment(AppointmentStatus status, @NotNull @NotEmpty @Future LocalDate date,
-                       LocalTime time, @NotEmpty @NotNull String duration,
-                       Doctor doctor, Nurse nurse, @Min(1) @NotEmpty int price,
+                       LocalTime start, LocalTime end,
+                       Doctor doctor, Nurse nurse, Patient patient, @Min(1) @NotEmpty int price,
                        boolean deleted) {
         this.status = status;
         this.date = date;
-        this.time = time;
-        this.duration = duration;
+        this.start = start;
+        this.end = end;
         this.doctor = doctor;
         this.nurse = nurse;
+        this.patient = patient;
         this.price = price;
         this.deleted = deleted;
     }

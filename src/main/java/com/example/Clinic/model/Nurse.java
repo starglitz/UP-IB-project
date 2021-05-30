@@ -8,14 +8,21 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-public class Nurse extends User{
+public class Nurse {
+
+    @Id
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="clinic_id")
     private Clinic clinic;
 
-    public Nurse(String email, String password, String name, String lastName,
-                  String address, String city, String country, String phoneNumber) {
-        super(email, password, name, lastName, address, city, country, phoneNumber);
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
+
+    public Nurse(User user) {
+        this.user = user;
     }
 }

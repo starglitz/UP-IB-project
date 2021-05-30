@@ -2,12 +2,18 @@ import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import loginImg from '../login-img.jpg';
+import loginImg from '../assets/login-img.jpg';
 import {useHistory} from 'react-router-dom';
+import { AuthenticationService } from '../services/AuthenticationService'
+import {TokenService} from "../services/TokenService";
+
+
 const DEFAULT_LOGIN = {
-    email: '',
+    username: '',
     password: ''
 };
+
+
 
 const LoginLayout = () => {
 
@@ -24,15 +30,20 @@ const LoginLayout = () => {
             },
         },
     }));
+    const history = useHistory();
+    const loggedUser = TokenService.getToken();
+    if(loggedUser && loggedUser !== 'undefined'){
+        history.push("/")
+    }
 
     const classes = useStyles();
 
-    const [login, setLogin] = useState(DEFAULT_LOGIN);
+    const [credentials, setCredentials] = useState(DEFAULT_LOGIN);
     const [error, setError] = useState('');
-    const history = useHistory();
+
     const handleChange = (event, prop) => {
-        setLogin({
-            ...login,
+        setCredentials({
+            ...credentials,
             [prop]: event.target.value
         });
     };
@@ -40,32 +51,23 @@ const LoginLayout = () => {
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
-        const data = {"email":login.email, "password":login.password};
-
-        fetch('http://localhost:8080/loginData', {
-            method: 'POST', // or 'PUT'
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response =>{
-                if(response.status!==200){
-                    throw new Error(response.status)
-                    }
-                else {
-                    history.push('/profile')
-                }}  )
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                setError('Pogresni podaci')
-                console.error('Error:', console.warn(error));
-            });
-
+        login()
 
     }
+
+    const login = async () => {
+        const status = await AuthenticationService.login(credentials)
+        console.log(status)
+        if(status == '401') {
+            setError("You are blocked from using this app!")
+        }
+        else if(status == '404') {
+            setError("Wrong username or password")
+        }
+        else if(status == '200') {
+            setError('ok!')
+        }
+    };
 
 
     return (
@@ -79,8 +81,8 @@ const LoginLayout = () => {
 
             <form className={classes.root} onSubmit={handleSubmit}>
 
-                <TextField value={login.email} onChange={(event) =>
-                    handleChange(event, 'email')}
+                <TextField value={login.username} onChange={(event) =>
+                    handleChange(event, 'username')}
                     id="outlined-basic" label="Email" variant="filled" />
                 <TextField helperText={error} value={login.password}
                     onChange={(event) =>

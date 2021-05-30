@@ -7,4 +7,5 @@ public interface RegisterRequestRepository extends JpaRepository<RegisterRequest
 
     RegisterRequest findByPatientId(Long id);
 
+
 }

@@ -1,26 +1,65 @@
-import React, {Component} from 'react';
-import  profil_img from '../profil-img.png'
+import React, {Component, useEffect, useState} from 'react';
+import  profil_img from '../assets/profil-img.png'
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import {useLocation} from "react-router-dom";
+import {PatientService} from "../services/PatientService";
+import {AppointmentService} from "../services/AppointmentService";
 
-class PatientProfilLayout extends Component {
+const  DEFAULT_PATIENT = {
+    approved: false,
+    enabled: true,
+    id: 1,
+    lbo: "",
+    patientBookId: 2,
+    userDto: {
+        address: "",
+        city: "",
+        country: "",
+        email: "",
+        id: 1,
+        lastName: "",
+        lastPasswordResetDate: null,
+        name: "",
+        phoneNumber: "",
+    }
+}
 
-    state = {
-        loading: true,
-        patient: null,
-        disabled: true
+const PatientProfilLayout = () => {
+
+
+
+    const [loading, setLoading] =  useState(true);
+    const [patient, setPatient] =  useState({DEFAULT_PATIENT});
+    const [disabled, setDisabled] =  useState(true);
+
+    // async componentDidMount() {
+    //     const url = "http://localhost:8080/patient/2";
+    //     const response = await fetch(url);
+    //     const data = await response.json();
+    //     this.setState({loading: false, patient: data});
+    //     console.log(patient)
+    // }
+
+    useEffect(() => {
+        fetchPatient();
+    }, []);
+
+    async function fetchPatient() {
+        try {
+            const response = await PatientService.get(1);
+            setPatient(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error(`Error loading your profile !: ${error}`);
+        }
     }
 
-    async componentDidMount() {
-        const url = "http://localhost:8080/patient/2";
-        const response = await fetch(url);
-        const data = await response.json();
-        this.setState({loading: false, patient: data});
-        console.log(this.state.patient)
-    }
 
-    handleEnableClik() {
-        this.setState( {disabled: !this.state.disabled} )
+
+
+    const handleEnableClik = () => {
+         setDisabled(!disabled)
         let saveBtn = document.getElementById('save-btn');
         if (saveBtn.style.display === "initial") {
             saveBtn.style.display = "none";
@@ -29,86 +68,88 @@ class PatientProfilLayout extends Component {
         }
     }
 
-    changeInputHandler = (event, prop) => {
+    const changeInputHandler = (event, prop) => {
 
         const person = {
-            ...this.state.patient
+            ...patient
         };
-        person[prop] = event.target.value;
 
-        this.setState({patient: person});
+        const user = {
+            ...patient.userDto
+        };
+
+
+        user[prop] = event.target.value;
+
+        person.userDto = user;
+
+        setPatient(person);
+
+
     }
 
-
-    validateForm = (email, newPass, confirmPass, name, surname, address, city, state, contact, lbo)  => {
+    const validateForm = (name, surname, address, city, state, contact)  => {
         let ok = true;
-        if(email === "" || name === "" || surname === "" || address === ""
-            || city === "" || state === "" || contact === "" || lbo === "") {
+        if(name === "" || surname === "" || address === ""
+            || city === "" || state === "" || contact === "") {
             ok = false;
             alert("Make sure to fill all fields!")
-        }
-        else if(newPass !== "" && newPass.length < 8) {
-            ok = false;
-            alert("Password should be at least 8 characters long! 😡")
-        }
-        else if(newPass !== confirmPass) {
-            ok = false;
-            alert("Passwords don't match!")
-        }
-
-
-        else if(this.validateEmail(email) === false) {
-            ok = false;
-            alert("You have entered an invalid email address!")
         }
 
         return ok;
     }
 
 
-    validateEmail = (email)  => {
-        let mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        if(email.match(mailformat)) {
-            return true;
+
+    async function update(id, appointment) {
+        try {
+            await PatientService.update(id, patient)
+            window.location.reload();
+        } catch (error) {
+            console.error(`Error ocurred while updating the appointment: ${error}`);
         }
-        return false;
     }
 
-    handleSaveData = ()  => {
-        let email = document.getElementById('email').value;
+    const handleSaveData = ()  => {
         let name = document.getElementById('name').value;
         let surname = document.getElementById('surname').value;
         let address = document.getElementById('address').value;
         let city = document.getElementById('city').value;
         let state = document.getElementById('state').value;
         let contact = document.getElementById('contact').value;
-        let lbo = document.getElementById('lbo').value;
-        let newPass = document.getElementById('newPassword').value;
-        let confirmPass = document.getElementById('confirmPass').value;
-
-        if(this.validateForm(email, newPass, confirmPass, name,surname,address,city,state,contact,lbo)) {
 
 
-            let user = {"email":email, "password":0, "name":name, "lastName":surname,
-                "address":address, "city":city, "country":state, "phoneNumber":contact, "lbo":lbo, "enabled":true};
-            if(newPass !== ""){
-                user.password = newPass;
+        if(validateForm(name,surname,address,city,state,contact)) {
+
+
+            let user = {"name":name, "lastName":surname,
+                "address":address, "city":city, "country":state, "phoneNumber":contact};
+
+
+            const newUser = {
+                ...patient.userDto
             }
-            fetch('http://localhost:8080/patient/2', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(user),
-            })
-                .then(response => response.json())
-                .then(user => {
-                    console.log('Success:', user);
-                    window.location.reload();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
+
+
+
+            function updateKeyIfDifferentValue(obj, src) {
+                Object.keys(obj).forEach(function(key) {
+                    if (src.hasOwnProperty(key)) {
+                        obj[key] = src[key];
+                    } else {
+                        obj[key] = obj[key];
+                    }
                 });
+                return obj;
+            }
+
+            const t = updateKeyIfDifferentValue(newUser, user);
+
+            patient.userDto = newUser;
+
+
+            update(1,patient);
+
 
         }
         else {
@@ -116,15 +157,6 @@ class PatientProfilLayout extends Component {
         }
     }
 
-
-            render() {
-        if (this.state.loading) {
-            return <div style={{textAlign:'center'}}>loading...</div>;
-        }
-
-        if (!this.state.patient) {
-            return <div style={{textAlign:'center'}}>Can't find your profile :/</div>;
-        }
 
         const imgStyle = {
             display: 'block',
@@ -135,6 +167,15 @@ class PatientProfilLayout extends Component {
             margin: '10px auto 10px auto',
             textAlign: 'center'
         };
+
+        if (loading) {
+            return <div style={{textAlign:'center'}}>loading...</div>;
+        }
+
+        if (!patient) {
+            return <div style={{textAlign:'center'}}>Can't find your profile :/</div>;
+        }
+
         return (
 
             <>
@@ -152,58 +193,49 @@ class PatientProfilLayout extends Component {
 
 
                     <label htmlFor="email" className="label-profilInfo">Email:</label>
-                    <input id="email" type="text" value={this.state.patient.email}   className="input-profilInfo "
+                    <input id="email" type="text" value={patient.userDto.email}   className="input-profilInfo "
                            disabled/>
 
                     <label htmlFor="name" className="label-profilInfo">Name:</label>
-                    <input id="name" type="text" value={this.state.patient.name} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'name')}/>
+                    <input id="name" type="text" value={patient.userDto.name} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'name')}/>
 
                     <label htmlFor="surname" className="label-profilInfo">Surame:</label>
-                    <input id="surname" type="text"  value={this.state.patient.lastName} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'lastName')}/>
+                    <input id="surname" type="text"  value={patient.userDto.lastName} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'lastName')}/>
 
                     <label htmlFor="address" className="label-profilInfo">Home address:</label>
-                    <input id="address" type="text" value={this.state.patient.address} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'address')}/>
+                    <input id="address" type="text" value={patient.userDto.address} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'address')}/>
 
                     <label htmlFor="city" className="label-profilInfo">City:</label>
-                    <input id="city" type="text"  value={this.state.patient.city} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'city')}/>
+                    <input id="city" type="text"  value={patient.userDto.city} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'city')}/>
 
                     <label htmlFor="state" className="label-profilInfo">State:</label>
-                    <input id="state" type="text" value={this.state.patient.country} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'country')}/>
+                    <input id="state" type="text" value={patient.userDto.country} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'country')}/>
 
                     <label htmlFor="contact" className="label-profilInfo">Contact:</label>
-                    <input id="contact" type="text" value={this.state.patient.phoneNumber} className="input-profilInfo "
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           onChange={(event) => this.changeInputHandler(event, 'phoneNumber')}/>
+                    <input id="contact" type="text" value={patient.userDto.phoneNumber} className="input-profilInfo "
+                           disabled = {(disabled)? "disabled" : ""}
+                           onChange={(event) => changeInputHandler(event, 'phoneNumber')}/>
 
                     <label htmlFor="lbo" className="label-profilInfo">LBO:</label>
-                    <input id="lbo" type="text" value={this.state.patient.lbo}  className="input-profilInfo "
+                    <input id="lbo" type="text" value={patient.lbo}  className="input-profilInfo "
                            disabled/>
 
-                    <label htmlFor="newPassword" className="label-profilInfo">New password:</label>
-                    <input id="newPassword" type="text"   className="input-profilInfo " placeholder="Enter new password"
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           />
-
-                    <label htmlFor="confirmPass" className="label-profilInfo">Confirm password:</label>
-                    <input id="confirmPass" type="text"  className="input-profilInfo " placeholder="Enter new password again"
-                           disabled = {(this.state.disabled)? "disabled" : ""}
-                           />
 
                     <div style={btnStyle}>
-                        <Button  onClick = {this.handleEnableClik.bind(this)}
+                        <Button  onClick = {handleEnableClik}
                                  variant="contained" color="primary"  size="medium"> Edit </Button>
 
-                        <Button id="save-btn" onClick={this.handleSaveData}
+                        <Button id="save-btn" onClick={handleSaveData}
                                 variant="contained"
                                 color="primary"
                                 size="medium"
@@ -215,7 +247,7 @@ class PatientProfilLayout extends Component {
                 </div>
             </>
         );
-    }
+
 }
 
 export default PatientProfilLayout;

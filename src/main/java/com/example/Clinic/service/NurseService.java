@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface NurseService {
     List<Nurse> findAll();
     Optional<Nurse> findById(Long id);
+    Nurse create(Nurse nurse);
 }

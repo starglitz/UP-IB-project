@@ -14,8 +14,8 @@ const AppointmentRow = (props) => {
                      <td>{props.id}</td>
                      <td>{props.status}</td>
                      <td>{props.date}</td>
-                     <td>{props.time}</td>
-                     <td>{props.duration}</td>
+                     <td>{props.start}</td>
+                     <td>{props.end}</td>
                      <td>{props.doctor.name + " " + props.doctor.lastName}</td>
                      <td>{props.nurse.name + " " + props.nurse.lastName}</td>
                      <td>{props.price}</td>
@@ -37,8 +37,8 @@ const AppointmentRow = (props) => {
                      <td>{props.id}</td>
                      <td>{props.status}</td>
                      <td>{props.date}</td>
-                     <td>{props.time}</td>
-                     <td>{props.duration}</td>
+                     <td>{props.start}</td>
+                     <td>{props.end}</td>
                      <td>{props.doctor.name + " " + props.doctor.lastName}</td>
                      <td>{props.nurse.name + " " + props.nurse.lastName}</td>
                      <td>{props.price}</td>
