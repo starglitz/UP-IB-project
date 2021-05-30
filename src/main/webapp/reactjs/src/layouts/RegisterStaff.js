@@ -17,7 +17,8 @@ const RegisterStaff = () => {
         email: '',
         lastName: '',
         name:'',
-        password:''
+        password:'',
+        enabled: true
     });
 
     const handleFormInputChange = (name) => (event) => {

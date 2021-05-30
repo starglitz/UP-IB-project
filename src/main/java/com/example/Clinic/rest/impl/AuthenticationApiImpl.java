@@ -45,9 +45,13 @@ public class AuthenticationApiImpl implements AuthenticationApi {
                             authenticationRequest.getPassword()));
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
         }catch (BadCredentialsException ex){
             return ResponseEntity.status(404).build();
-        }catch (DisabledException ex ){
+        }
+        catch (DisabledException ex ){
+            System.out.println("im caught");
             return ResponseEntity.status(403).build();
         }
 

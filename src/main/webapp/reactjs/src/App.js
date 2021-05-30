@@ -23,6 +23,8 @@ import PatientsTable from "./components/patients/PatientsTable";
 import Location from "./components/Location";
 import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
+import BlockUsers from "./layouts/BlockUsers";
+import UpdateStaff from "./layouts/UpdateStaff";
 
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
 
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/login" exact component={LoginLayout}/>
+
                 {/*<Route path="/nursePage" exact component={NurseLayout}/>*/}
                 <PrivateRoute
                     exact
@@ -157,6 +160,23 @@ function App() {
                     component={ChangePassword}
                     roles={['CLINIC_ADMIN','PATIENT','DOCTOR','NURSE','CLINIC_CENTRE_ADMIN']}
                 />
+
+//                 <Route path="/blockUsers" exact component={BlockUsers}/>
+                <PrivateRoute
+                    exact
+                    path="/blockUsers"
+                    component={BlockUsers}
+                    roles={['CLINIC_ADMIN']}
+                />
+                  
+//                 <Route path="/updateStaff/:id" exact component={UpdateStaff}/>      
+                <PrivateRoute
+                    exact
+                    path="/updateStaff/:id"
+                    component={UpdateStaff}
+                    roles={['CLINIC_CENTRE_ADMIN']}
+                />
+
             </Switch>
         </Router>
     </div>

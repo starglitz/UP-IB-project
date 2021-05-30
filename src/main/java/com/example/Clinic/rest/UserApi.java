@@ -26,4 +26,17 @@ public interface UserApi {
     @GetMapping(value = "/profile",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getAll();
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(value = "/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getUser(@PathVariable("id") Long id);
+
+
+
+
 }

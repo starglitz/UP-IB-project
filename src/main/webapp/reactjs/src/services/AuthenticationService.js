@@ -21,16 +21,16 @@ async function login(userCredentials) {
                 status = '404'
                 return '404'
             }
-            else if(error.response.status == '403') {
-                status = '403'
-                return '403'
+            else if(error.response.status == '401') {
+                status = '401'
+                return '401'
             }
 
         }
     });
 
 
-    if(status != '403' && status != '404') {
+    if(status != '401' && status != '404') {
         console.log('proslo')
         TokenService.removeToken()
         const decoded_token = TokenService.decodeToken(response.data.accessToken);

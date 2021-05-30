@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +34,8 @@ public class UserDto {
 
     @NotBlank
     private String phoneNumber;
+
+    private boolean enabled;
+
+    private List<String> roles;
 }

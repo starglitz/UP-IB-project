@@ -46,6 +46,8 @@ public class User {
     @Column(name = "last_password_reset_date")
     private Timestamp lastPasswordResetDate;
 
+    private boolean enabled;
+
     public User(String email, String password, String name, String lastName,
                 String address, String city, String country, String phoneNumber) {
         this.email = email;
@@ -56,6 +58,19 @@ public class User {
         this.city = city;
         this.country = country;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(String email, String password, String name, String lastName,
+                String address, String city, String country, String phoneNumber, boolean enabled) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.phoneNumber = phoneNumber;
+        this.enabled = enabled;
     }
 
 

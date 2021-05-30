@@ -22,7 +22,6 @@ public class UserRegisterDto {private Long id;
     @NotBlank
     private String address;
 
-    @NotBlank
     private String password;
 
     private String passwordValidate;
@@ -35,4 +34,6 @@ public class UserRegisterDto {private Long id;
 
     @NotBlank
     private String phoneNumber;
+
+    private boolean enabled = true;
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,6 +34,7 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public Optional<User> findOne(Long id) {
+        System.out.println(userRepository.findById(id));
         return userRepository.findById(id);
     }
 
@@ -45,25 +47,42 @@ public class UserServiceImpl  implements UserService {
         if (userJpa == null) {
             ok = false;
         } else {
-            User updated = new User(user.getId(),user.getEmail(), user.getPassword(), user.getName(), user.getLastName(),
-                    user.getAddress(), user.getCity(), user.getCountry(), user.getPhoneNumber());
 
-            if (validatePassword != null && !validatePassword.equals("")) {
-                if (passwordEncoder.matches(validatePassword,
-                        userJpa.getPassword())) {
-                    updated.setPassword(passwordEncoder.encode(user.getPassword()));
-                    updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
-                }
-                else {
-                    ok = false;
-                    updated.setPassword(userJpa.getPassword());
-                }
+            if(!user.isEnabled()) {
+                userJpa.setEnabled(false);
+                userRepository.save(userJpa);
+                return ok;
             }
-            System.out.println(userJpa);
-            System.out.println(updated);
-            updated.setRoles(userJpa.getRoles());
-            updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
-            userRepository.save(updated);
+
+            else {
+
+
+                User updated = new User(user.getId(), user.getEmail(), user.getPassword(), user.getName(), user.getLastName(),
+                        user.getAddress(), user.getCity(), user.getCountry(), user.getPhoneNumber());
+
+                if (validatePassword != null && !validatePassword.equals("")) {
+                    if (passwordEncoder.matches(validatePassword,
+                            userJpa.getPassword())) {
+                        updated.setPassword(passwordEncoder.encode(user.getPassword()));
+                        updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
+                        updated.setEnabled(userJpa.isEnabled());
+                        userRepository.save(updated);
+                        return ok;
+                    } else {
+                        ok = false;
+                        updated.setPassword(userJpa.getPassword());
+                        updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
+                        updated.setEnabled(userJpa.isEnabled());
+                        userRepository.save(updated);
+                        return ok;
+                    }
+                }
+                updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
+                updated.setPassword(userJpa.getPassword());
+                updated.setEnabled(true);
+                updated.setRoles(userJpa.getRoles());
+                userRepository.save(updated);
+            }
         }
 
         return ok;
@@ -78,5 +97,10 @@ public class UserServiceImpl  implements UserService {
         User user = userRepository.findUserByEmail(userPrincipal.getUsername()).orElse(null);
         return user;
 
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 }
