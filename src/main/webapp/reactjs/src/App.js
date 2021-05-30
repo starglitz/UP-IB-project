@@ -25,6 +25,7 @@ import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
 import BlockUsers from "./layouts/BlockUsers";
 import UpdateStaff from "./layouts/UpdateStaff";
+import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
 
 
 function App() {
@@ -169,7 +170,7 @@ function App() {
                     roles={['CLINIC_ADMIN']}
                 />
                   
-//                 <Route path="/updateStaff/:id" exact component={UpdateStaff}/>      
+//                 <Route path="/updateStaff/:id" exact component={UpdateStaff}/>
                 <PrivateRoute
                     exact
                     path="/updateStaff/:id"
@@ -177,6 +178,12 @@ function App() {
                     roles={['CLINIC_CENTRE_ADMIN']}
                 />
 
+                <PrivateRoute
+                    exact
+                    path="/newClinicAdmin"
+                    component={NewClinicAdmin}
+                    roles={['CLINIC_CENTRE_ADMIN']}
+                />
             </Switch>
         </Router>
     </div>

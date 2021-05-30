@@ -339,3 +339,15 @@ register-form {
     background-color: #f59b42;
 }
 
+.input-margin {
+    margin: 2% !important;
+}
+
+.form-size {
+    background: cornsilk;
+    opacity: 0.97;
+    margin: 0.5% 30%;
+    padding: 2% 8% 2% 8%;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+}
