@@ -72,35 +72,27 @@ const ChangePassword = () => {
         <>
             <div className="updateInfoCard">
                 <div className="passwordChange">
-
-                    <table style={{width:'100%', margin:'30px'}}>
-                        <tr style={{padding:'10px',margin:'10px'}}>
-                            <td style={{width:'50%', textAlign:'right', margin:'10px'}}>
+                <table style={{margin: '0 auto', width:'50%',textAlign:'center', whiteSpace:'nowrap'}}>
+                    <tr>
+                            <td>
                                 <label htmlFor="password" className="label-register"> Old password:</label>
                             </td>
-                            <td style={{width:'50%', textAlign:'left', margin:'10px'}}>
+                            <td >
                                 <input name="password" id="old" type="password" placeholder="enter old password here"
                                        maxLength="100" className="input-register" />
                             </td>
                         </tr>
                         <tr>
-                            <td style={{width:'50%', textAlign:'right'}}>
+                            <td >
                                 <label htmlFor="confirm" className="label-register">New password:</label>
                             </td>
-                            <td style={{width:'50%', textAlign:'left'}}>
+                            <td >
                                 <input  id="new" type="password" placeholder="enter new password" className="input-register"/>
                             </td>
                         </tr>
                     </table>
-
-                    {/*<label htmlFor="password" className="label-register"> Old password:</label>*/}
-                    {/*<input name="password" id="old" type="password" placeholder="enter old password here"*/}
-                    {/*       maxLength="100" className="input-register" />*/}
-
-
-                    {/*<label htmlFor="confirm" className="label-register">New password:</label>*/}
-                    {/*<input  id="new" type="password" placeholder="enter new password" className="input-register"/>*/}
-
+                    <br/>
+               
 
                     <Button variant="contained" onClick={change} className="btnChange">Change</Button>
                 </div>
