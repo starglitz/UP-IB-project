@@ -3,6 +3,9 @@ package com.example.Clinic.rest.impl;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.rest.PatientBookApi;
+import com.example.Clinic.rest.support.converter.PatientToDto;
+import com.example.Clinic.rest.support.dto.PatientBookDto;
+import com.example.Clinic.rest.support.dto.PatientDto;
 import com.example.Clinic.service.PatientBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +24,9 @@ public class PatientBookApiImpl implements PatientBookApi {
     @Autowired
     private PatientBookService patientBookService;
 
+    @Autowired
+    private PatientToDto patientToDto;
+
     @Override
     public ResponseEntity<PatientBook> addPatientBook(@Valid PatientBook patientBook) throws ParserConfigurationException, SAXException, IOException {
         boolean valid = patientBookService.addPatientBook(patientBook);
@@ -35,7 +41,13 @@ public class PatientBookApiImpl implements PatientBookApi {
     public ResponseEntity getPatientBook(Long id) throws ParserConfigurationException, SAXException, IOException {
         PatientBook patientBook = patientBookService.findById(id);
         System.out.println(patientBook);
-        return new ResponseEntity(patientBook, HttpStatus.OK);
+
+        //Long id, PatientDto patientDto, List<String> illnessHistory,
+        //                          List<String> drugs, String xml
+        PatientDto patient = patientToDto.convert(patientBook.getPatient());
+        PatientBookDto dto = new PatientBookDto(patientBook.getId(), patient, patientBook.getIllnessHistory(),
+                patientBook.getDrugs(), patientBook.getXml());
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 
     @Override
