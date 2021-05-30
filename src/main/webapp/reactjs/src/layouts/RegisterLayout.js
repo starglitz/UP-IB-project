@@ -8,6 +8,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory } from "react-router-dom";
 import {PatientService} from "../services/PatientService";
+import {TokenService} from "../services/TokenService";
 
 
 const RegisterLayout = () => {
@@ -29,6 +30,11 @@ const RegisterLayout = () => {
         enabled: true,
         approved: false
     })
+
+    const loggedUser = TokenService.getToken();
+    if(loggedUser && loggedUser !== 'undefined'){
+        history.push("/")
+    }
 
 
     const routeChange = () =>{

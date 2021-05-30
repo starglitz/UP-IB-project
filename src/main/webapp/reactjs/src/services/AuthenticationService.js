@@ -38,7 +38,7 @@ async function login(userCredentials) {
         if (decoded_token && decoded_refresh_token) {
             TokenService.setToken(response.data.accessToken);
             TokenService.setRefreshToken(response.data["refreshToken"]);
-            // window.location.assign("/");
+            window.location.assign("/");
             console.log(TokenService.getToken(), TokenService.getRefreshToken())
         } else {
             console.error("Invalid token");
@@ -65,7 +65,6 @@ function getRole() {
         let string = decoded_token.roles;
         let spliceString = string.slice(1, string.length - 1)
         let roles = spliceString.split(", ")
-        console.log(roles)
         return roles;
     } else {
         return null;
