@@ -68,6 +68,7 @@ const navbar = () => {
     clinicCentreAdmin.push(addClinicAdmin)
 
 
+
     const elementRender = [];
     if(!TokenService.getToken()) {
         elementRender.push(registerElement)

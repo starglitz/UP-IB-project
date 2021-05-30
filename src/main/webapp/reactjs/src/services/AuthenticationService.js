@@ -30,7 +30,7 @@ async function login(userCredentials) {
     });
 
 
-    if(status != '401' && status != '404') {
+    if(status != '401' && status != '404' && response) {
         console.log('proslo')
         TokenService.removeToken()
         const decoded_token = TokenService.decodeToken(response.data.accessToken);

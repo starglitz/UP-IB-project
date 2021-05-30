@@ -15,7 +15,7 @@ const ClinicProfile = () => {
 
     const [clinic, setClinic] = useState({
 
-        clinic_id: '',
+        clinic_id: 0,
         name: '',
         description: '',
         rating: '',
@@ -42,8 +42,9 @@ const ClinicProfile = () => {
 
     useEffect(() => {
         fetchData()
-        fetchDoctors()
-        fetchAppointments()
+        // callbackF()
+        // fetchDoctors()
+        // fetchAppointments()
         // fetchAddress()
         //console.log(address)
     }, []);
@@ -58,14 +59,26 @@ const ClinicProfile = () => {
 
     async function fetchData() {
         try {
-            const response = await ClinicService.get(17);
+            const response = await ClinicService.getByLoggedInAdmin();
             setClinic(response.data)
             console.log(response.data)
+            fetchDoctors(response.data.clinic_id)
+            fetchAppointments(response.data.clinic_id)
         } catch (error) {
             console.error(`Error loading clinic !: ${error}`);
         }
+
     }
 
+
+    async function callbackF() {
+        await fetchData()
+        fetchDoctors()
+        fetchAppointments()
+
+        // fetchDoctors()
+        // fetchAppointments()
+    }
     // async function fetchDoctors() {
     //     const res = await fetch("http://localhost:8080/doctorByClinic/1");
     //     res
@@ -74,9 +87,10 @@ const ClinicProfile = () => {
     //         .catch(err => setErrors(err));
     // }
 
-    async function fetchDoctors() {
+    async function fetchDoctors(clinic_id) {
         try {
-            const response = await DoctorService.getByClinicId(17)
+            console.log("im here but clinic id is : " + clinic_id)
+            const response = await DoctorService.getByClinicId(clinic_id)
             setDoctors(response.data)
             console.log(response.data);
         } catch (error) {
@@ -94,9 +108,9 @@ const ClinicProfile = () => {
     //         .catch(err => setErrors(err));
     // }
 
-    async function fetchAppointments() {
+    async function fetchAppointments(clinic_id) {
         try {
-            const response = await AppointmentService.getByClinicId(17);
+            const response = await AppointmentService.getByClinicId(clinic_id);
             setAppointments(response.data.filter((app) => app.deleted == false && app.status == 'FREE'))
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
@@ -165,11 +179,11 @@ const ClinicProfile = () => {
     }
 
     async function handleSaveData(){
-        let name = document.getElementById('name').value;
-        let description = document.getElementById('description').value;
-        let rating = document.getElementById('rating').value;
-
-        let hospital = {clinic_id:'1', name:name, description: description, rating: rating}
+        // let name = document.getElementById('name').value;
+        // let description = document.getElementById('description').value;
+        // let rating = document.getElementById('rating').value;
+        //
+        // let hospital = {clinic_id:clinic.clinic_id, name:name, description: description, rating: rating}
 
         // fetch('http://localhost:8080/clinic', {
         //     method: 'PUT',
@@ -187,9 +201,13 @@ const ClinicProfile = () => {
         //         console.error('Error:', error);
         //     });
 
-        await ClinicService.update(hospital.clinic_id, hospital);
+        await ClinicService.update(clinic.clinic_id, clinic);
     }
 
+    const handleFormInputChange = (name) => (event) => {
+        const val = event.target.value;
+        setClinic({ ...clinic, [name]: val });
+    };
 
     return (
         <>
@@ -212,7 +230,7 @@ const ClinicProfile = () => {
                     <tr>
                         <td>
                     <label htmlFor="name" className="label-hospital">Name:</label></td>
-                        <td>  <input defaultValue={clinic.name} id="name" type="text"  className="input-hospital"
+                        <td>  <input defaultValue={clinic.name} onChange={handleFormInputChange("name")} id="name" type="text"  className="input-hospital"
                                      disabled = {(disabled)? "disabled" : ""}/>
                         </td>
                     </tr>
@@ -220,7 +238,8 @@ const ClinicProfile = () => {
                             <td>
                     <label htmlFor="description" className="label-hospital">Description:</label>
                             </td>
-                            <td>  <input defaultValue={clinic.description} id="description" type="text" className="input-hospital"
+                            <td>  <input defaultValue={clinic.description} onChange={handleFormInputChange("description")}
+                                         id="description" type="text" className="input-hospital"
                                          disabled = {(disabled)? "disabled" : ""}/>
                             </td>
                         </tr>
@@ -236,7 +255,7 @@ const ClinicProfile = () => {
                     <tr>
                         <td>  <label htmlFor="addr" className="label-hospital">Address:</label>
                         </td>
-                        <td>   <input defaultValue={clinic.addressName}  id="rating" type="text" className="input-hospital"
+                        <td>   <input defaultValue={clinic.addressName} onChange={handleFormInputChange("addressName")} id="rating" type="text" className="input-hospital"
                                       disabled = {(disabled)? "disabled" : ""}/>
                         </td>
                     </tr>

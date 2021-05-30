@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -36,4 +37,10 @@ public interface ClinicApi {
     @PutMapping(value="/{id}", produces = {MediaType.APPLICATION_JSON_VALUE},
     consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity update(@PathVariable("id") Long id,@Valid @RequestBody Clinic clinic);
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(value = "/admin", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getClinicByLoggedInAdmin(Authentication authentication);
+
+
 }

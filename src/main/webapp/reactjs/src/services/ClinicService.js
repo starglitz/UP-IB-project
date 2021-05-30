@@ -5,7 +5,8 @@ export const ClinicService = {
     getAll,
     update,
     create,
-    getByDate
+    getByDate,
+    getByLoggedInAdmin
 };
 
 
@@ -27,4 +28,8 @@ async function create(clinic) {
 
 async function getByDate(date) {
     return await AxiosClient.get(`http://localhost:8080/clinics/date/${date}`);
+}
+
+async function getByLoggedInAdmin() {
+    return await AxiosClient.get(`http://localhost:8080/clinics/admin`);
 }
