@@ -1,12 +1,24 @@
-import React, {useState} from "react";
-import {Button} from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {Button, makeStyles, MenuItem, Select} from "@material-ui/core";
 import {NurseService} from "../services/NurseService";
 import {DoctorService} from "../services/DoctorService";
+import {ClinicService} from "../services/ClinicService";
 
-
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+    select: {
+    }
+}));
 
 const RegisterStaff = () => {
 
+    const classes = useStyles();
 
     const [role, setRole] = useState('NURSE');
     const [showAlert, setShowAlert] = useState({ success: null, message: "" });
@@ -21,11 +33,32 @@ const RegisterStaff = () => {
         enabled: true
     });
 
+    const [clinics, setClinics] = useState([])
+    const [error, setError] = useState([])
+    const [clinic, setClinic] = useState({})
+
     const handleFormInputChange = (name) => (event) => {
         const val = event.target.value;
         setUser({ ...user, [name]: val });
     };
 
+    useEffect(() => {
+        fetchClinics().catch(err => setError(err));
+    }, []);
+
+    async function fetchClinics() {
+        try {
+            const response = await ClinicService.getAll()
+            setClinics(response.data)
+        } catch (error) {
+            console.error(`Error loading doctors !: ${error}`);
+        }
+    }
+
+    function handleChange(event) {
+        console.log(event.target.value)
+        setClinic(event.target.value)
+    }
 
     let sameData = <>
         <div style={{margin: '0 auto', display: 'flex',
@@ -74,7 +107,22 @@ const RegisterStaff = () => {
                 <label htmlFor="confirm" className="label-register">Confirm password:</label>
                 <input  id="confirm" type="password" placeholder="confirm password" className="input-register"/>
 
+                <div>
+                    <label htmlFor="clinic" className="label-register">Clinic:</label>
+                <Select
+                    className="input-register"
+                        labelId="clinicLabel"
+                        name="clinic"
+                        id="clinic"
+                        onChange={handleChange}
+                    style={{backgroundColor:"white"}}
 
+                >
+                    {clinics.map(clinic => (
+                        <MenuItem key={clinic.id} value={clinic}> {clinic.name} </MenuItem>
+                    ))}
+                </Select>
+                </div>
             </div>
         </div>
     </>
@@ -165,7 +213,7 @@ const RegisterStaff = () => {
 
         if (validate) {
 
-            let nurse = {"user": user}
+            let nurse = {"user": user, "clinic":clinic}
             console.log(nurse)
             console.log("NURSE REGISTER")
             try {
@@ -178,7 +226,7 @@ const RegisterStaff = () => {
                     message: "Error ocurred while registering",
                 });
             }
-            alert("successfully registered! log in before u start using the website")
+            alert("successfully registered!")
           //  window.location.assign("/home");
         }
     }
@@ -189,7 +237,7 @@ const RegisterStaff = () => {
 
 
         if (validate) {
-            let doctor = {"user": user};
+            let doctor = {"user": user, "clinic": clinic};
             console.log(doctor)
             console.log("DOCTOR REGISTER")
             try {
@@ -202,7 +250,7 @@ const RegisterStaff = () => {
                     message: "Error ocurred while registering",
                 });
             }
-            alert("successfully registered! log in before u start using the website")
+            alert("successfully registered!")
            // window.location.assign("/home");
         }
     }

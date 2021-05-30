@@ -9,6 +9,7 @@ import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
+import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +32,9 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Autowired
     private DtoToDoctor dtoToDoctor;
+
+    @Autowired
+    private ClinicService clinicService;
 
     @Override
     public ResponseEntity getAllDoctors() {
@@ -83,8 +87,12 @@ public class DoctorApiImpl implements DoctorApi {
                 doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber(),
                 doctor.getUser().isEnabled());
 
+        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id()).orElse(null);
 
         Doctor doctor1 = new Doctor(user);
+        if(clinic != null) {
+            doctor1.setClinic(clinic);
+        }
         Doctor created = doctorService.create(doctor1);
 
         return new ResponseEntity("Success", HttpStatus.OK);

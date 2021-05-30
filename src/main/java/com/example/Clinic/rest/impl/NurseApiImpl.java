@@ -1,5 +1,6 @@
 package com.example.Clinic.rest.impl;
 
+import com.example.Clinic.model.Clinic;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.NurseApi;
@@ -7,6 +8,7 @@ import com.example.Clinic.rest.support.converter.DtoToNurse;
 import com.example.Clinic.rest.support.converter.NurseToDto;
 import com.example.Clinic.rest.support.dto.NurseDto;
 import com.example.Clinic.rest.support.dto.RegisterNurseDto;
+import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.NurseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class NurseApiImpl implements NurseApi {
 
     @Autowired
     private NurseToDto nurseToDto;
+
+    @Autowired
+    private ClinicService clinicService;
 
     @Override
     public ResponseEntity getAllNurses() {
@@ -46,9 +51,13 @@ public class NurseApiImpl implements NurseApi {
                 nurseDto.getUser().getCountry(), nurseDto.getUser().getPhoneNumber(),
                 nurseDto.getUser().isEnabled());
 
+        Clinic clinic = clinicService.findById(nurseDto.getClinic().getClinic_id()).orElse(null);
 
 
         Nurse nurse = new Nurse(user);
+        if(clinic != null) {
+            nurse.setClinic(clinic);
+        }
         Nurse created = nurseService.create(nurse);
 
         return new ResponseEntity("Successfully created", HttpStatus.OK);
