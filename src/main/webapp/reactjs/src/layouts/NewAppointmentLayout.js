@@ -151,7 +151,8 @@ const NewAppointmentLayout = () => {
                     </select>
 
                     <label htmlFor="nurse" className="label-register">Nurse:</label>
-                    <select name="nurse" id="nurse" className="input-register">
+                    <select name="nurse" id="nurse" className="input-register"
+                    style={{marginLeft:'50px'}}>
                         {nurses.map((nurse) =>
                             <option key={nurse.id} value={JSON.stringify(nurse)}>{nurse.user.name + " " + nurse.user.lastName}</option>
                         )}

@@ -92,7 +92,7 @@ const ChangePassword = () => {
                         </tr>
                     </table>
                     <br/>
-               
+
 
                     <Button variant="contained" onClick={change} className="btnChange">Change</Button>
                 </div>
