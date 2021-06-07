@@ -5,5 +5,5 @@ export const ClinicAdminService = {
 };
 
 async function create(clinicAdmin) {
-    return await AxiosClient.post(`http://localhost:8080/clinic/admin`, clinicAdmin);
+    return await AxiosClient.post(`https://localhost:8080/clinic/admin`, clinicAdmin);
 }

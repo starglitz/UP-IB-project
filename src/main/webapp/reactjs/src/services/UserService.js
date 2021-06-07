@@ -9,7 +9,7 @@ export const UserService = {
 
 async function edit(id, user) {
     let status = '200';
-    await AxiosClient.put(`http://localhost:8080/user/${id}`, user)
+    await AxiosClient.put(`https://localhost:8080/user/${id}`, user)
         .catch(function (error) {
             if (error.response) {
                 console.log(error.response.status);
@@ -23,13 +23,13 @@ async function edit(id, user) {
 }
 
 async function getMyInfo() {
-    return await AxiosClient.get("http://localhost:8080/user/profile");
+    return await AxiosClient.get("https://localhost:8080/user/profile");
 }
 
 async function getAll() {
-    return await AxiosClient.get("http://localhost:8080/user")
+    return await AxiosClient.get("https://localhost:8080/user")
 }
 
 async function get(id) {
-    return await AxiosClient.get(`http://localhost:8080/user/${id}`);
+    return await AxiosClient.get(`https://localhost:8080/user/${id}`);
 }

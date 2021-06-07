@@ -13,7 +13,7 @@ async function login(userCredentials) {
     console.log(userCredentials)
     let status = "200";
     const response = await AxiosClient.post(
-        "http://localhost:8080/auth/login",
+        "https://localhost:8080/auth/login",
         userCredentials
     ).catch(function (error) {
         if (error.response) {
