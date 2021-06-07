@@ -10,21 +10,21 @@ export const DoctorService = {
 
 
 async function get(id) {
-    return await AxiosClient.get(`http://localhost:8080/doctors/${id}`);
+    return await AxiosClient.get(`httpss://localhost:8080/doctors/${id}`);
 }
 
 async function getAll() {
-    return await AxiosClient.get(`http://localhost:8080/doctors`);
+    return await AxiosClient.get(`httpss://localhost:8080/doctors`);
 }
 
 async function getByClinicAndDate(clinic_id, date) {
-    return await AxiosClient.get(`http://localhost:8080/doctors/clinic/${clinic_id}/date/${date}`);
+    return await AxiosClient.get(`https://localhost:8080/doctors/clinic/${clinic_id}/date/${date}`);
 }
 
 async function getByClinicId(id) {
-    return await AxiosClient.get(`http://localhost:8080/doctors/clinic/${id}`);
+    return await AxiosClient.get(`https://localhost:8080/doctors/clinic/${id}`);
 }
 
 async function add(doctor) {
-    return await AxiosClient.post("http://localhost:8080/doctors", doctor);
+    return await AxiosClient.post("https://localhost:8080/doctors", doctor);
 }

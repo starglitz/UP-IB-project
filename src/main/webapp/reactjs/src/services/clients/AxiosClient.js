@@ -34,7 +34,7 @@ AxiosClient.interceptors.response.use(
                 console.log("Token je istekao, pokusavam refresh")
                 originalRequest._retry = true;
                 const refreshToken = TokenService.getRefreshToken();
-                return axios.post('http://localhost:8080/auth/refresh',
+                return axios.post('https://localhost:8080/auth/refresh',
                     {}, {  headers: {
                             'Authorization': `Bearer ${refreshToken}`
                         }})
