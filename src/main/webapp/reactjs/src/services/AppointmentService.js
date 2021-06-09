@@ -8,7 +8,8 @@ export const AppointmentService = {
     getByClinicId,
     getFreeByClinicId,
     getFreeByDoctorIdAndDate,
-    deleteAppointment
+    deleteAppointment,
+    postBookingAppointment
 };
 
 
@@ -38,6 +39,10 @@ async function getFreeByClinicId(id) {
 
 async function getFreeByDoctorIdAndDate(id, date) {
     return await AxiosClient.get(`https://localhost:8080/appointments/free/doctor/${id}/date/${date}`);
+}
+
+async function postBookingAppointment(id) {
+    return await AxiosClient.post(`https://localhost:8080/appointments/booking/${id}`);
 }
 
 async function deleteAppointment(id) {

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -59,5 +60,10 @@ public interface AppointmentApi {
     @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Appointment> deleteAppointment(@PathVariable("id") Long id);
+
+    @PermitAll
+    @PostMapping(value = "/booking/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity bookAppointment(Authentication authentication, @PathVariable long id);
 
 }

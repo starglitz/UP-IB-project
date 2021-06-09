@@ -26,7 +26,7 @@ public interface DoctorApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getDoctor(@PathVariable("id") Long id);
 
-    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN','PATIENT')")
     @GetMapping(value = "/clinic/{clinic_id}/date/{date}",
     produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity getDoctorsByClinicAndDate(@PathVariable("clinic_id") Long id,
