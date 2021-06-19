@@ -31,7 +31,7 @@ public class DtoToRecipe implements Converter<RecipeDto, Recipe> {
         }
         System.out.println(source);
 
-        Nurse nurse = nurseService.findById(source.getNurse().getId()).orElse(null);
+        Nurse nurse = nurseService.findById(source.getNurse().getUser().getId()).get();
         target.setNurse(nurse);
 
         target.setRecipe_id(source.getRecipe_id());

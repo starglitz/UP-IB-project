@@ -1,9 +1,6 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Appointment;
-import com.example.Clinic.model.Doctor;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.AppointmentStatus;
 import com.example.Clinic.rest.AppointmentApi;
 import com.example.Clinic.rest.support.converter.AppointmentToDto;
@@ -11,13 +8,12 @@ import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToAppointment;
 import com.example.Clinic.rest.support.converter.NurseToDto;
 import com.example.Clinic.rest.support.dto.AppointmentDto;
-import com.example.Clinic.service.AppointmentService;
-import com.example.Clinic.service.DoctorService;
-import com.example.Clinic.service.NurseService;
-import com.example.Clinic.service.PatientService;
+import com.example.Clinic.service.*;
+import com.example.Clinic.service.impl.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -52,6 +48,12 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Autowired
     private AppointmentToDto appointmentToDto;
+
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity getAllAppointments() {
@@ -110,5 +112,28 @@ public class AppointmentApiImpl implements AppointmentApi {
     public ResponseEntity<Appointment> deleteAppointment(Long id) {
         Appointment appointment = appointmentService.findById(id);
         return new ResponseEntity(appointmentService.delete(appointment), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity bookAppointment(Authentication authentication, long id) {
+        User user = userService.getLoggedIn(authentication);
+        Appointment appointmentForUpdate = appointmentService.findById(id);
+
+
+        if(!appointmentForUpdate.getStatus().equals(AppointmentStatus.FREE)){
+            return new ResponseEntity("Appointment is already reserved",HttpStatus.BAD_REQUEST);
+
+        }else {
+            appointmentForUpdate.setPatient(patientService.getPatientById(user.getId()).orElse(null));
+            appointmentForUpdate.setStatus(AppointmentStatus.RESERVED);
+            appointmentService.update(appointmentForUpdate);
+
+            emailService.sendEmail(user.getEmail(), "Booking appointment report",
+                    "Hello " + user.getName() + ", You have successfully reserved an appointment for: "
+                            + appointmentForUpdate.getDate() + ", at: " + appointmentForUpdate.getStart()
+            + " which be held by doctor: " + appointmentForUpdate.getDoctor().getUser().getName() + " " +
+                            appointmentForUpdate.getDoctor().getUser().getLastName());
+            return new ResponseEntity(HttpStatus.OK);
+        }
     }
 }
