@@ -20,7 +20,7 @@ const BlockUsers = () => {
         try {
             const response = await UserService.getAll();
             const filtered = response.data.filter(u => u.enabled === true &&
-                !(u.roles.includes("CLINIC_ADMIN", "CLINIC_CENTER_ADMIN")));
+                !(u.roles.includes("CLINIC_ADMIN", "CLINIC_CENTRE_ADMIN")));
             //const filtered = response.data.filter(u => u.enabled === true)
              setUsers(filtered)
             console.log(filtered)
