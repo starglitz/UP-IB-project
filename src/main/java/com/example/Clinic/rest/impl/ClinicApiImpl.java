@@ -101,5 +101,15 @@ public class ClinicApiImpl implements ClinicApi {
         return new ResponseEntity(clinicToDto.convert(admin.getClinic()), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity getNotRatedVisitedClinics(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        List<Clinic> clinics = clinicService.getNotRatedByPatientId(user.getId());
+        if(clinics.size() > 0) {
+            return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.OK);
+        }
+        return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.NOT_FOUND);
+    }
+
 
 }

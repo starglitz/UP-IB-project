@@ -11,9 +11,11 @@ import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
 import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.DoctorService;
+import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
@@ -35,6 +37,9 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Autowired
     private ClinicService clinicService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity getAllDoctors() {
@@ -96,5 +101,17 @@ public class DoctorApiImpl implements DoctorApi {
         Doctor created = doctorService.create(doctor1);
 
         return new ResponseEntity("Success", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getNotRatedByPatient(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        List<Doctor> doctors = doctorService.getNotRatedByPatientId(user.getId());
+        List<DoctorDto> dtos = new ArrayList<>();
+        for(Doctor doctor : doctors) {
+            DoctorDto dto = doctorToDto.convert(doctor);
+            dtos.add(dto);
+        }
+        return new ResponseEntity(dtos, HttpStatus.OK);
     }
 }

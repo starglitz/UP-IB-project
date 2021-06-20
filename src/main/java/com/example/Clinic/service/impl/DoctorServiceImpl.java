@@ -74,4 +74,9 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctorJpa = doctorRepository.save(doctor);
         return doctorJpa;
     }
+
+    @Override
+    public List<Doctor> getNotRatedByPatientId(Long id) {
+        return doctorRepository.findNotRatedByPatientId(id);
+    }
 }

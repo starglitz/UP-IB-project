@@ -49,5 +49,9 @@ public interface ClinicApi {
     @GetMapping(value = "/admin", produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getClinicByLoggedInAdmin(Authentication authentication);
 
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @GetMapping(value = "/not_rated", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getNotRatedVisitedClinics(Authentication authentication);
+
 
 }

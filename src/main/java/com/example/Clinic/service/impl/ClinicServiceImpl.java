@@ -51,4 +51,9 @@ public class ClinicServiceImpl implements ClinicService {
     public Clinic update(Clinic clinic) {
         return clinicRepository.save(clinic);
     }
+
+    @Override
+    public List<Clinic> getNotRatedByPatientId(Long id) {
+        return clinicRepository.findNotRatedByPatientId(id);
+    }
 }

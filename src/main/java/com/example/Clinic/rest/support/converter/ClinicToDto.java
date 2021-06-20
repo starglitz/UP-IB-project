@@ -28,7 +28,7 @@ public class ClinicToDto implements Converter<Clinic, ClinicDto> {
         dto.setClinic_id(clinic.getClinic_id());
         dto.setName(clinic.getName());
         dto.setDescription(clinic.getDescription());
-        dto.setRating(clinic.getRating());
+        //dto.setRating(clinic.getRating());
         dto.setAddressName(clinic.getAddressName());
         dto.setLng(clinic.getLng());
         dto.setLat(clinic.getLat());

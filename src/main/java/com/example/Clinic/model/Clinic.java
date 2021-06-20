@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,9 +24,13 @@ public class Clinic {
 //    @OneToMany
 //    @JoinColumn(name = "service_id")
 //    private List<Service> services;
-    private float rating;
+  @ElementCollection
+  @CollectionTable(name ="clinic_rating")
+  private List<String> ratings = new ArrayList<String>();
 
 
+  @Transient
+  private float averageRating;
 //    @OneToOne(mappedBy = "clinic")
 //    private Address address;
 

@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,7 +15,13 @@ public class Doctor{
     @Id
     private Long id;
 
-    private float grade;
+    @ElementCollection
+    @CollectionTable(name ="doctor_rating")
+    private List<String> ratings = new ArrayList<String>();
+
+    @Transient
+    private float averageRating;
+
     @ManyToOne
     @JoinColumn(name="clinic_id")
     private Clinic clinic;

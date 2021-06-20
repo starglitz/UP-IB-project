@@ -15,4 +15,5 @@ public interface ClinicService {
     Optional<Clinic> findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);
     Clinic update(Clinic clinic);
+    List<Clinic> getNotRatedByPatientId(Long id);
 }

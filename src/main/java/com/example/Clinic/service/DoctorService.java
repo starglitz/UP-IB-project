@@ -15,4 +15,5 @@ public interface DoctorService {
     List<Doctor> findByClinicId(Long id);
     List<Doctor> findByClinicAndDate(Long id, LocalDate date);
     Doctor create(Doctor doctor);
+    List<Doctor> getNotRatedByPatientId(Long id);
 }
