@@ -28,6 +28,7 @@ import UpdateStaff from "./layouts/UpdateStaff";
 import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
 import ClinicCentreAdminLayout from "./layouts/ClinicCentreAdminLayout";
 import NewClinic from "./components/clinics/NewClinic";
+import RateTables from "./components/ratings/RateTables";
 
 
 function App() {
@@ -192,6 +193,13 @@ function App() {
                     path="/newClinicAdmin"
                     component={NewClinicAdmin}
                     roles={['CLINIC_CENTRE_ADMIN']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/rate"
+                    component={RateTables}
+                    roles={['PATIENT']}
                 />
             </Switch>
         </Router>

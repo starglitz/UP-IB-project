@@ -6,7 +6,9 @@ export const ClinicService = {
     update,
     create,
     getByDate,
-    getByLoggedInAdmin
+    getByLoggedInAdmin,
+    getNotRatedByPatient,
+    rate
 };
 
 
@@ -32,4 +34,12 @@ async function getByDate(date) {
 
 async function getByLoggedInAdmin() {
     return await AxiosClient.get(`https://localhost:8080/clinics/admin`);
+}
+
+async function getNotRatedByPatient() {
+    return await AxiosClient.get(`https://localhost:8080/clinics/not_rated`);
+}
+
+async function rate(id, rating) {
+    return await AxiosClient.put(`https://localhost:8080/clinics/rate/${id}`, rating);
 }

@@ -1,6 +1,7 @@
 package com.example.Clinic.service;
 
 import com.example.Clinic.model.Doctor;
+import com.example.Clinic.model.DoctorRating;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
@@ -16,4 +17,5 @@ public interface DoctorService {
     List<Doctor> findByClinicAndDate(Long id, LocalDate date);
     Doctor create(Doctor doctor);
     List<Doctor> getNotRatedByPatientId(Long id);
+    Doctor rate(Long id, DoctorRating rating);
 }

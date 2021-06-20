@@ -4,6 +4,7 @@ package com.example.Clinic.service.impl;
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Clinic;
 import com.example.Clinic.model.ClinicRating;
+import com.example.Clinic.repository.ClinicRatingRepository;
 import com.example.Clinic.repository.ClinicRepository;
 import com.example.Clinic.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Autowired
     private ClinicRepository clinicRepository;
+
+    @Autowired
+    private ClinicRatingRepository clinicRatingRepository;
 
     @Override
     public Clinic create(Clinic clinic) {
@@ -63,6 +67,7 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Clinic update(Clinic clinic) {
+
         return clinicRepository.save(clinic);
     }
 
@@ -71,6 +76,14 @@ public class ClinicServiceImpl implements ClinicService {
         List<Clinic> clinics = clinicRepository.findNotRatedByPatientId(id);
         clinics = setAverageRatingToClinics(clinics);
         return clinics;
+    }
+
+    @Override
+    public Clinic rate(Long id, ClinicRating rating) {
+        Clinic clinic = clinicRepository.findById(id).orElse(null);
+        rating = clinicRatingRepository.save(rating);
+        clinic.getRatings().add(rating);
+        return clinicRepository.save(clinic);
     }
 
 

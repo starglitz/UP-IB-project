@@ -4,6 +4,7 @@ package com.example.Clinic.service.impl;
 import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.UserRole;
 import com.example.Clinic.repository.AuthorityRepository;
+import com.example.Clinic.repository.DoctorRatingRepository;
 import com.example.Clinic.repository.DoctorRepository;
 import com.example.Clinic.repository.UserRepository;
 import com.example.Clinic.service.DoctorService;
@@ -26,6 +27,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Autowired
     private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private DoctorRatingRepository doctorRatingRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -83,6 +87,14 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Doctor> getNotRatedByPatientId(Long id) {
         return setAverageRating(doctorRepository.findNotRatedByPatientId(id));
+    }
+
+    @Override
+    public Doctor rate(Long id, DoctorRating rating) {
+        Doctor doctor = doctorRepository.findById(id).orElse(null);
+        rating = doctorRatingRepository.save(rating);
+        doctor.getRatings().add(rating);
+        return doctorRepository.save(doctor);
     }
 
 

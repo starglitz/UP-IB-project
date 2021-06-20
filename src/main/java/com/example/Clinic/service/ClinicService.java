@@ -1,6 +1,7 @@
 package com.example.Clinic.service;
 
 import com.example.Clinic.model.Clinic;
+import com.example.Clinic.model.ClinicRating;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,4 +17,5 @@ public interface ClinicService {
     List<Clinic> findClinicsByDate(LocalDate date);
     Clinic update(Clinic clinic);
     List<Clinic> getNotRatedByPatientId(Long id);
+    Clinic rate(Long id, ClinicRating rating);
 }

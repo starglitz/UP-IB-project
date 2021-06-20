@@ -1,9 +1,6 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Clinic;
-import com.example.Clinic.model.Doctor;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.rest.DoctorApi;
 import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToDoctor;
@@ -11,6 +8,7 @@ import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
 import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.DoctorService;
+import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +38,9 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public ResponseEntity getAllDoctors() {
@@ -113,5 +114,13 @@ public class DoctorApiImpl implements DoctorApi {
             dtos.add(dto);
         }
         return new ResponseEntity(dtos, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity rate(Long id, Authentication authentication, DoctorRating doctorRating) {
+        User user = userService.getLoggedIn(authentication);
+        Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+        doctorRating.setPatient(patient);
+        return new ResponseEntity(doctorToDto.convert(doctorService.rate(id, doctorRating)), HttpStatus.OK);
     }
 }

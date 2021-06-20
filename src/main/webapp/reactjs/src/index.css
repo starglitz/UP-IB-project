@@ -353,3 +353,24 @@ register-form {
     border-radius: 25px;
     border: 2px solid #73AD21;
 }
+
+.rating-div {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.text-align {
+    text-align: center;
+    margin: 30px;
+    margin-top:50px;
+}
+
+.flex-container {
+    display: flex;
+    margin: 0 auto;
+}
+
+.flex-child {
+    flex: 1;
+    margin:15px
+}

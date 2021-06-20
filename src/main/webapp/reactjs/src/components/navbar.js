@@ -30,6 +30,7 @@ const navbar = () => {
     const blockUsers = <Nav.Link key={key++}  href="blockUsers">Block users</Nav.Link>
     const appointmentReview = <Nav.Link key={key++}  href="appointmentReview">Appointment review</Nav.Link>
     const doctorPatients = <Nav.Link key={key++}  href="patients">Patients</Nav.Link>
+    const rate = <Nav.Link key={key++}  href="rate">Rate doctors & clinics</Nav.Link>
     const logoutLink = <Nav.Link key={key++} onClick={logoutClick}  href="">Logout</Nav.Link>
 
 
@@ -38,6 +39,7 @@ const navbar = () => {
     patient.push(profileElement)
     patient.push(clinicsElement)
     patient.push(chandePassword)
+    patient.push(rate)
 
 
     let nurse = [];

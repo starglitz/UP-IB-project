@@ -1,6 +1,7 @@
 package com.example.Clinic.rest;
 
 import com.example.Clinic.model.Clinic;
+import com.example.Clinic.model.ClinicRating;
 import com.example.Clinic.rest.support.dto.ClinicDto;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -52,6 +54,11 @@ public interface ClinicApi {
     @PreAuthorize("hasAuthority('PATIENT')")
     @GetMapping(value = "/not_rated", produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getNotRatedVisitedClinics(Authentication authentication);
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @PutMapping(value = "/rate/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity setRate(@PathVariable("id") Long id, Authentication authentication,@RequestBody ClinicRating rating);
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.Clinic.rest;
 
+import com.example.Clinic.model.DoctorRating;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.NurseDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
@@ -46,4 +47,9 @@ public interface DoctorApi {
     @GetMapping(value = "/not_rated",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getNotRatedByPatient(Authentication authentication);
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @PutMapping(value = "/rate/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity rate(@PathVariable("id") Long id, Authentication authentication, @RequestBody DoctorRating doctorRating);
 }
