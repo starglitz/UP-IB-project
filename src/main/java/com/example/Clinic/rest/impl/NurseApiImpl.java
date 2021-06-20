@@ -51,7 +51,7 @@ public class NurseApiImpl implements NurseApi {
                 nurseDto.getUser().getCountry(), nurseDto.getUser().getPhoneNumber(),
                 nurseDto.getUser().isEnabled());
 
-        Clinic clinic = clinicService.findById(nurseDto.getClinic().getClinic_id()).orElse(null);
+        Clinic clinic = clinicService.findById(nurseDto.getClinic().getClinic_id());
 
 
         Nurse nurse = new Nurse(user);

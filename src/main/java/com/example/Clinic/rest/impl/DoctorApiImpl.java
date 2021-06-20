@@ -54,7 +54,7 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Override
     public ResponseEntity getDoctor(Long id) {
-        Doctor doctor = doctorService.findById(id).orElse(null);
+        Doctor doctor = doctorService.findById(id);
         if(doctor == null) {
             return new ResponseEntity("Doctor with id " + id + " not found!", HttpStatus.NOT_FOUND);
         }
@@ -92,7 +92,7 @@ public class DoctorApiImpl implements DoctorApi {
                 doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber(),
                 doctor.getUser().isEnabled());
 
-        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id()).orElse(null);
+        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id());
 
         Doctor doctor1 = new Doctor(user);
         if(clinic != null) {

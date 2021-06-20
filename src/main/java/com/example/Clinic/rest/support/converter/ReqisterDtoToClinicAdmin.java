@@ -31,7 +31,7 @@ public class ReqisterDtoToClinicAdmin implements Converter<RegisterClinicAdminDt
     public ClinicAdmin convert(RegisterClinicAdminDto dto) {
         ClinicAdmin clinicAdmin = new ClinicAdmin();
 
-        Clinic clinic = clinicService.findById(dto.getClinic().getClinic_id()).get();
+        Clinic clinic = clinicService.findById(dto.getClinic().getClinic_id());
 
         User user = dtoToUser.convert(dto.getUser());
         user.setPassword(passwordEncoder.encode(dto.getUser().getPassword()));

@@ -15,9 +15,8 @@ public class Doctor{
     @Id
     private Long id;
 
-    @ElementCollection
-    @CollectionTable(name ="doctor_rating")
-    private List<String> ratings = new ArrayList<String>();
+    @OneToMany
+    private List<DoctorRating> ratings;
 
     @Transient
     private float averageRating;

@@ -53,7 +53,7 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
         Nurse nurse = nurseService.findById(dto.getNurse().getId()).orElse(null);
         appointment.setNurse(nurse);
 
-        Doctor doctor = doctorService.findById(dto.getDoctor().getId()).orElse(null);
+        Doctor doctor = doctorService.findById(dto.getDoctor().getId());
         appointment.setDoctor(doctor);
 
         appointment.setAppointment_id(dto.getAppointment_id());

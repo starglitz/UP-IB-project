@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ClinicService {
     Clinic create(Clinic clinic);
     List<Clinic> findAll();
-    Optional<Clinic> findById(Long id);
+    Clinic findById(Long id);
     List<Clinic> findClinicsByDate(LocalDate date);
     Clinic update(Clinic clinic);
     List<Clinic> getNotRatedByPatientId(Long id);

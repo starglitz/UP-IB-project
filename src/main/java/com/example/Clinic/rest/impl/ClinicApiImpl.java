@@ -47,7 +47,7 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Override
     public ResponseEntity getClinic(Long id) {
-        Clinic clinic = clinicService.findById(id).get();
+        Clinic clinic = clinicService.findById(id);
         if(clinic != null) {
             ClinicDto dto = clinicToDto.convert(clinic);
             return new ResponseEntity(dto, HttpStatus.OK);

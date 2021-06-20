@@ -3,6 +3,7 @@ package com.example.Clinic.service.impl;
 
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Clinic;
+import com.example.Clinic.model.ClinicRating;
 import com.example.Clinic.repository.ClinicRepository;
 import com.example.Clinic.service.ClinicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +29,35 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public List<Clinic> findAll() {
-        return clinicRepository.findAll();
+        List<Clinic> clinics = clinicRepository.findAll();
+        return setAverageRatingToClinics(clinics);
     }
 
     @Override
-    public Optional<Clinic> findById(Long id) {
-        return clinicRepository.findById(id);
+    public Clinic findById(Long id) {
+        Clinic clinic = clinicRepository.findById(id).orElse(null);
+        if (clinic.getRatings().size() != 0) {
+            float count = 0;
+            for (ClinicRating rating : clinic.getRatings()) {
+                count += rating.getRating();
+            }
+            System.out.println("AVERAGE RATING: " + count / clinic.getRatings().size());
+            clinic.setAverageRating(count / clinic.getRatings().size());
+        }
+        return clinic;
+
     }
 
     @Override
     public List<Clinic> findClinicsByDate(LocalDate date) {
         List<Clinic> clinics = clinicRepository.findClinicsByDate(date);
 
+
+
         if(date.equals(LocalDate.of(2000, 01, 01))){
-            return clinicRepository.findAll();
+            return setAverageRatingToClinics(clinicRepository.findAll());
         }
-        return clinics;
+        return setAverageRatingToClinics(clinics);
 
     }
 
@@ -54,6 +68,23 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public List<Clinic> getNotRatedByPatientId(Long id) {
-        return clinicRepository.findNotRatedByPatientId(id);
+        List<Clinic> clinics = clinicRepository.findNotRatedByPatientId(id);
+        clinics = setAverageRatingToClinics(clinics);
+        return clinics;
+    }
+
+
+    public List<Clinic> setAverageRatingToClinics(List<Clinic> clinics) {
+        for(Clinic clinic : clinics) {
+            if (clinic.getRatings().size() != 0) {
+                float count = 0;
+                for (ClinicRating rating : clinic.getRatings()) {
+                    count += rating.getRating();
+                }
+                System.out.println("AVERAGE RATING: " + count / clinic.getRatings().size());
+                clinic.setAverageRating(count / clinic.getRatings().size());
+            }
+        }
+        return clinics;
     }
 }

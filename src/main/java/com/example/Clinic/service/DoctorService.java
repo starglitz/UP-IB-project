@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public interface DoctorService {
     List<Doctor> findAll();
-    Optional<Doctor> findById(Long id);
+    Doctor findById(Long id);
     List<Doctor> findByClinicId(Long id);
     List<Doctor> findByClinicAndDate(Long id, LocalDate date);
     Doctor create(Doctor doctor);

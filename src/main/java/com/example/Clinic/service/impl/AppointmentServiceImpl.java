@@ -32,7 +32,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         boolean valid = checkValid(appointment);
 
         if (valid) {
-            Doctor doctor = doctorService.findById(appointment.getDoctor().getId()).get();
+            Doctor doctor = doctorService.findById(appointment.getDoctor().getId());
             Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
 
             appointment.setDoctor(doctor);

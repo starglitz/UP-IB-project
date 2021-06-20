@@ -36,7 +36,7 @@ public class DtoToClinicAdmin implements Converter<ClinicAdminDto, ClinicAdmin> 
             clinicAdmin = new ClinicAdmin();
         }
 
-        Clinic clinic = clinicService.findById(dto.getClinic().getClinic_id()).get();
+        Clinic clinic = clinicService.findById(dto.getClinic().getClinic_id());
 
         User user = dtoToUser.convert(dto.getUser());
 

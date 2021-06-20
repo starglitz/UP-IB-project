@@ -1,10 +1,7 @@
 package com.example.Clinic.service.impl;
 
 
-import com.example.Clinic.model.Authority;
-import com.example.Clinic.model.Doctor;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.UserRole;
 import com.example.Clinic.repository.AuthorityRepository;
 import com.example.Clinic.repository.DoctorRepository;
@@ -35,22 +32,30 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Doctor> findAll() {
-        return doctorRepository.findAll();
+        return setAverageRating(doctorRepository.findAll());
     }
 
     @Override
-    public Optional<Doctor> findById(Long id) {
-        return doctorRepository.findById(id);
+    public Doctor findById(Long id) {
+        Doctor doctor = doctorRepository.findById(id).orElse(null);
+        if(doctor != null) {
+            float count = 0;
+            for(DoctorRating rating : doctor.getRatings()) {
+                count += rating.getRating();
+            }
+            doctor.setAverageRating(count/doctor.getRatings().size());
+        }
+        return doctor;
     }
 
     @Override
     public List<Doctor> findByClinicId(Long id) {
-        return doctorRepository.findByClinicId(id);
+        return setAverageRating(doctorRepository.findByClinicId(id));
     }
 
     @Override
     public List<Doctor> findByClinicAndDate(Long id, LocalDate date) {
-        return doctorRepository.findByClinicAndDate(id, date);
+        return setAverageRating(doctorRepository.findByClinicAndDate(id, date));
     }
 
     @Override
@@ -77,6 +82,18 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Doctor> getNotRatedByPatientId(Long id) {
-        return doctorRepository.findNotRatedByPatientId(id);
+        return setAverageRating(doctorRepository.findNotRatedByPatientId(id));
+    }
+
+
+    public List<Doctor> setAverageRating(List<Doctor> doctors) {
+        for(Doctor doctor : doctors) {
+            float count = 0;
+            for(DoctorRating rating : doctor.getRatings()) {
+                count += rating.getRating();
+            }
+            doctor.setAverageRating(count/doctor.getRatings().size());
+        }
+        return doctors;
     }
 }

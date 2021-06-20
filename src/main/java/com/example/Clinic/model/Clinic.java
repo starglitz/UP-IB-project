@@ -20,13 +20,13 @@ public class Clinic {
     private String name;
 
     private String description;
+
+    @OneToMany
+    private List<ClinicRating> ratings;
   //  private List<Doctor> doctors;
 //    @OneToMany
 //    @JoinColumn(name = "service_id")
 //    private List<Service> services;
-  @ElementCollection
-  @CollectionTable(name ="clinic_rating")
-  private List<String> ratings = new ArrayList<String>();
 
 
   @Transient
