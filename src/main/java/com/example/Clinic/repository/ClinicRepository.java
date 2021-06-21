@@ -15,4 +15,14 @@ public interface ClinicRepository extends JpaRepository<Clinic, Long> {
             "                             (SELECT doctor_id from appointment where date = ?1 and status = 'FREE'))",
     nativeQuery = true)
     List<Clinic> findClinicsByDate(LocalDate date);
+
+
+
+    @Query(value = "select * from  clinic where clinic_id in " +
+            "(select clinic_id from doctor where id in(" +
+            "select doctor_id from appointment where patient_id = ?1 and status = 'PASSED'))" +
+            "and clinic_id not in(select clinic_clinic_id from clinic_ratings " +
+            "where ratings_id in (select id from clinic_rating where patient_id = ?1))",
+            nativeQuery = true)
+    List<Clinic> findNotRatedByPatientId(Long id);
 }

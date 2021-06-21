@@ -66,6 +66,7 @@ public class UserServiceImpl  implements UserService {
                         updated.setPassword(passwordEncoder.encode(user.getPassword()));
                         updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
                         updated.setEnabled(userJpa.isEnabled());
+                        updated.setRoles(userJpa.getRoles());
                         userRepository.save(updated);
                         return ok;
                     } else {

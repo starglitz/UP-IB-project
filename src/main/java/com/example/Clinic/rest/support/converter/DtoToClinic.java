@@ -25,7 +25,7 @@ public class DtoToClinic implements Converter<ClinicDto, Clinic> {
         Clinic clinic = new Clinic();
 
         if (clinic.getClinic_id() != null) {
-            clinic = (Clinic) this.clinicService.findById(clinic.getClinic_id()).get();
+            clinic = (Clinic) this.clinicService.findById(clinic.getClinic_id());
         }
 
         if (clinic == null) {
@@ -36,7 +36,7 @@ public class DtoToClinic implements Converter<ClinicDto, Clinic> {
         clinic.setLng(dto.getLng());
         clinic.setName(dto.getName());
         clinic.setDescription(dto.getDescription());
-        clinic.setRating(dto.getRating());
+        //clinic.setRating(dto.getRating());
         clinic.setAddressName(dto.getAddressName());
 
 

@@ -37,7 +37,7 @@ public class DtoToNurse implements Converter<NurseDto, Nurse> {
             target = new Nurse();
         }
         if(source.getClinic() != null) {
-            Clinic clinic = clinicService.findById(source.getClinic().getClinic_id()).orElse(null);
+            Clinic clinic = clinicService.findById(source.getClinic().getClinic_id());
             target.setClinic(clinic);
             target.setClinic(dtoToClinic.convert(source.getClinic()));
         }

@@ -95,7 +95,12 @@ public class AppointmentApiImpl implements AppointmentApi {
 
         Appointment appointment = dtoToAppointment.convert(appointmentDto);
 
-        return new ResponseEntity(appointmentService.add(appointment), HttpStatus.OK);
+        if(appointmentService.add(appointment)) {
+            return new ResponseEntity("added", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("bad request :( ", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override

@@ -1,19 +1,16 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Clinic;
-import com.example.Clinic.model.Doctor;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.rest.DoctorApi;
 import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
-import com.example.Clinic.service.ClinicService;
-import com.example.Clinic.service.DoctorService;
+import com.example.Clinic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
@@ -36,6 +33,15 @@ public class DoctorApiImpl implements DoctorApi {
     @Autowired
     private ClinicService clinicService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    private ClinicAdminService clinicAdminService;
+
     @Override
     public ResponseEntity getAllDoctors() {
         List<Doctor> doctors = doctorService.findAll();
@@ -49,7 +55,7 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Override
     public ResponseEntity getDoctor(Long id) {
-        Doctor doctor = doctorService.findById(id).orElse(null);
+        Doctor doctor = doctorService.findById(id);
         if(doctor == null) {
             return new ResponseEntity("Doctor with id " + id + " not found!", HttpStatus.NOT_FOUND);
         }
@@ -87,7 +93,7 @@ public class DoctorApiImpl implements DoctorApi {
                 doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber(),
                 doctor.getUser().isEnabled());
 
-        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id()).orElse(null);
+        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id());
 
         Doctor doctor1 = new Doctor(user);
         if(clinic != null) {
@@ -96,5 +102,38 @@ public class DoctorApiImpl implements DoctorApi {
         Doctor created = doctorService.create(doctor1);
 
         return new ResponseEntity("Success", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getNotRatedByPatient(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        List<Doctor> doctors = doctorService.getNotRatedByPatientId(user.getId());
+        List<DoctorDto> dtos = new ArrayList<>();
+        for(Doctor doctor : doctors) {
+            DoctorDto dto = doctorToDto.convert(doctor);
+            dtos.add(dto);
+        }
+        return new ResponseEntity(dtos, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity rate(Long id, Authentication authentication, DoctorRating doctorRating) {
+        User user = userService.getLoggedIn(authentication);
+        Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+        doctorRating.setPatient(patient);
+        return new ResponseEntity(doctorToDto.convert(doctorService.rate(id, doctorRating)), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getByAdminsClinic(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        ClinicAdmin clinicAdmin = clinicAdminService.findById(user.getId());
+        List<Doctor> doctors = doctorService.findByClinicId(clinicAdmin.getClinic().getClinic_id());
+        List<DoctorDto> dtos = new ArrayList<>();
+        for(Doctor doctor : doctors) {
+            DoctorDto dto = doctorToDto.convert(doctor);
+            dtos.add(dto);
+        }
+        return new ResponseEntity(dtos, HttpStatus.OK);
     }
 }

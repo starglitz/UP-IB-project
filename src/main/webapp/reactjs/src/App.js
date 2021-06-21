@@ -27,6 +27,7 @@ import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
 import NewClinic from "./components/clinics/NewClinic";
 import PasswordLess from "./services/PasswordLessError";
 import {TokenService} from "./services/TokenService";
+import RateTables from "./components/ratings/RateTables";
 
 
 function App() {
@@ -193,6 +194,13 @@ function App() {
                     path="/newClinicAdmin"
                     component={NewClinicAdmin}
                     roles={['CLINIC_CENTRE_ADMIN']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/rate"
+                    component={RateTables}
+                    roles={['PATIENT']}
                 />
             </Switch>
         </Router>

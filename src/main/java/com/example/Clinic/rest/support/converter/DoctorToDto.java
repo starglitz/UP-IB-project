@@ -26,7 +26,7 @@ public class DoctorToDto implements Converter<Doctor, DoctorDto> {
         DoctorDto dto = new DoctorDto();
 
         dto.setId(doctor.getId());
-        dto.setGrade(doctor.getGrade());
+        //dto.setGrade(doctor.getGrade());
         if(doctor.getClinic() != null) {
             dto.setClinic(clinicToDto.convert(doctor.getClinic()));
         }

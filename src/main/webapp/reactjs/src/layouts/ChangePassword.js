@@ -43,7 +43,7 @@ const ChangePassword = () => {
                     const status = await UserService.edit(user.id, edited)
                     console.log("status here: " + status)
                     if(status == '200') {
-                        history.push("/home")
+                        history.push("/")
                     }
                     else if(status == '400') {
                         alert("The old password is incorrect!")

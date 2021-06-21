@@ -1,5 +1,6 @@
 package com.example.Clinic.rest;
 
+import com.example.Clinic.model.DoctorRating;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.NurseDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
@@ -7,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
@@ -41,4 +43,18 @@ public interface DoctorApi {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<RegisterDoctorDto> create(@RequestBody @Valid RegisterDoctorDto doctor);
 
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @GetMapping(value = "/not_rated",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getNotRatedByPatient(Authentication authentication);
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @PutMapping(value = "/rate/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity rate(@PathVariable("id") Long id, Authentication authentication, @RequestBody DoctorRating doctorRating);
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(value = "/admin/clinic",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getByAdminsClinic(Authentication authentication);
 }

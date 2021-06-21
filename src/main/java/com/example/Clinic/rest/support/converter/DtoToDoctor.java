@@ -30,7 +30,7 @@ public class DtoToDoctor implements Converter<DoctorDto, Doctor> {
         Doctor doctor = new Doctor();
 
         if (doctor.getId() != null) {
-            doctor = (Doctor) this.doctorService.findById(doctor.getId()).get();
+            doctor = (Doctor) this.doctorService.findById(doctor.getId());
         }
 
         if (doctor == null) {
@@ -38,7 +38,7 @@ public class DtoToDoctor implements Converter<DoctorDto, Doctor> {
         }
 
         doctor.setId(dto.getId());
-        doctor.setGrade(dto.getGrade());
+        //doctor.setGrade(dto.getGrade());
         doctor.setClinic(dtoToClinic.convert(dto.getClinic()));
         doctor.setUser(dtoToUser.convert(dto.getUser()));
 

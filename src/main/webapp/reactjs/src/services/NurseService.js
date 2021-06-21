@@ -3,7 +3,8 @@ import AxiosClient from "./clients/AxiosClient";
 export const NurseService = {
     get,
     getAll,
-    add
+    add,
+    getByAdminsClinic
 };
 
 
@@ -18,3 +19,8 @@ async function getAll() {
 async function add(nurse) {
     return await AxiosClient.post("https://localhost:8080/nurses", nurse);
 }
+
+async function getByAdminsClinic() {
+    return await AxiosClient.get(`https://localhost:8080/nurses/admin/clinic`);
+}
+

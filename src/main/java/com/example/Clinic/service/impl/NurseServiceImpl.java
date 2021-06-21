@@ -72,4 +72,9 @@ public class NurseServiceImpl implements NurseService {
         Nurse nurseJpa = nurseRepository.save(nurse);
         return nurseJpa;
     }
+
+    @Override
+    public List<Nurse> findByClinicId(Long id) {
+        return nurseRepository.findByClinicId(id);
+    }
 }
