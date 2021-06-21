@@ -18,19 +18,19 @@ import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfil
 import ClinicAppointments from "./components/appointments/appointmentTable";
 import DoctorTable from "./components/clinicDoctors/doctorTable";
 import BookingPage from "./components/booking/bookingPage";
-import PatientProfile from "./profile/PatientProfile";
 import PatientsTable from "./components/patients/PatientsTable";
-import Location from "./components/Location";
 import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
 import BlockUsers from "./layouts/BlockUsers";
 import UpdateStaff from "./layouts/UpdateStaff";
 import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
-import ClinicCentreAdminLayout from "./layouts/ClinicCentreAdminLayout";
 import NewClinic from "./components/clinics/NewClinic";
+import PasswordLess from "./services/PasswordLessError";
+import {TokenService} from "./services/TokenService";
 
 
 function App() {
+    // TokenService.removeToken()
   return (
     <div className="App">
       <Navbar/>
@@ -39,6 +39,7 @@ function App() {
 
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/login" exact component={LoginLayout}/>
+                <Route path="/magic/" component={PasswordLess}/>
 
                 {/*<Route path="/nursePage" exact component={NurseLayout}/>*/}
                 <PrivateRoute
