@@ -1,21 +1,25 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Clinic;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.rest.NurseApi;
 import com.example.Clinic.rest.support.converter.DtoToNurse;
 import com.example.Clinic.rest.support.converter.NurseToDto;
+import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.NurseDto;
 import com.example.Clinic.rest.support.dto.RegisterNurseDto;
+import com.example.Clinic.service.ClinicAdminService;
 import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.NurseService;
+import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class NurseApiImpl implements NurseApi {
@@ -29,6 +33,12 @@ public class NurseApiImpl implements NurseApi {
 
     @Autowired
     private ClinicService clinicService;
+
+    @Autowired
+    private ClinicAdminService clinicAdminService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity getAllNurses() {
@@ -61,5 +71,18 @@ public class NurseApiImpl implements NurseApi {
         Nurse created = nurseService.create(nurse);
 
         return new ResponseEntity("Successfully created", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getByAdminsClinic(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        ClinicAdmin clinicAdmin = clinicAdminService.findById(user.getId());
+        List<Nurse> nurses = nurseService.findByClinicId(clinicAdmin.getClinic().getClinic_id());
+        List<NurseDto> dtos = new ArrayList<>();
+        for(Nurse nurse : nurses) {
+            NurseDto dto = nurseToDto.convert(nurse);
+            dtos.add(dto);
+        }
+        return new ResponseEntity(dtos, HttpStatus.OK);
     }
 }

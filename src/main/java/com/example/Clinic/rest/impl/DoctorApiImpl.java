@@ -6,10 +6,7 @@ import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
-import com.example.Clinic.service.ClinicService;
-import com.example.Clinic.service.DoctorService;
-import com.example.Clinic.service.PatientService;
-import com.example.Clinic.service.UserService;
+import com.example.Clinic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +38,9 @@ public class DoctorApiImpl implements DoctorApi {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private ClinicAdminService clinicAdminService;
 
     @Override
     public ResponseEntity getAllDoctors() {
@@ -122,5 +122,18 @@ public class DoctorApiImpl implements DoctorApi {
         Patient patient = patientService.getPatientById(user.getId()).orElse(null);
         doctorRating.setPatient(patient);
         return new ResponseEntity(doctorToDto.convert(doctorService.rate(id, doctorRating)), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getByAdminsClinic(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        ClinicAdmin clinicAdmin = clinicAdminService.findById(user.getId());
+        List<Doctor> doctors = doctorService.findByClinicId(clinicAdmin.getClinic().getClinic_id());
+        List<DoctorDto> dtos = new ArrayList<>();
+        for(Doctor doctor : doctors) {
+            DoctorDto dto = doctorToDto.convert(doctor);
+            dtos.add(dto);
+        }
+        return new ResponseEntity(dtos, HttpStatus.OK);
     }
 }

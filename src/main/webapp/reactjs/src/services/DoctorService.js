@@ -7,7 +7,8 @@ export const DoctorService = {
     getByClinicId,
     add,
     getNotRatedByPatient,
-    rate
+    rate,
+    getByAdminsClinic
 };
 
 
@@ -37,4 +38,8 @@ async function getNotRatedByPatient() {
 
 async function rate(id, rating) {
     return await AxiosClient.put(`https://localhost:8080/doctors/rate/${id}`, rating);
+}
+
+async function getByAdminsClinic() {
+    return await AxiosClient.get(`https://localhost:8080/doctors/admin/clinic`);
 }

@@ -11,4 +11,5 @@ public interface NurseService {
     List<Nurse> findAll();
     Optional<Nurse> findById(Long id);
     Nurse create(Nurse nurse);
+    List<Nurse> findByClinicId(Long id);
 }

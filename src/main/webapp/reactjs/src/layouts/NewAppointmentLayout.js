@@ -15,34 +15,21 @@ const NewAppointmentLayout = () => {
         fetchNurses();
     }, []);
 
-    // async function fetchDoctors() {
-    //     const res = await fetch("http://localhost:8080/allDoctors");
-    //     res
-    //         .json()
-    //         .then(res => setDoctors(res))
-    //         .catch(err => setErrors(err));
-    // }
+
 
     async function fetchDoctors() {
         try {
-            const response = await DoctorService.getAll()
+            const response = await DoctorService.getByAdminsClinic()
             setDoctors(response.data)
         } catch (error) {
             console.error(`Error loading doctors !: ${error}`);
         }
     }
 
-    // async function fetchNurses() {
-    //     const res = await fetch("http://localhost:8080/allNurses");
-    //     res
-    //         .json()
-    //         .then(res => setNurses(res))
-    //         .catch(err => setErrors(err));
-    // }
 
     async function fetchNurses() {
         try {
-            const response = await NurseService.getAll()
+            const response = await NurseService.getByAdminsClinic()
             setNurses(response.data)
         } catch (error) {
             console.error(`Error loading nurses !: ${error}`);
@@ -88,20 +75,7 @@ const NewAppointmentLayout = () => {
             console.log(appointment);
             console.log(JSON.stringify(appointment));
             addAppointment(appointment);
-            // fetch('http://localhost:8080/addAppointment', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(appointment),
-            // })
-            //     // .then(response => response.json())
-            //     .then(user => {
-            //         console.log('Success:', user);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //     });
+
         }
     }
 

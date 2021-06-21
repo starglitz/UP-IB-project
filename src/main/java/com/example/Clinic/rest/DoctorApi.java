@@ -52,4 +52,9 @@ public interface DoctorApi {
     @PutMapping(value = "/rate/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity rate(@PathVariable("id") Long id, Authentication authentication, @RequestBody DoctorRating doctorRating);
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(value = "/admin/clinic",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getByAdminsClinic(Authentication authentication);
 }
