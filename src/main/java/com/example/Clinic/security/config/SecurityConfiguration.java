@@ -83,6 +83,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
                 .authorizeRequests()
                 .antMatchers("/auth/login").permitAll()
+                .antMatchers("/auth/passwordless").permitAll()
+                .antMatchers("/auth/magic/{token}").permitAll()
                 .antMatchers(HttpMethod.POST, "/patients").permitAll()
                 .anyRequest().authenticated();
 

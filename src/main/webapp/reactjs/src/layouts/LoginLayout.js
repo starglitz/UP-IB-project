@@ -6,6 +6,7 @@ import loginImg from '../assets/login-img.jpg';
 import {useHistory} from 'react-router-dom';
 import { AuthenticationService } from '../services/AuthenticationService'
 import {TokenService} from "../services/TokenService";
+import {Checkbox, FormControlLabel} from "@material-ui/core";
 
 
 const DEFAULT_LOGIN = {
@@ -16,6 +17,8 @@ const DEFAULT_LOGIN = {
 
 
 const LoginLayout = () => {
+
+    const [passwordLess, setPasswordLess] = useState(false)
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -40,6 +43,7 @@ const LoginLayout = () => {
 
     const [credentials, setCredentials] = useState(DEFAULT_LOGIN);
     const [error, setError] = useState('');
+    const [emailError, setEmailError] = useState('');
 
     const handleChange = (event, prop) => {
         setCredentials({
@@ -47,12 +51,22 @@ const LoginLayout = () => {
             [prop]: event.target.value
         });
     };
+    const handlePasswordLess = (event, prop) => {
+        setPasswordLess(event.target.checked)
+        let password = document.getElementById('passwordTf')
+        if (event.target.checked === true) {
+            password.hidden = true
+        } else {
+            password.removeAttribute('hidden')
+        }
+    };
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-
-        login()
-
+        if (!passwordLess)
+            login()
+        else
+            passwordLessLogin()
     }
 
     const login = async () => {
@@ -69,6 +83,17 @@ const LoginLayout = () => {
         }
     };
 
+    const passwordLessLogin = async () => {
+        const request = {
+            'email':credentials.username
+        }
+        const status = await AuthenticationService.passwordLessRequest(request)
+        if (status === '200') {
+            alert('A redirection link has been sent to your email')
+        } else if (status === '404')
+            setEmailError('Email is not registered in our system')
+    };
+
 
     return (
 
@@ -81,14 +106,23 @@ const LoginLayout = () => {
 
             <form className={classes.root} onSubmit={handleSubmit}>
 
-                <TextField value={login.username} onChange={(event) =>
+                <TextField helperText={emailError} value={login.username} onChange={(event) =>
                     handleChange(event, 'username')}
-                    id="outlined-basic" label="Email" variant="filled" />
+                    id="outlined-basic username" label="Email" variant="filled" />
                 <TextField helperText={error} value={login.password}
                     onChange={(event) =>
                     handleChange(event, 'password')}
-                    id="outlined-basic" label="Password" variant="filled" type='password' />
+                    id="passwordTf" label="Password" variant="filled" type='password' />
 
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            onChange={handlePasswordLess}
+                            name="checkedB"
+                        />
+                    }
+                    label="Password-less login"
+                />
 
                 <Button type='submit' variant="contained" size="large" color="default">Login</Button>
             </form>

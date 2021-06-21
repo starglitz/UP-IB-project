@@ -1,12 +1,18 @@
 package com.example.Clinic.rest.impl;
 
+import com.example.Clinic.model.Authority;
+import com.example.Clinic.model.TokenExpiration;
+import com.example.Clinic.model.TokenPair;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.AuthenticationApi;
 import com.example.Clinic.rest.support.dto.JwtAuthenticationRequest;
+import com.example.Clinic.rest.support.dto.PasswordLessDto;
 import com.example.Clinic.rest.support.dto.UserTokenState;
 import com.example.Clinic.security.services.UserDetailsImpl;
 import com.example.Clinic.security.token.TokenUtils;
+import com.example.Clinic.service.impl.EmailServiceImpl;
 import com.example.Clinic.service.impl.UserDetailsServiceImpl;
+import com.example.Clinic.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +26,10 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -34,6 +43,14 @@ public class AuthenticationApiImpl implements AuthenticationApi {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    private List<TokenExpiration> tokenStore = new ArrayList<>();
 
     @Override
     public ResponseEntity<UserTokenState> createAuthenticationToken(JwtAuthenticationRequest authenticationRequest,
@@ -68,7 +85,61 @@ public class AuthenticationApiImpl implements AuthenticationApi {
 
         return ResponseEntity.ok(new UserTokenState(jwt, refreshJwt));
 
+    }
 
+    @Override
+    public ResponseEntity<String> passwordLessRequest(PasswordLessDto dto, HttpServletResponse response) {
+        Optional<User> optionalUser = userService.findUserByEmail(dto.getEmail());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            System.out.println(user);
+
+            List<String> roles = new ArrayList<>();
+            for (Authority one : user.getRoles()) {
+                roles.add(one.getName().toString());
+            }
+
+            String jwt = tokenUtils.generateToken(user.getEmail(), roles.toString());
+            TokenExpiration tokenExpiration = new TokenExpiration();
+            tokenExpiration.setToken(jwt);
+            tokenExpiration.setTime(LocalDateTime.now());
+
+            emailService.sendEmail(dto.getEmail(), "LOGIN ATTEMPT",
+                    "Hello " + user.getName() + " " + user.getLastName() +
+                            ", ignore this email if you didn't want to log in. " +
+                            "\nIf you did want to login VIA password-less login here is the redirection link." +
+                            "\nLink : http://localhost:3000/magic/?token=" + jwt);
+            tokenStore.add(tokenExpiration);
+            System.out.println(tokenStore);
+            return new ResponseEntity<String>("Verification email has been sent", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("User associated with this email does not exist", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    public ResponseEntity<TokenPair> tokenCheck(String token) {
+        boolean valid = false;
+        List<TokenExpiration> checkedTokenStore = tokenStore;
+        for (TokenExpiration t : tokenStore) {
+            if (t.getTime().plusMinutes(1).isBefore(LocalDateTime.now())) {
+                checkedTokenStore.remove(t);
+            }
+        }
+        for (TokenExpiration t : checkedTokenStore) {
+            if (t.getToken().equals(token)) {
+                System.out.println(t);
+                tokenStore.remove(t);
+                valid = true;
+                break;
+            }
+        }
+        if (valid) {
+            String refreshJwt = tokenUtils.generateRefreshToken(token);
+            return ResponseEntity.ok(new TokenPair(token, refreshJwt));
+        } else {
+            return new ResponseEntity(null, HttpStatus.NO_CONTENT);
+        }
     }
 
     @Override
@@ -81,8 +152,6 @@ public class AuthenticationApiImpl implements AuthenticationApi {
 
         if (this.tokenUtils.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             String refreshedToken = tokenUtils.refreshToken(token);
-
-
             return ResponseEntity.ok(refreshedToken);
         } else {
             UserTokenState userTokenState = new UserTokenState();
