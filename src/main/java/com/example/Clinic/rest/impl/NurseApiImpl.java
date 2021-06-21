@@ -81,6 +81,7 @@ public class NurseApiImpl implements NurseApi {
         List<NurseDto> dtos = new ArrayList<>();
         for(Nurse nurse : nurses) {
             NurseDto dto = nurseToDto.convert(nurse);
+            dto.setId(nurse.getId());
             dtos.add(dto);
         }
         return new ResponseEntity(dtos, HttpStatus.OK);

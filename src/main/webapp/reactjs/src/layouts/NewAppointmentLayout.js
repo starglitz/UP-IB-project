@@ -10,6 +10,7 @@ const NewAppointmentLayout = () => {
     const [nurses, setNurses] = useState([]);
     const [hasError, setErrors] =  useState(false);
 
+    const [error, setError] = useState("")
     useEffect(() => {
         fetchDoctors();
         fetchNurses();
@@ -41,6 +42,10 @@ const NewAppointmentLayout = () => {
             await AppointmentService.create(appointment)
         }
         catch (error) {
+
+            if(error.response.status == 400) {
+                setError("Entered data is invalid. Date/time you're trying to take might already be taken.")
+            }
             console.error(`Error while adding new appointment: ${error}`);
         }
     }
@@ -60,8 +65,10 @@ const NewAppointmentLayout = () => {
         console.log('date: ' + date);
         console.log('start: ' + start);
         console.log('doctor: ' + JSON.parse(doctor));
+        console.log('NURSE:' + JSON.parse(nurse))
 
         console.log('doct id: ' + JSON.parse(doctor).id);
+        console.log('NURSE ID:' + JSON.parse(nurse).id)
 
         if(valid(date,start,end,price)) {
 
@@ -101,7 +108,7 @@ const NewAppointmentLayout = () => {
     return(
         <>
             <h1 style={{textAlign:'center', margin:'20px'}}>Add new appointment</h1>
-
+           <p style={{textAlign:'center', margin:'20px', color:'indianred'}}> {error} </p>
             <div style={{margin: '0 auto', display: 'flex',
                 justifyContent: 'center'}}>
 
@@ -134,7 +141,6 @@ const NewAppointmentLayout = () => {
 
                     <label htmlFor="price" className="label-register">Price:</label>
                     <input  id="price" type="text" placeholder="enter price" className="input-register"/>
-
                     <button onClick={sendData} className="submit-register">Submit</button>
                 </div>
             </div>

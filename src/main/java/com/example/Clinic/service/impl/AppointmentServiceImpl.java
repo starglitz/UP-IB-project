@@ -12,6 +12,8 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,17 +33,56 @@ public class AppointmentServiceImpl implements AppointmentService {
     public boolean add(Appointment appointment) {
         boolean valid = checkValid(appointment);
 
+        if(appointment.getDate().equals(LocalDate.now())) {
+            if(appointment.getStart().isBefore(LocalTime.now())
+            || appointment.getEnd().isBefore(LocalTime.now())) {
+                valid = false;
+            }
+        }
         if (valid) {
-            Doctor doctor = doctorService.findById(appointment.getDoctor().getId());
-            Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
 
-            appointment.setDoctor(doctor);
-            appointment.setNurse(nurse);
-            appointment.setPatient(null);
-            appointment.setStatus(AppointmentStatus.FREE);
+            boolean notBooked = true;
+            List<Appointment> all = appointmentRepository.findAll();
+            for(Appointment app : all) {
+                if(app.getDate().equals(appointment.getDate())) {
 
-            System.out.println(appointment);
-            appointmentRepository.save(appointment);
+                    if (app.getDoctor().equals(appointment.getDoctor()) ||
+                            app.getNurse().equals(appointment.getNurse())) {
+
+                        Boolean startInZone = (
+                                (app.getStart().isAfter(appointment.getStart()))
+                                        && (app.getStart().isBefore(appointment.getEnd()))
+                        );
+                        Boolean endInZone = (
+                                (app.getEnd().isAfter(appointment.getStart()))
+                                        && (app.getEnd().isBefore(appointment.getEnd()))
+                        );
+
+                        Boolean isTheSame = (app.getEnd().equals(appointment.getEnd()) ||
+                                app.getStart().equals(appointment.getStart()));
+
+                        Boolean inZone = appointment.getStart().isAfter(app.getStart()) &&
+                                appointment.getEnd().isBefore(app.getEnd());
+
+                        if (startInZone || endInZone || isTheSame || inZone) {
+                            notBooked = false;
+                            valid = false;
+                        }
+                    }
+                }
+            }
+            if(notBooked) {
+                Doctor doctor = doctorService.findById(appointment.getDoctor().getId());
+                Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
+
+                appointment.setDoctor(doctor);
+                appointment.setNurse(nurse);
+                appointment.setPatient(null);
+                appointment.setStatus(AppointmentStatus.FREE);
+
+                System.out.println(appointment);
+                appointmentRepository.save(appointment);
+            }
         }
 
         return valid;
