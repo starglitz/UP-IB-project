@@ -4,8 +4,10 @@ import { TokenService } from "../services/TokenService";
 export const AuthenticationService = {
     login,
     logout,
+    passwordLessRequest,
     getRole,
-    findCommonElement
+    findCommonElement,
+    checkTokenValidity
 };
 
 async function login(userCredentials) {
@@ -40,6 +42,7 @@ async function login(userCredentials) {
             TokenService.setRefreshToken(response.data["refreshToken"]);
             window.location.assign("/");
             console.log(TokenService.getToken(), TokenService.getRefreshToken())
+            alert("A")
         } else {
             console.error("Invalid token");
 
@@ -49,6 +52,37 @@ async function login(userCredentials) {
 
     return status;
 
+}
+
+async function passwordLessRequest(email) {
+    let status = "200";
+    await AxiosClient.post("https://localhost:8080/auth/passwordless", email).catch(function (error) {
+        if (error.response) {
+            if(error.response.status == '404') {
+                status = '404'
+                console.log(status)
+                return '404'
+            }
+            else if(error.response.status == '401') {
+                status = '401'
+                console.log(status)
+                return '401'
+            }
+
+        }
+    });
+
+    return status
+}
+
+async function checkTokenValidity(jwt) {
+    const response = await AxiosClient("https://localhost:8080/auth/magic/" + jwt)
+    if (response.status == 200) {
+        const tokenPair = response.data
+        TokenService.setToken(tokenPair.jwt);
+        TokenService.setRefreshToken(tokenPair.refreshJwt)
+        window.location.assign("/");
+    }
 }
 
 
