@@ -81,7 +81,7 @@ async function passwordLessRequest(email) {
 }
 
 async function checkTokenValidity(jwt) {
-    const response = await AxiosClient("https://localhost:8080/auth/magic/" + jwt)
+    const response = await AxiosClient.get("https://localhost:8080/auth/magic/" + jwt)
     if (response.status == 200) {
         const tokenPair = response.data
         TokenService.setToken(tokenPair.jwt);

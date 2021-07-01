@@ -23,4 +23,6 @@ public interface UserService {
 
     User enable(User user);
 
+    Boolean changePassword(UserRegisterDto user, String passwordValidate);
+
 }

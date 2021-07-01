@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.validation.Valid;
+
 @Component
 public class UserApiImpl implements UserApi {
 
@@ -21,6 +23,7 @@ public class UserApiImpl implements UserApi {
 
     @Autowired
     private UserToDto userToDto;
+
 
 
     @Override
@@ -37,7 +40,18 @@ public class UserApiImpl implements UserApi {
     public ResponseEntity getLoggedIn(Authentication authentication) {
         User user = userService.getLoggedIn(authentication);
         if(user != null) {
-            UserDto userDto = userToDto.convert(user);
+            UserRegisterDto userDto = new UserRegisterDto();
+            userDto.setAddress(user.getAddress());
+            userDto.setEnabled(user.isEnabled());
+            userDto.setCity(user.getCity());
+            userDto.setId(user.getId());
+            userDto.setPassword("");
+            userDto.setCountry(user.getCountry());
+            userDto.setEmail(user.getEmail());
+            userDto.setPhoneNumber(user.getPhoneNumber());
+            userDto.setName(user.getName());
+            userDto.setLastName(user.getLastName());
+            userDto.setPasswordValidate("");
             return new ResponseEntity(userDto, HttpStatus.OK);
         }
         return new ResponseEntity("no user in database", HttpStatus.NOT_FOUND);
@@ -61,13 +75,19 @@ public class UserApiImpl implements UserApi {
 
     @Override
     public ResponseEntity enable(String token) {
-//        Jwt token =
-//
-//
-//        User user = userService.getLoggedIn(authentication);
-//        user.setEnabled(true);
-//        User update = userService.enable(user);
+
         return new ResponseEntity("test", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<UserRegisterDto> changePassword(Long id, @Valid UserRegisterDto user) {
+        System.out.println(user);
+        if(userService.changePassword(user, user.getPasswordValidate())) {
+            return new ResponseEntity("updated", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("bad data", HttpStatus.BAD_REQUEST);
+        }
     }
 
 

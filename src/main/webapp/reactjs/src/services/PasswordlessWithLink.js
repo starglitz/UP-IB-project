@@ -7,6 +7,7 @@ const PasswordlessWithLink = () => {
 
     const jwt = urlParams.get('token')
     console.log(jwt)
+    console.log("???")
 
     const status = AuthenticationService.loginViaLink(jwt)
 

@@ -8,7 +8,13 @@ const ChangePassword = () => {
     const location = useLocation();
     const history = useHistory();
 
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        id: '',
+        address: '',
+        city: '',
+        country: '',
+        passwordValidate: ''
+    });
 
 
     useEffect(() => {
@@ -20,6 +26,7 @@ const ChangePassword = () => {
             const response = await UserService.getMyInfo()
             // setUser(response.data);
             setUser(response.data)
+
             console.log(response.data);
         } catch (error) {
             console.error(`Error loading your profile !: ${error}`);
@@ -40,7 +47,7 @@ const ChangePassword = () => {
             //console.log(edited);
             try {
                     console.log(user)
-                    const status = await UserService.edit(user.id, edited)
+                    const status = await UserService.updatePassword(user.id, user)
                     console.log("status here: " + status)
                     if(status == '200') {
                         history.push("/")
@@ -57,16 +64,22 @@ const ChangePassword = () => {
 
     const validate = (old, newPass) => {
         let ok = true
-        if(old === "") {
-            alert("You left old password field empty!")
+        if(user.password === "") {
+            alert("You left new password field empty!")
             ok = false
         }
-        else if(newPass === "") {
-            alert("You left new password field empty!")
+        else if(user.passwordValidate === "" || user.passwordValidate == null) {
+            alert("You left old password field empty!")
             ok = false
         }
         return ok
     }
+
+
+    const handleFormInputChange = (name) => (event) => {
+        const val = event.target.value;
+        setUser({ ...user, [name]: val });
+    };
 
     return(
         <>
@@ -79,7 +92,7 @@ const ChangePassword = () => {
                             </td>
                             <td >
                                 <input name="password" id="old" type="password" placeholder="enter old password here"
-                                       maxLength="100" className="input-register" />
+                                       maxLength="100" className="input-register" onChange={handleFormInputChange("passwordValidate")}/>
                             </td>
                         </tr>
                         <tr>
@@ -87,7 +100,8 @@ const ChangePassword = () => {
                                 <label htmlFor="confirm" className="label-register">New password:</label>
                             </td>
                             <td >
-                                <input  id="new" type="password" placeholder="enter new password" className="input-register"/>
+                                <input  id="new" type="password" placeholder="enter new password" className="input-register"
+                                        onChange={handleFormInputChange("password")}/>
                             </td>
                         </tr>
                     </table>

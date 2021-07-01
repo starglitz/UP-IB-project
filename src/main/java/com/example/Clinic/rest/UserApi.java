@@ -37,10 +37,16 @@ public interface UserApi {
     ResponseEntity getUser(@PathVariable("id") Long id);
 
 
-
     @PutMapping(value = "/enable/{token}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity enable(@PathVariable("token") String token);
+
+
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTER_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PutMapping(value = "/passwordUpdate/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<UserRegisterDto> changePassword(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
+
 
 
 }

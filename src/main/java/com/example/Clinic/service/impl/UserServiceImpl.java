@@ -74,6 +74,7 @@ public class UserServiceImpl  implements UserService {
                         updated.setPassword(userJpa.getPassword());
                         updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
                         updated.setEnabled(userJpa.isEnabled());
+                        updated.setRoles(userJpa.getRoles());
                         userRepository.save(updated);
                         return ok;
                     }
@@ -112,5 +113,31 @@ public class UserServiceImpl  implements UserService {
         userRepository.save(userJpa);
 
         return userJpa;
+    }
+
+    @Override
+    public Boolean changePassword(UserRegisterDto user, String validatePassword) {
+
+        boolean ok = true;
+
+        User userJpa = userRepository.findById(user.getId()).orElse(null);
+
+        if (validatePassword != null && !validatePassword.equals("")) {
+            System.out.println("Password is not null or empty");
+            System.out.println("User DTO: " + user);
+            System.out.println("User JPA: " + userJpa);
+            if (passwordEncoder.matches(validatePassword,
+                    userJpa.getPassword())) {
+                System.out.println("Password matches & will be edited");
+                userJpa.setPassword(passwordEncoder.encode(user.getPassword()));
+                userRepository.save(userJpa);
+            } else {
+                ok = false;
+            }
+        }
+        else {
+            ok = false;
+        }
+        return ok;
     }
 }

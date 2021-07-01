@@ -5,7 +5,8 @@ export const UserService = {
     getMyInfo,
     getAll,
     get,
-    setEnabled
+    setEnabled,
+    updatePassword
 };
 
 async function edit(id, user) {
@@ -38,4 +39,19 @@ async function get(id) {
 async function setEnabled(token) {
     await AxiosClient.put(`https://localhost:8080/user/enable/${token}`)
 
+}
+
+async function updatePassword(id, user) {
+    let status = '200';
+    await AxiosClient.put(`https://localhost:8080/user/passwordUpdate/${id}`, user)
+        .catch(function (error) {
+            if (error.response) {
+                console.log(error.response.status);
+                if(error.response.status == '400') {
+                    status = '400'
+                    return '400'
+                }
+            }
+        });
+    return status;
 }

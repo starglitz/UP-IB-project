@@ -11,9 +11,9 @@ import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.impl.EmailServiceImpl;
 import com.example.Clinic.service.impl.UserDetailsServiceImpl;
 import com.example.Clinic.service.impl.UserServiceImpl;
+import org.json.*;
 import org.apache.tomcat.util.json.JSONParser;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
