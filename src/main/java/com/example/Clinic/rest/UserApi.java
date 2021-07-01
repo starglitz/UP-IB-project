@@ -38,5 +38,9 @@ public interface UserApi {
 
 
 
+    @PutMapping(value = "/enable/{token}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity enable(@PathVariable("token") String token);
+
 
 }

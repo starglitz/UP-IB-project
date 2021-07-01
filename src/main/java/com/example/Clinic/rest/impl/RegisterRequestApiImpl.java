@@ -51,8 +51,17 @@ public class RegisterRequestApiImpl implements RegisterRequestApi {
         if(patient == null) {
             return new ResponseEntity("Bad request", HttpStatus.BAD_REQUEST);
         }
-        request.setPatient(patientToListDto.convert(patient));
-        RegisterRequest req = dtoToRegisterRequest.convert(request);
+        //request.setPatient(patientToListDto.convert(patient));
+        //request.setRegister_request_id(request);
+
+        System.out.println("API LAYER DTO REQUEST: " + request);
+        RegisterRequest req = new RegisterRequest();
+        req.setRegister_request_id(request.getRegister_request_id());
+        req.setPatient(patient);
+        req.setStatus(request.getStatus());
+        req.setVisitedMail(request.isVisitedMail());
+
+//        RegisterRequest req = dtoToRegisterRequest.convert(request);
         return new ResponseEntity(registerRequestService.update(req), HttpStatus.OK);
     }
 }

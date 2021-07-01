@@ -18,6 +18,7 @@ const DEFAULT_LOGIN = {
 
 const LoginLayout = () => {
 
+
     const [passwordLess, setPasswordLess] = useState(false)
 
     const useStyles = makeStyles((theme) => ({
@@ -73,7 +74,7 @@ const LoginLayout = () => {
         const status = await AuthenticationService.login(credentials)
         console.log(status)
         if(status == '401') {
-            setError("You are blocked from using this app!")
+            setError("You are not allowed to use this application")
         }
         else if(status == '404') {
             setError("Wrong username or password")

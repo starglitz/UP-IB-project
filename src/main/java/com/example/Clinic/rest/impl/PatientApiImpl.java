@@ -72,7 +72,7 @@ public class PatientApiImpl implements PatientApi {
                 patientDto.getUserDto().getPhoneNumber());
 
         user.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
-        user.setEnabled(true);
+        user.setEnabled(false);
 
         Set<Authority> authorities = new HashSet<>(){{
             add(authorityRepository.findByName(UserRole.PATIENT.toString()));

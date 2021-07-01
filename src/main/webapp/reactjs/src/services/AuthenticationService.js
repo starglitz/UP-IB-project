@@ -1,5 +1,7 @@
 import AxiosClient from "./clients/AxiosClient";
 import { TokenService } from "../services/TokenService";
+import {UserService} from "./UserService";
+
 
 export const AuthenticationService = {
     login,
@@ -7,8 +9,11 @@ export const AuthenticationService = {
     passwordLessRequest,
     getRole,
     findCommonElement,
-    checkTokenValidity
+    checkTokenValidity,
+    loginViaLink
 };
+
+
 
 async function login(userCredentials) {
 
@@ -82,6 +87,24 @@ async function checkTokenValidity(jwt) {
         TokenService.setToken(tokenPair.jwt);
         TokenService.setRefreshToken(tokenPair.refreshJwt)
         window.location.assign("/");
+    }
+}
+
+async function loginViaLink(jwt) {
+    console.log("entered service function")
+    const response = await AxiosClient("https://localhost:8080/auth/linkLogin/" + jwt)
+    console.log("response status: " + response.status)
+    if (response.status == 200) {
+        console.log("its 200")
+        const tokenPair = response.data
+        console.log("access:")
+        console.log(tokenPair.jwt);
+        console.log("refresh: ")
+        console.log(tokenPair.refreshJwt);
+        TokenService.setToken(tokenPair.jwt);
+        TokenService.setRefreshToken(tokenPair.refreshJwt)
+        //window.location.replace("https://localhost:3000/");
+        window.location.assign("/changePassword");
     }
 }
 

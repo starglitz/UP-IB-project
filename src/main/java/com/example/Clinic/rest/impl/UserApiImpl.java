@@ -6,6 +6,7 @@ import com.example.Clinic.rest.support.converter.UserToDto;
 import com.example.Clinic.rest.support.dto.UserDto;
 import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import com.example.Clinic.service.UserService;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +57,17 @@ public class UserApiImpl implements UserApi {
         }
         UserDto dto = userToDto.convert(user);
         return new ResponseEntity(dto, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity enable(String token) {
+//        Jwt token =
+//
+//
+//        User user = userService.getLoggedIn(authentication);
+//        user.setEnabled(true);
+//        User update = userService.enable(user);
+        return new ResponseEntity("test", HttpStatus.OK);
     }
 
 

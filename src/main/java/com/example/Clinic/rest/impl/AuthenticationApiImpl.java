@@ -1,18 +1,19 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Authority;
-import com.example.Clinic.model.TokenExpiration;
-import com.example.Clinic.model.TokenPair;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.rest.AuthenticationApi;
 import com.example.Clinic.rest.support.dto.JwtAuthenticationRequest;
 import com.example.Clinic.rest.support.dto.PasswordLessDto;
 import com.example.Clinic.rest.support.dto.UserTokenState;
 import com.example.Clinic.security.services.UserDetailsImpl;
 import com.example.Clinic.security.token.TokenUtils;
+import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.impl.EmailServiceImpl;
 import com.example.Clinic.service.impl.UserDetailsServiceImpl;
 import com.example.Clinic.service.impl.UserServiceImpl;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,13 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -50,7 +50,13 @@ public class AuthenticationApiImpl implements AuthenticationApi {
     @Autowired
     private EmailServiceImpl emailService;
 
+    @Autowired
+    private PatientService patientService;
+
     private List<TokenExpiration> tokenStore = new ArrayList<>();
+
+
+
 
     @Override
     public ResponseEntity<UserTokenState> createAuthenticationToken(JwtAuthenticationRequest authenticationRequest,
@@ -117,6 +123,7 @@ public class AuthenticationApiImpl implements AuthenticationApi {
         }
     }
 
+
     @Override
     public ResponseEntity<TokenPair> tokenCheck(String token) {
         boolean valid = false;
@@ -158,6 +165,34 @@ public class AuthenticationApiImpl implements AuthenticationApi {
             return ResponseEntity.badRequest().body(userTokenState);
         }
     }
+
+    @Override
+    public ResponseEntity loginViaLink(String token) throws JSONException {
+//       Jwt jwt = token.
+        String[] chunks = token.split("\\.");
+        Base64.Decoder decoder = Base64.getDecoder();
+
+        String header = new String(decoder.decode(chunks[0]));
+        String payload = new String(decoder.decode(chunks[1]));
+
+//        JSONParser parser = new JSONParser(payload);
+//        JSONObject json = (JSONObject) parser.parse(payload);
+        JSONObject obj = new JSONObject(payload);
+
+        String email = obj.getString("sub");
+        System.out.println("EMAIL:");
+        System.out.println(email);
+        User user = userService.findUserByEmail(email).orElse(null);
+        user.setEnabled(true);
+        userService.enable(user);
+
+        // Jwt jwt = decoder.decode(token);
+        String refreshJwt = tokenUtils.generateRefreshToken(token);
+        return ResponseEntity.ok(new TokenPair(token, refreshJwt));
+
+
+    }
+
 
 
 }

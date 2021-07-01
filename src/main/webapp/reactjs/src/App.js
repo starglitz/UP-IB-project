@@ -28,6 +28,8 @@ import NewClinic from "./components/clinics/NewClinic";
 import PasswordLess from "./services/PasswordLessError";
 import {TokenService} from "./services/TokenService";
 import RateTables from "./components/ratings/RateTables";
+import PasswordlessWithLink from "./services/PasswordlessWithLink";
+import {AuthenticationService} from "./services/AuthenticationService";
 
 
 function App() {
@@ -41,6 +43,7 @@ function App() {
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/login" exact component={LoginLayout}/>
                 <Route path="/magic/" component={PasswordLess}/>
+                <Route path="/magicWithLink/" component={PasswordlessWithLink}/>
 
                 {/*<Route path="/nursePage" exact component={NurseLayout}/>*/}
                 <PrivateRoute

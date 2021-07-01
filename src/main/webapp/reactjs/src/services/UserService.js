@@ -4,7 +4,8 @@ export const UserService = {
     edit,
     getMyInfo,
     getAll,
-    get
+    get,
+    setEnabled
 };
 
 async function edit(id, user) {
@@ -32,4 +33,9 @@ async function getAll() {
 
 async function get(id) {
     return await AxiosClient.get(`https://localhost:8080/user/${id}`);
+}
+
+async function setEnabled(token) {
+    await AxiosClient.put(`https://localhost:8080/user/enable/${token}`)
+
 }

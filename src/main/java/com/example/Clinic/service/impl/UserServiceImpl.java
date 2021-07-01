@@ -104,4 +104,13 @@ public class UserServiceImpl  implements UserService {
     public List<User> getAll() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User enable(User user) {
+        User userJpa = userRepository.findById(user.getId()).orElse(null);
+        userJpa.setEnabled(true);
+        userRepository.save(userJpa);
+
+        return userJpa;
+    }
 }
