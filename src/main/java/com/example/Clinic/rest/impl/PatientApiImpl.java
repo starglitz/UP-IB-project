@@ -13,15 +13,18 @@ import com.example.Clinic.rest.support.dto.PatientRegisterDto;
 import com.example.Clinic.service.PatientBookService;
 import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.RegisterRequestService;
+import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.xml.sax.SAXException;
 
+import javax.naming.AuthenticationException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -61,6 +64,9 @@ public class PatientApiImpl implements PatientApi {
 
     @Autowired
     private AuthorityRepository authorityRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity registerUser(@RequestBody @Valid PatientRegisterDto patientDto) throws ParserConfigurationException, SAXException, IOException {
@@ -123,6 +129,13 @@ public class PatientApiImpl implements PatientApi {
         Patient patientJpa = patientService.updatePatient(dtoToPatient.convert(patientDto), id);
 
         return new ResponseEntity<>(patientToDto.convert(patientJpa), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getPatientsByDoctorId(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        List<Patient> patients = patientService.getByDoctorId(user.getId());
+        return new ResponseEntity(patients, HttpStatus.OK);
     }
 
 

@@ -13,4 +13,5 @@ public interface PatientService {
    public List<Patient> getAll();
    public Optional<Patient> getPatientById(Long id);
    public  Patient updatePatient(Patient patient, Long id);
+   List<Patient> getByDoctorId(Long id);
 }

@@ -26,7 +26,7 @@ const PatientsTable = () => {
 
     async function fetchData() {
         try {
-            const response = await PatientService.getAll()
+            const response = await PatientService.getByCurrentDoctor()
             setPatients(response.data)
             let pat = response.data
 
