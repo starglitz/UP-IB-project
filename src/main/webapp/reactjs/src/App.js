@@ -30,6 +30,7 @@ import {TokenService} from "./services/TokenService";
 import RateTables from "./components/ratings/RateTables";
 import PasswordlessWithLink from "./services/PasswordlessWithLink";
 import {AuthenticationService} from "./services/AuthenticationService";
+import LinkNotValid from "./layouts/LinkNotValid";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                 <Route path="/login" exact component={LoginLayout}/>
                 <Route path="/magic/" component={PasswordLess}/>
                 <Route path="/magicWithLink/" component={PasswordlessWithLink}/>
+                <Route path="/linkExpired" component={LinkNotValid}/>
 
                 {/*<Route path="/nursePage" exact component={NurseLayout}/>*/}
                 <PrivateRoute

@@ -57,6 +57,11 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
 
         if(requestJpa.getStatus().equals(RequestStatus.PENDING)) {
             System.out.println("guesssss");
+
+            Patient patient = requestJpa.getPatient();
+            patient.setVisitedMail(false);
+            patientService.updatePatient(patient, patient.getId());
+
             if(request.getStatus().equals(RequestStatus.APPROVED)) {
 
 

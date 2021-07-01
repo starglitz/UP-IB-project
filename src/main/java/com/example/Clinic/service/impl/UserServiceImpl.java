@@ -130,6 +130,7 @@ public class UserServiceImpl  implements UserService {
                     userJpa.getPassword())) {
                 System.out.println("Password matches & will be edited");
                 userJpa.setPassword(passwordEncoder.encode(user.getPassword()));
+                userJpa.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
                 userRepository.save(userJpa);
             } else {
                 ok = false;

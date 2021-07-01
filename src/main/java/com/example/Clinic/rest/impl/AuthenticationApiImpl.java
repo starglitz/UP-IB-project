@@ -183,13 +183,25 @@ public class AuthenticationApiImpl implements AuthenticationApi {
         System.out.println("EMAIL:");
         System.out.println(email);
         User user = userService.findUserByEmail(email).orElse(null);
-        user.setEnabled(true);
-        userService.enable(user);
 
-        // Jwt jwt = decoder.decode(token);
-        String refreshJwt = tokenUtils.generateRefreshToken(token);
-        return ResponseEntity.ok(new TokenPair(token, refreshJwt));
+        Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+        System.out.println(patient);
+        if(patient.isVisitedMail() == true) {
+            System.out.println("ALREADY VISITED");
+            return new ResponseEntity("already visited", HttpStatus.BAD_REQUEST);
+        }
 
+        else {
+            user.setEnabled(true);
+            userService.enable(user);
+
+            patient.setVisitedMail(true);
+            patientService.updatePatient(patient, patient.getId());
+            System.out.println("NOT VISITED MAIL - ELSE");
+            // Jwt jwt = decoder.decode(token);
+            String refreshJwt = tokenUtils.generateRefreshToken(token);
+            return ResponseEntity.ok(new TokenPair(token, refreshJwt));
+        }
 
     }
 

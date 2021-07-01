@@ -31,7 +31,9 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient updatePatient(Patient patient, Long id) {
-        return patientRepository.save(patient);
+        Patient jpa = patientRepository.findById(id).orElse(null);
+        jpa.setVisitedMail(patient.isVisitedMail());
+        return patientRepository.save(jpa);
     }
 
     @Override

@@ -51,6 +51,7 @@ public class RegisterRequestApiImpl implements RegisterRequestApi {
         if(patient == null) {
             return new ResponseEntity("Bad request", HttpStatus.BAD_REQUEST);
         }
+        
         //request.setPatient(patientToListDto.convert(patient));
         //request.setRegister_request_id(request);
 

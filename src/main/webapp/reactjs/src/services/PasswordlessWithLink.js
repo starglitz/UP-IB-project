@@ -15,7 +15,7 @@ const PasswordlessWithLink = () => {
 
     return (
         <>
-            <h1> Success </h1>
+            <h3> Redirecting, please wait.. </h3>
         </>
     )
 }

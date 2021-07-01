@@ -91,10 +91,22 @@ async function checkTokenValidity(jwt) {
 }
 
 async function loginViaLink(jwt) {
+    let status = '200'
     console.log("entered service function")
     const response = await AxiosClient("https://localhost:8080/auth/linkLogin/" + jwt)
-    console.log("response status: " + response.status)
-    if (response.status == 200) {
+        .catch(function (error) {
+        if (error.response) {
+            console.log(error.response.status)
+            if (error.response.status == '400') {
+                status = '400'
+                //window.location.assign("/linkExpired");
+            }
+        }
+        });
+   // console.log("response status: " + response.status)
+
+    //if (response.status == 200) {
+    if (status == '200') {
         console.log("its 200")
         const tokenPair = response.data
         console.log("access:")
@@ -106,6 +118,14 @@ async function loginViaLink(jwt) {
         //window.location.replace("https://localhost:3000/");
         window.location.assign("/changePassword");
     }
+    else if(status == '400') {
+        window.location.assign("/linkExpired");
+    }
+
+    if(TokenService.getToken() != null) {
+        window.location.assign("/changePassword");
+    }
+
 }
 
 
