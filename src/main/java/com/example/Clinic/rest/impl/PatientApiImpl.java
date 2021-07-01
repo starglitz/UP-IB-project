@@ -135,7 +135,8 @@ public class PatientApiImpl implements PatientApi {
     public ResponseEntity getPatientsByDoctorId(Authentication authentication) {
         User user = userService.getLoggedIn(authentication);
         List<Patient> patients = patientService.getByDoctorId(user.getId());
-        return new ResponseEntity(patients, HttpStatus.OK);
+        List<PatientDto> dtos = patientToDto.convert(patients);
+        return new ResponseEntity(dtos, HttpStatus.OK);
     }
 
 
