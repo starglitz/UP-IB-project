@@ -31,6 +31,7 @@ import RateTables from "./components/ratings/RateTables";
 import PasswordlessWithLink from "./services/PasswordlessWithLink";
 import {AuthenticationService} from "./services/AuthenticationService";
 import LinkNotValid from "./layouts/LinkNotValid";
+import PatientAppointments from "./components/tables/PatientAppointments";
 
 
 function App() {
@@ -144,8 +145,17 @@ function App() {
                 {/*<Route path="/appointmentReview" exact component={AppointmentReview}/>*/}
                 <PrivateRoute
                     exact
-                    path="/appointmentReview"
+                    path="/patient/appointment/review"
                     component={AppointmentReview}
+                    roles={['DOCTOR']}
+                />
+
+
+                {/*<Route path="/appointmentReview" exact component={AppointmentReview}/>*/}
+                <PrivateRoute
+                    exact
+                    path="/patient/appointments"
+                    component={PatientAppointments}
                     roles={['DOCTOR']}
                 />
 
