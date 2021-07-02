@@ -21,12 +21,12 @@ public interface PatientBookApi {
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<PatientBook> addPatientBook(@Valid @RequestBody PatientBook patientBook) throws ParserConfigurationException, SAXException, IOException;
 
-    @PreAuthorize("hasAnyAuthority( 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
+    //@PreAuthorize("hasAnyAuthority( 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatientBook(@PathVariable("id") Long id) throws ParserConfigurationException, SAXException, IOException;
 
-    @PreAuthorize("hasAnyAuthority('DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
+ //   @PreAuthorize("hasAnyAuthority('DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})

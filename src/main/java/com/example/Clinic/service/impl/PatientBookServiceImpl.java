@@ -39,7 +39,7 @@ public class PatientBookServiceImpl implements PatientBookService {
         boolean valid = checkValid(patientBook);
 
         if (valid)
-
+            patientBook.setXml(toXML(patientBook));
             encryptedXml = AsymmetricKeyEncryption.encryptMain(patientBook);
 
         patientBook.setXml(encryptedXml);
@@ -83,9 +83,13 @@ public class PatientBookServiceImpl implements PatientBookService {
 
             decipheredBook.setDrugs(patientBook.getDrugs());
             decipheredBook.setIllnessHistory(patientBook.getIllnessHistory());
-            decipheredBook.setXml(decipheredBook.toXML());
+            decipheredBook.setXml(toXML(decipheredBook));
+            String encryptedXml = AsymmetricKeyEncryption.encryptMain(decipheredBook);
+            decipheredBook.setXml(encryptedXml);
+
             System.out.println(decipheredBook);
-            patientBookRepository.save(patientBook);
+
+            patientBookRepository.save(decipheredBook);
         }
         return valid;
     }
@@ -95,5 +99,28 @@ public class PatientBookServiceImpl implements PatientBookService {
         if (patientBook.getPatient() == null) { valid = false; }
 //        if (patientBook.getRecipes() == null) { valid = false; }
         return valid;
+    }
+
+
+    public String toXML(PatientBook book) {
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+        xml += "<patientBook>" +
+                "    <illnessHistory>";
+
+        for(String illness : book.getIllnessHistory()) {
+            xml += "<illness>" + illness + "</illness>";
+        }
+        xml += "</illnessHistory>";
+
+        xml += "<drugs>";
+
+        for(String drug : book.getDrugs()) {
+            xml += "<drug>" + drug + "</drug>";
+        }
+
+        xml += "</drugs>" +
+                "</patientBook>";
+
+        return xml;
     }
 }
