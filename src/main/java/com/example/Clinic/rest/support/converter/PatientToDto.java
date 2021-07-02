@@ -4,6 +4,7 @@ import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.rest.support.dto.PatientBookDto;
 import com.example.Clinic.rest.support.dto.PatientDto;
+import com.example.Clinic.security.services.AsymmetricEncription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,10 @@ public class PatientToDto implements Converter<Patient, PatientDto> {
             retVal.setApproved(source.isApproved());
             retVal.setEnabled(source.isEnabled());
             retVal.setPatient_book_id(source.getPatientBookId());
-            retVal.setLbo(source.getLbo());
+
+            AsymmetricEncription encription = new AsymmetricEncription(source.getLbo());
+
+            retVal.setLbo(encription.decrypt());
             retVal.setUserDto(userToDto.convert(source.getUser()));
 
 

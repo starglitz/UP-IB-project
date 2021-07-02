@@ -5,11 +5,14 @@ import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.repository.PatientRepository;
+import com.example.Clinic.security.services.AsymmetricEncription;
 import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +28,11 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient addPatient(Patient patient) {
+
+        AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
+
+        patient.setLbo(encription.encrypt());
+
 
         return patientRepository.save(patient);
     }
