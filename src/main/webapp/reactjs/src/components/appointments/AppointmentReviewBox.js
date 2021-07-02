@@ -45,7 +45,6 @@ async function fetchAppointment() {
                 appointment.status = "PASSED"
                 console.log(appointment)
                 await AppointmentService.finish(appointment)
-                window.location.assign("/patients")
             } catch (error) {
                 console.error(`Error ocurred while updating the appointment: ${error}`);
             }
@@ -75,9 +74,10 @@ async function fetchAppointment() {
 
                 if (recipe.description !== "") {
                     console.log(recipe)
-                    // addRecipe(recipe).catch(err => setError(err))
+                    addRecipe(recipe).catch(err => setError(err))
                 }
             })
+            window.location.assign("/patients")
         } else {
             alert("Please fill out all missing fields")
         }
