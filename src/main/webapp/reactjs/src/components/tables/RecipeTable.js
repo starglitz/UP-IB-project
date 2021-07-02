@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import {classes} from "istanbul-lib-coverage";
-import {AppointmentService} from "../../services/AppointmentService";
 import {RecipeService} from "../../services/RecipeService";
 
 export const RecipeTable = () => {
@@ -11,15 +10,8 @@ export const RecipeTable = () => {
     const [hasError, setError] = useState(false)
 
     useEffect(() => {
-        fetchData()
-            // .then(res => setRequests(res))
-            // .catch(err => setError(err));
+        fetchData().catch(err => setError(err));
     },[])
-
-    // async function fetchData() {
-    //     const res = await fetch('http://localhost:8080/notApprovedRecipes');
-    //     return res.json()
-    // }
 
     async function fetchData() {
         try {
@@ -36,33 +28,13 @@ export const RecipeTable = () => {
     async function approveRecipe(recipe) {
         recipe.validated = true
         try {
-            console.log(recipe)
+            recipe.nurseId = recipe.nurse.id
             await RecipeService.approve(recipe.recipe_id.toString(), recipe)
             window.location.reload();
         } catch (error) {
             console.error(`Error ocurred while updating the recipe: ${error}`);
         }
     }
-
-    // const approveRecipe = (recipe) => {
-    //     recipe.validated = true
-    //     fetch('http://localhost:8080/updateRecipe/' + recipe.recipe_id.toString(), {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(recipe),
-    //     })
-    //         .then(response => response.json())
-    //         .then(rcp => {
-    //             requests.splice(rcp) // removes the clicked recipe from the list
-    //             console.log('Success:', rcp);
-    //             window.location.reload();
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
-    // }
 
 
     return (
@@ -83,7 +55,7 @@ export const RecipeTable = () => {
                             <TableCell align={"center"} >{row.description}</TableCell>
                             <TableCell align={"center"} >{row.issueDate}</TableCell>
                             <TableCell align={"center"} >
-                                <Button variant="contained" color="primary" onClick={() => {approveRecipe(row)}}>
+                                <Button variant="contained" color="primary" onClick={() => {approveRecipe(row).catch(err => setError(err))}}>
                                     Approve Recipe
                                 </Button>
                             </TableCell>

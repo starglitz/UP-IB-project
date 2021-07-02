@@ -8,8 +8,6 @@ import {PatientService} from "../../services/PatientService";
 
 const PatientsTable = () => {
 
-
-
     const [patients, setPatients] = useState([])
     const [hasError, setError] = useState(false)
     const [filter, setFilter] = useState(false);
@@ -17,10 +15,7 @@ const PatientsTable = () => {
 
 
     useEffect(() => {
-        // fetchData("http://localhost:8080/allPatients")
-        //     .then(res => setPatients(res))
-        //     .catch(err => setError(err));
-        fetchData()
+        fetchData().catch(err => setError(err))
     },[])
 
 
@@ -55,11 +50,6 @@ const PatientsTable = () => {
         }
     }
 
-    // async function fetchData(url) {
-    //     const res = await fetch(url,);
-    //     return res.json()
-    // }
-
     const listenerHandler = (e) => {
         if(!filter){
             clickHandler(e)
@@ -68,14 +58,16 @@ const PatientsTable = () => {
 
     const clickHandler = (e) => {
         const id = e[0];
+        localStorage.setItem("PATIENT_ID", id)
+        localStorage.setItem("PATIENT_NAME", e[1] + " " + e[2])
+        console.log(e)
         history.push({
-            pathname: '/patientProfile',
+            pathname: '/patient/appointments',
             search: '?id=' + id,
             state: { detail: id}
         });
 
     }
-
 
     const columns = [
         {
@@ -109,17 +101,13 @@ const PatientsTable = () => {
                 filter: true,
                 sort: false,
             }
-        }]
-
-
-
+        }
+    ]
 
     const options = {
         selectableRows: "none",
         onRowClick: listenerHandler,
         viewColumns: false,
-       // customToolbar: AddButton
-
     };
 
     return (

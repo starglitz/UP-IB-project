@@ -18,6 +18,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appointment_id;
 
+    private String conclusion;
+
     private AppointmentStatus status;
 
     private LocalDate date;

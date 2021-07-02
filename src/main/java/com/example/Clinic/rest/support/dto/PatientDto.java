@@ -20,7 +20,7 @@ public class PatientDto {
 
     private boolean approved = false;
 
-//    private PatientBookDto patientBookDto;
+    private Long patient_book_id;
 
     private UserDto userDto;
 }
