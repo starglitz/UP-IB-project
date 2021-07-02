@@ -4,12 +4,14 @@ export const AppointmentService = {
     get,
     getAll,
     update,
+    finish,
     create,
     getByClinicId,
     getFreeByClinicId,
     getFreeByDoctorIdAndDate,
     deleteAppointment,
-    postBookingAppointment
+    postBookingAppointment,
+    getPatientAppointments
 };
 
 
@@ -21,8 +23,16 @@ async function getAll() {
     return await AxiosClient.get(`https://localhost:8080/appointments`);
 }
 
+async function getPatientAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/patient/${id}`);
+}
+
 async function update(id, appointment) {
     return await AxiosClient.put(`https://localhost:8080/appointments/${id}`, appointment);
+}
+
+async function finish(appointment) {
+    return await AxiosClient.put(`https://localhost:8080/appointments/finish`, appointment);
 }
 
 async function create(appointment) {
