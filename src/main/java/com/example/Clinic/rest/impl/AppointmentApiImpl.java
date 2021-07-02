@@ -22,6 +22,7 @@ import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -92,7 +93,12 @@ public class AppointmentApiImpl implements AppointmentApi {
         PatientBook patientBook = patientBookService.findById(appointment.getPatient().getPatientBookId());
 
         if (patientBook != null) {
-            patientBook.getIllnessHistory().add(appointment.getConclusion());
+            System.out.println("PATIENT BOOK: " + patientBook.getIllnessHistory());
+            System.out.println("CONCLUSION: " + appointment.getConclusion());
+            List<String> illnesses =  new ArrayList<String>((patientBook.getIllnessHistory()));
+            String conclusion = appointment.getConclusion();
+            illnesses.add(conclusion);
+            patientBook.setIllnessHistory(illnesses);
             patientBookService.updatePatientBook(patientBook, patientBook.getId());
             return new ResponseEntity<>(dto, HttpStatus.OK);
         }

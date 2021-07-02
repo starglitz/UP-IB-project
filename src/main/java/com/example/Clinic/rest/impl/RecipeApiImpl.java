@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -56,8 +57,14 @@ public class RecipeApiImpl implements RecipeApi {
             assert newRecipe != null;
             PatientBook patientBook = patientBookService.findById(newRecipe.getPatientBookId());
             if (patientBook != null) {
-                patientBook.getDrugs().add(newRecipe.getDescription());
+                System.out.println("PATIENT BOOK: " + patientBook.getIllnessHistory());
+                System.out.println("NEW DRUG: " + newRecipe.getDescription());
+                List<String> drugs =  new ArrayList<String>((patientBook.getDrugs()));
+                String newDrug = newRecipe.getDescription();
+                drugs.add(newDrug);
+                patientBook.setDrugs(drugs);
                 patientBookService.updatePatientBook(patientBook, patientBook.getId());
+                return new ResponseEntity<>(dto, HttpStatus.OK);
             }
             return new ResponseEntity<>(newRecipe, HttpStatus.OK);
         }
