@@ -2,11 +2,11 @@ package com.example.Clinic.service.impl;
 
 
 import com.example.Clinic.model.Authority;
+import com.example.Clinic.model.Doctor;
 import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.User;
 import com.example.Clinic.model.enumerations.UserRole;
 import com.example.Clinic.repository.AuthorityRepository;
-import com.example.Clinic.repository.DoctorRepository;
 import com.example.Clinic.repository.NurseRepository;
 import com.example.Clinic.repository.UserRepository;
 import com.example.Clinic.rest.support.converter.DtoToNurse;
@@ -46,9 +46,7 @@ public class NurseServiceImpl implements NurseService {
     }
 
     @Override
-    public Optional<Nurse> findById(Long id) {
-        return nurseRepository.findById(id);
-    }
+    public Nurse findById(Long id) { return nurseRepository.findById(id).orElse(null); }
 
     @Override
     public Nurse create(Nurse nurse) {

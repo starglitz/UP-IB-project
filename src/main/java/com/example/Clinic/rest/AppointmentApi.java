@@ -9,9 +9,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 @RestController
@@ -51,6 +54,15 @@ public interface AppointmentApi {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
             LocalDate date);
 
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @PutMapping(value = "/finish",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> finishAppointment(@Valid @RequestBody AppointmentDto appointment)
+            throws ParserConfigurationException, SAXException, IOException;
+
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @GetMapping(value = "/patient/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getPatientAppointments(@PathVariable long id);
 
     @PreAuthorize("hasAnyAuthority('PATIENT', 'DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PutMapping(value = "/{id}",

@@ -7,6 +7,7 @@ import com.example.Clinic.repository.AppointmentRepository;
 import com.example.Clinic.service.AppointmentService;
 import com.example.Clinic.service.DoctorService;
 import com.example.Clinic.service.NurseService;
+import com.example.Clinic.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     private NurseService nurseService;
+
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public boolean add(Appointment appointment) {
@@ -73,7 +77,7 @@ public class AppointmentServiceImpl implements AppointmentService {
             }
             if(notBooked) {
                 Doctor doctor = doctorService.findById(appointment.getDoctor().getId());
-                Nurse nurse = nurseService.findById(appointment.getNurse().getId()).get();
+                Nurse nurse = nurseService.findById(appointment.getNurse().getId());
 
                 appointment.setDoctor(doctor);
                 appointment.setNurse(nurse);
@@ -128,6 +132,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date) {
         return appointmentRepository.findFreeByDoctorAndDate(doctor_id, date);
+    }
+
+    @Override
+    public List<Appointment> findByPatient(long id) {
+        Optional<Patient> patient = patientService.getPatientById(id);
+        return patient.map(value ->
+                appointmentRepository.findAppointmentByPatientAndStatus(value, AppointmentStatus.RESERVED))
+                .orElse(null);
     }
 
 

@@ -25,7 +25,7 @@ public class PatientToDto implements Converter<Patient, PatientDto> {
             retVal.setId(source.getId());
             retVal.setApproved(source.isApproved());
             retVal.setEnabled(source.isEnabled());
-            //retVal.setPatientBookId(source.getPatientBookId());
+            retVal.setPatient_book_id(source.getPatientBookId());
             retVal.setLbo(source.getLbo());
             retVal.setUserDto(userToDto.convert(source.getUser()));
 

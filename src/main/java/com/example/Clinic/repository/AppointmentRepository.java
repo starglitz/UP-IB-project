@@ -1,6 +1,8 @@
 package com.example.Clinic.repository;
 
 import com.example.Clinic.model.Appointment;
+import com.example.Clinic.model.Patient;
+import com.example.Clinic.model.enumerations.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,5 +24,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             nativeQuery = true)
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
 
+    List<Appointment> findAppointmentByPatientAndStatus(Patient patient, AppointmentStatus status);
 
 }

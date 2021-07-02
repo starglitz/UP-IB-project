@@ -16,11 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class AppointmentApiImpl implements AppointmentApi {
@@ -28,20 +30,12 @@ public class AppointmentApiImpl implements AppointmentApi {
     @Autowired
     private AppointmentService appointmentService;
 
-    @Autowired
-    private DoctorService doctorService;
-
-    @Autowired
-    private NurseService nurseService;
 
     @Autowired
     private PatientService patientService;
 
     @Autowired
-    private DoctorToDto doctorToDto;
-
-    @Autowired
-    private NurseToDto nurseToDto;
+    private PatientBookService patientBookService;
 
     @Autowired
     private DtoToAppointment dtoToAppointment;
@@ -89,6 +83,30 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
+    public ResponseEntity finishAppointment(@Valid AppointmentDto dto) throws ParserConfigurationException, SAXException, IOException {
+
+        Appointment appointment = dtoToAppointment.convert(dto);
+        appointmentService.update(appointment);
+
+        assert appointment != null;
+        PatientBook patientBook = patientBookService.findById(appointment.getPatient().getPatientBookId());
+
+        if (patientBook != null) {
+            patientBook.getIllnessHistory().add(appointment.getConclusion());
+            patientBookService.updatePatientBook(patientBook, patientBook.getId());
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>("Patient book doesnt exist", HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity getPatientAppointments(long id) {
+        List<AppointmentDto> appointments = appointmentToDto.convertList(appointmentService.findByPatient(id));
+        return new ResponseEntity(appointments, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
         System.out.println("!!!!");
         System.out.println(appointmentDto);
@@ -104,13 +122,12 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
-    public ResponseEntity updateAppointment(@Valid AppointmentDto appointmentParam, Long id) {
+    public ResponseEntity updateAppointment(@Valid AppointmentDto dto, Long id) {
 
-        Appointment appointment = dtoToAppointment.convert(appointmentParam);
+        Appointment appointment = dtoToAppointment.convert(dto);
+        appointmentService.update(appointment);
 
-        boolean valid = appointmentService.update(appointment);
-
-        return new ResponseEntity(appointmentParam, HttpStatus.OK);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @Override

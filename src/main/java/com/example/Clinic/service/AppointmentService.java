@@ -10,13 +10,13 @@ import java.util.Optional;
 @Service
 public interface AppointmentService {
 
-    public boolean add(Appointment appointment);
-    public boolean update(Appointment appointment);
-    public Appointment delete(Appointment appointment);
-    public Appointment findById(Long id);
-    public List<Appointment> findAll();
-    public List<Appointment> findByClinicId(Long clinic_id);
-    public List<Appointment> findFreeByClinicId(Long clinic_id);
+    boolean add(Appointment appointment);
+    boolean update(Appointment appointment);
+    Appointment delete(Appointment appointment);
+    Appointment findById(Long id);
+    List<Appointment> findAll();
+    List<Appointment> findByClinicId(Long clinic_id);
+    List<Appointment> findFreeByClinicId(Long clinic_id);
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
-
+    List<Appointment> findByPatient(long id);
 }

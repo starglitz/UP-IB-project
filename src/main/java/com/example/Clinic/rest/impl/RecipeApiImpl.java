@@ -1,10 +1,12 @@
 package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Nurse;
+import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.rest.RecipeApi;
 import com.example.Clinic.rest.support.converter.DtoToRecipe;
 import com.example.Clinic.rest.support.dto.RecipeDto;
+import com.example.Clinic.service.PatientBookService;
 import com.example.Clinic.service.RecipeService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.xml.sax.SAXException;
 
 import javax.validation.Valid;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,6 +31,9 @@ public class RecipeApiImpl implements RecipeApi {
 
     @Autowired
     private DtoToRecipe dtoToRecipe;
+
+    @Autowired
+    private PatientBookService patientBookService;
 
     @Override
     public ResponseEntity<Recipe> addRecipe(@RequestBody @Valid RecipeDto dto) {
@@ -40,16 +48,20 @@ public class RecipeApiImpl implements RecipeApi {
     }
 
     @Override
-    public ResponseEntity approveRecipe(RecipeDto dto, Long recipe_id) {
-        System.out.println(dto);
+    public ResponseEntity approveRecipe(RecipeDto dto, Long recipe_id) throws ParserConfigurationException, SAXException, IOException {
         Recipe newRecipe = dtoToRecipe.convert(dto);
-        System.out.println(newRecipe);
         boolean valid = recipeService.updateRecipe(newRecipe, recipe_id);
 
-        if(valid)
-            return new ResponseEntity(newRecipe, HttpStatus.OK);
-
-        return new ResponseEntity(newRecipe, HttpStatus.BAD_REQUEST);
+        if(valid) {
+            assert newRecipe != null;
+            PatientBook patientBook = patientBookService.findById(newRecipe.getPatientBookId());
+            if (patientBook != null) {
+                patientBook.getDrugs().add(newRecipe.getDescription());
+                patientBookService.updatePatientBook(patientBook, patientBook.getId());
+            }
+            return new ResponseEntity<>(newRecipe, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(newRecipe, HttpStatus.BAD_REQUEST);
     }
 
     @Override

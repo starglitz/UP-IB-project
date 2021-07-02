@@ -10,8 +10,7 @@ export const PatientTable = () => {
 
     useEffect(() => {
         fetchData()
-            // .then(res => setRequests(res))
-            // .catch(err => setError(err));
+            .catch(err => setError(err));
     },[])
 
     // async function fetchData() {
