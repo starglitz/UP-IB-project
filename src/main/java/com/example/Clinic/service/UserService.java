@@ -25,4 +25,7 @@ public interface UserService {
 
     Boolean changePassword(UserRegisterDto user, String passwordValidate);
 
+    User setFirstTime(User user);
+
+
 }

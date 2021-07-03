@@ -194,7 +194,7 @@ public class AuthenticationApiImpl implements AuthenticationApi {
         else {
             user.setEnabled(true);
             userService.enable(user);
-
+            user.setFirstTime(false);
             patient.setVisitedMail(true);
             patientService.updatePatient(patient, patient.getId());
             System.out.println("NOT VISITED MAIL - ELSE");

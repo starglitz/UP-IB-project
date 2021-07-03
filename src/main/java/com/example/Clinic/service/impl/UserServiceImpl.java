@@ -141,4 +141,10 @@ public class UserServiceImpl  implements UserService {
         }
         return ok;
     }
+
+    @Override
+    public User setFirstTime(User user) {
+        userRepository.save(user);
+        return user;
+    }
 }

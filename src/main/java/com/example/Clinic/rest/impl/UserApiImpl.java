@@ -3,6 +3,7 @@ package com.example.Clinic.rest.impl;
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.UserApi;
 import com.example.Clinic.rest.support.converter.UserToDto;
+import com.example.Clinic.rest.support.dto.FirstTimeDto;
 import com.example.Clinic.rest.support.dto.UserDto;
 import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import com.example.Clinic.service.UserService;
@@ -88,6 +89,19 @@ public class UserApiImpl implements UserApi {
         else {
             return new ResponseEntity("bad data", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public ResponseEntity firstTime(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        FirstTimeDto dto = new FirstTimeDto(user.isFirstTime());
+
+        if(user.isFirstTime()) {
+            user.setFirstTime(false);
+            userService.setFirstTime(user);
+        }
+
+        return new ResponseEntity(dto, HttpStatus.OK);
     }
 
 

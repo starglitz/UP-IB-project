@@ -1,6 +1,7 @@
 import AxiosClient from "./clients/AxiosClient";
 import { TokenService } from "../services/TokenService";
 import {UserService} from "./UserService";
+import {PatientService} from "./PatientService";
 
 
 export const AuthenticationService = {
@@ -45,7 +46,19 @@ async function login(userCredentials) {
         if (decoded_token && decoded_refresh_token) {
             TokenService.setToken(response.data.accessToken);
             TokenService.setRefreshToken(response.data["refreshToken"]);
-            window.location.assign("/");
+
+
+
+            const res = await UserService.isFirstTime();
+            const firstTime = res.data;
+            if(firstTime.firstTime === true) {
+                window.location.assign("/changePassword");
+            }
+
+            else {
+                window.location.assign("/");
+            }
+
             console.log(TokenService.getToken(), TokenService.getRefreshToken())
             alert("A")
         } else {
