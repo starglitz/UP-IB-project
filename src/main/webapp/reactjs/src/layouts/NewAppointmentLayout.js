@@ -3,12 +3,15 @@ import RegisterRequestRow from "../components/registerRequestRow";
 import {AppointmentService} from "../services/AppointmentService";
 import {DoctorService} from "../services/DoctorService";
 import {NurseService} from "../services/NurseService";
+import {useHistory} from "react-router-dom";
 
 const NewAppointmentLayout = () => {
 
     const [doctors, setDoctors] = useState([]);
     const [nurses, setNurses] = useState([]);
     const [hasError, setErrors] =  useState(false);
+
+    const history = useHistory()
 
     const [error, setError] = useState("")
     useEffect(() => {
@@ -82,6 +85,8 @@ const NewAppointmentLayout = () => {
             console.log(appointment);
             console.log(JSON.stringify(appointment));
             addAppointment(appointment);
+            alert("Successfully created an appointment!")
+            history.push("/")
 
         }
     }

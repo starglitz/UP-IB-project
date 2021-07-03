@@ -1,6 +1,7 @@
 package com.example.Clinic.rest.support.converter;
 
 import com.example.Clinic.model.Clinic;
+import com.example.Clinic.model.ClinicRating;
 import com.example.Clinic.rest.support.dto.ClinicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -32,6 +33,18 @@ public class ClinicToDto implements Converter<Clinic, ClinicDto> {
         dto.setAddressName(clinic.getAddressName());
         dto.setLng(clinic.getLng());
         dto.setLat(clinic.getLat());
+
+        float total = 0;
+        float average = 0;
+        if (clinic.getRatings().size() != 0) {
+
+            for (ClinicRating rating : clinic.getRatings()) {
+                total += rating.getRating();
+            }
+            average = total / clinic.getRatings().size();
+        }
+
+        dto.setRating(average);
 
         return dto;
     }
