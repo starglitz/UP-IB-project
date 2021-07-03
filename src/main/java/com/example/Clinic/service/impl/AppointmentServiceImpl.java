@@ -142,6 +142,14 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .orElse(null);
     }
 
+    @Override
+    public List<Appointment> findByPatientFinished(long id) {
+        Optional<Patient> patient = patientService.getPatientById(id);
+        return patient.map(value ->
+                appointmentRepository.findAppointmentByPatientAndStatus(value, AppointmentStatus.PASSED))
+                .orElse(null);
+    }
+
 
     private boolean checkValid(Appointment appointment) {
         boolean valid = true;
