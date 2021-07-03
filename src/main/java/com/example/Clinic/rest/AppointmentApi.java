@@ -64,6 +64,10 @@ public interface AppointmentApi {
     @GetMapping(value = "/patient/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> getPatientAppointments(@PathVariable long id);
 
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @GetMapping(value = "/patient/finished/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getPatientFinishedAppointments(@PathVariable long id);
+
     @PreAuthorize("hasAnyAuthority('PATIENT', 'DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})

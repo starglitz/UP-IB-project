@@ -28,7 +28,7 @@ const navbar = () => {
     const staffRegister = <Nav.Link key={key++}  href="staffRegister">Staff register</Nav.Link>
     const chandePassword = <Nav.Link key={key++}  href="changePassword">Change password</Nav.Link>
     const blockUsers = <Nav.Link key={key++}  href="blockUsers">Block users</Nav.Link>
-    const doctorPatients = <Nav.Link key={key++}  href="patients">Patients</Nav.Link>
+    const doctorPatients = <Nav.Link key={key++}  href="patients">Patient</Nav.Link>
     const rate = <Nav.Link key={key++}  href="rate">Rate doctors & clinics</Nav.Link>
     const logoutLink = <Nav.Link key={key++} onClick={logoutClick}  href="">Logout</Nav.Link>
 
