@@ -5,7 +5,6 @@ import {useHistory} from "react-router-dom";
 import ServicesTable from "../components/tables/ServicesTable";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import DoctorPatientsTable from "../components/patients/DoctorPatientsTable";
 import Location from "../components/Location";
 import {AppointmentService} from "../services/AppointmentService";
 import {ClinicService} from "../services/ClinicService";
