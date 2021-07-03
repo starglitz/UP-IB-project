@@ -7,7 +7,7 @@ import {AppointmentService} from "../../services/AppointmentService";
 import {PatientService} from "../../services/PatientService";
 import Button from "@material-ui/core/Button";
 
-const PatientsTable = () => {
+const DoctorPatientsTable = () => {
 
     const [open, setOpen] = React.useState(false);
     const [patients, setPatients] = useState([])
@@ -153,4 +153,4 @@ const PatientsTable = () => {
     );
 }
 
-export default PatientsTable;
+export default DoctorPatientsTable;
