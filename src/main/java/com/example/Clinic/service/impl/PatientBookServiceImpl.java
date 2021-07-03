@@ -64,7 +64,8 @@ public class PatientBookServiceImpl implements PatientBookService {
             System.out.println(decipheredBook);
         }
 
-        return decipheredBook; }
+        return decipheredBook;
+    }
 
     @Override
     public boolean updatePatientBook(PatientBook patientBook, Long id) throws IOException, SAXException, ParserConfigurationException {
