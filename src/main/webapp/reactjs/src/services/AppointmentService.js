@@ -11,7 +11,8 @@ export const AppointmentService = {
     getFreeByDoctorIdAndDate,
     deleteAppointment,
     postBookingAppointment,
-    getPatientAppointments
+    getPatientAppointments,
+    getFinishedPatientAppointments
 };
 
 
@@ -25,6 +26,10 @@ async function getAll() {
 
 async function getPatientAppointments(id) {
     return await AxiosClient.get(`https://localhost:8080/appointments/patient/${id}`);
+}
+
+async function getFinishedPatientAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/patient/finished/${id}`);
 }
 
 async function update(id, appointment) {

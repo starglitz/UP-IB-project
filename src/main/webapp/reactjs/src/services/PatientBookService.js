@@ -1,7 +1,8 @@
 import AxiosClient from "./clients/AxiosClient";
 
-export const PatientService = {
+export const PatientBookService = {
     get,
+    getByPatient,
     update,
     create
 };
@@ -9,6 +10,10 @@ export const PatientService = {
 
 async function get(id) {
     return await AxiosClient.get(`https://localhost:8080/patientBooks/${id}`);
+}
+
+async function getByPatient(id) {
+    return await AxiosClient.get(`https://localhost:8080/patientBooks/patient/${id}`);
 }
 
 async function update(id, patient_book) {

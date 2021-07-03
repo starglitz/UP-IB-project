@@ -19,4 +19,5 @@ public interface AppointmentService {
     List<Appointment> findFreeByClinicId(Long clinic_id);
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
     List<Appointment> findByPatient(long id);
+    List<Appointment> findByPatientFinished(long id);
 }
