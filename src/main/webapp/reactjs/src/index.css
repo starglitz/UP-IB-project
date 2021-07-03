@@ -208,7 +208,52 @@ register-form {
     text-decoration: none;
     color: #000;
 }
+/*-----------------------Clinic reports-----------------------------------------*/
+.hospitalReports-container h1{
+    text-align:center;
+    margin:20px;
+}
 
+
+.hospitalReports-container
+{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hospitalReports-container li{
+    background: #e5e5e5;
+    margin: 5% auto;
+    padding: 20px;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.hospitalReports-container img{
+    margin: auto;
+    display: block;
+    width: 300px;
+}
+
+.rating-row
+{
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+}
+
+.rating-row p{
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+/*------------------------------------------------------*/
 .link-appointments a:link{
     text-decoration: none;
 
