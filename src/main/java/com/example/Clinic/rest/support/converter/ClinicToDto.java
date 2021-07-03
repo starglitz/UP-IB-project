@@ -36,12 +36,18 @@ public class ClinicToDto implements Converter<Clinic, ClinicDto> {
 
         float total = 0;
         float average = 0;
+        int counterNotZero = 0;
+
+
         if (clinic.getRatings().size() != 0) {
 
             for (ClinicRating rating : clinic.getRatings()) {
-                total += rating.getRating();
+                if (rating.getRating() != 0) {
+                    total += rating.getRating();
+                    counterNotZero += 1;
+                }
             }
-            average = total / clinic.getRatings().size();
+            average = total / counterNotZero;
         }
 
         dto.setRating(average);
