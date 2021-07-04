@@ -6,9 +6,9 @@ import {AppointmentService} from "../../services/AppointmentService";
 import {RecipeService} from "../../services/RecipeService";
 
 
-function AppointmentTable(appointmentParam) { // trebalo bi da se pasuje appointment ovde
+function AppointmentReviewBox() {
 
-    const [appointment, setAppointment] = useState([]) // test state, ovo treba da se izbrise kada se napravi pretraga
+    const [appointment, setAppointment] = useState([])
     const [hasError, setError] = useState(false)
     const [open, setOpen] = React.useState(false);
 
@@ -141,4 +141,4 @@ async function fetchAppointment() {
     );
 }
 
-export default AppointmentTable
+export default AppointmentReviewBox

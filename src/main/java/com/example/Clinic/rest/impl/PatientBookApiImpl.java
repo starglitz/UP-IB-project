@@ -4,6 +4,8 @@ import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
 import com.example.Clinic.rest.PatientBookApi;
 import com.example.Clinic.rest.support.converter.PatientToDto;
+import com.example.Clinic.rest.support.dto.DrugChangeDto;
+import com.example.Clinic.rest.support.dto.IllnessChangeDto;
 import com.example.Clinic.rest.support.dto.PatientBookDto;
 import com.example.Clinic.rest.support.dto.PatientDto;
 import com.example.Clinic.service.PatientBookService;
@@ -17,6 +19,8 @@ import org.xml.sax.SAXException;
 import javax.validation.Valid;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -66,6 +70,32 @@ public class PatientBookApiImpl implements PatientBookApi {
             return new ResponseEntity(dto, HttpStatus.OK);
         }
         return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity updatePatientBookIllnesses(Long id, IllnessChangeDto dto) throws ParserConfigurationException, SAXException, IOException {
+        PatientBook patientBook = patientBookService.findById(id);
+        if (patientBook != null) {
+            boolean valid = patientBookService.updatePatientBookIllness(patientBook, dto);
+            if(valid) {
+                return new ResponseEntity<>("Patient book successfully updated", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("You cannot edit this illness !", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity updatePatientBookDrugs(Long id, DrugChangeDto dto) throws ParserConfigurationException, SAXException, IOException {
+        PatientBook patientBook = patientBookService.findById(id);
+        if (patientBook != null) {
+            boolean valid = patientBookService.updatePatientBookDrugs(patientBook, dto);
+            if(valid) {
+                return new ResponseEntity<>("Patient book successfully updated", HttpStatus.OK);
+            }
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @Override

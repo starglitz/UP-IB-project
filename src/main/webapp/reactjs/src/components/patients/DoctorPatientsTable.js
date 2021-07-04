@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import MUIDataTable, { TableFilterList }  from "mui-datatables";
 import {useHistory} from "react-router-dom";
-import {Dialog, DialogActions, DialogContent, Tooltip} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent, DialogTitle, Tooltip} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import {AppointmentService} from "../../services/AppointmentService";
 import {PatientService} from "../../services/PatientService";
@@ -106,6 +106,7 @@ const DoctorPatientsTable = () => {
     const handleAppointments = () => {
         setOpen(false);
         const id = localStorage.getItem("PATIENT_ID");
+        localStorage.setItem("EDIT_ALLOW", "true")
         history.push({
             pathname: '/patient/appointments',
             search: '?id=' + id,
@@ -116,6 +117,7 @@ const DoctorPatientsTable = () => {
     const handleMedicalHistory  = () => {
         setOpen(false);
         const id = localStorage.getItem("PATIENT_ID");
+        localStorage.setItem("EDIT_ALLOW", "false")
         history.push({
             pathname: '/patient/history',
             search: '?id=' + id,
