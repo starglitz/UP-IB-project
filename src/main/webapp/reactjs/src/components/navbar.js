@@ -109,26 +109,25 @@ const navbar = () => {
     }
 
     return (
-    <>
-        <Navbar bg="dark" variant="dark">
+        <>
+            <Navbar bg="dark" variant="dark">
 
-            <Navbar.Brand href="#home">
+                <Navbar.Brand href="#home">
 
-                <img
-                    src={hospitallogo}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                    alt="hospital logo"
-                />
-            </Navbar.Brand>
+                    <img
+                        src={hospitallogo}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        alt="hospital logo"
+                    />
+                </Navbar.Brand>
 
-            <Navbar.Brand href="#home">Our clinic</Navbar.Brand>
-            {getUniqueListBy(elementRender, "key")}
-        </Navbar>
-    </>
+                <Navbar.Brand href="#home">Our clinic</Navbar.Brand>
+                {getUniqueListBy(elementRender, "key")}
+            </Navbar>
+        </>
     );
 };
 
 export default navbar;
-

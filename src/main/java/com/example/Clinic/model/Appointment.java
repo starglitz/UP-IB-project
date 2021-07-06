@@ -34,6 +34,7 @@ public class Appointment {
     @ManyToOne
     private Nurse nurse;
 
+
     @ManyToOne
     @Nullable
     private Patient patient;

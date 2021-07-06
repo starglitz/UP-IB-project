@@ -12,12 +12,12 @@ const Location = (props) => {
         lng: 19.83
     });
 
-console.log(props.lat)
+    console.log(props.lat)
     console.log(props.lng)
-console.log(center)
+    console.log(center)
 
-  //  useEffect(() => {setCenter({ "lat": props.lat, "lng": props.lng })} ,[])
-console.log(center)
+    //  useEffect(() => {setCenter({ "lat": props.lat, "lng": props.lng })} ,[])
+    console.log(center)
 
     const[zoom, setZoom] = useState(11)
 
@@ -44,47 +44,3 @@ console.log(center)
 }
 
 export default Location;
-
-
-// const containerStyle = {
-//     position: 'relative',
-//     width: '100%',
-//     height: '100%'
-// }
-//
-// export class MapContainer extends Component {
-//
-//
-//
-//     render() {
-//         return (
-//             <Map containerStyle={containerStyle} google={this.props.google}
-//                  initialCenter={{
-//                      lat: 40.854885,
-//                      lng: -88.081807
-//                  }}
-//                  zoom={14}>
-//
-//
-//                 <Marker
-//                     name={'Dolores park'}
-//                     position={{lat: 37.759703, lng: -122.428093}} />
-//                 <Marker />
-//
-//                 {/*<Marker onClick={this.onMarkerClick}*/}
-//                 {/*        name={'Current location'} />*/}
-//
-//                 {/*<InfoWindow onClose={this.onInfoWindowClose}>*/}
-//                 {/*    <div>*/}
-//                 {/*        <h1>{this.state.selectedPlace.name}</h1>*/}
-//                 {/*    </div>*/}
-//                 {/*</InfoWindow>*/}
-//             </Map>
-//         );
-//     }
-// }
-
-// let api_key = 'AIzaSyBSy4OLNtk0u3zPO2s864I2_Gv4Ni1WeVw';
-// export default GoogleApiWrapper({
-//     apiKey: (api_key)
-// })(MapContainer)

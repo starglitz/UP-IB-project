@@ -98,6 +98,7 @@ public interface AppointmentApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> updateAppointment(@Valid @RequestBody AppointmentDto appointment, @PathVariable("id") Long id);
 
+
     @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     ResponseEntity<Appointment> deleteAppointment(@PathVariable("id") Long id);
