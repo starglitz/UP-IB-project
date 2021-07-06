@@ -1,32 +1,23 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import MUIDataTable from "mui-datatables";
+import {AppointmentService} from "../services/AppointmentService";
 import {Typography} from "@material-ui/core";
-import {useHistory} from "react-router-dom";
-import {AppointmentService} from "../../services/AppointmentService";
-function AppointmentTable() {
+import MUIDataTable from "mui-datatables";
 
+function PatientAppointmentHistory() {
 
     const [requests, setRequests] = useState([])
-    const [hasError, setError] = useState(false)
-    const history = useHistory();
 
     useEffect(() => {
         fetchData()
 
     },[])
 
-    const {id} = useParams();
-
-    // async function fetchData() {
-    //     const res = await fetch('http://localhost:8080/clinicAppointments/' + id);
-    //     return res.json()
-    // }
 
 
     async function fetchData() {
         try {
-            const response = await AppointmentService.getFreeByClinicId(id);
+            const response = await AppointmentService.getPatientAppointmentsHistory();
             setRequests(response.data)
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
@@ -34,12 +25,6 @@ function AppointmentTable() {
     }
 
 
-    const clickHandler = (e) => {
-        const id = e[0];
-        history.push("/booking/" + id)
-    }
-
-    console.log(requests)
 
 
     const columns = [
@@ -88,11 +73,10 @@ function AppointmentTable() {
                 sort: false,
             }
         }
-        ]
+    ]
 
     const options = {
         selectableRows: 'none',
-        onRowClick: clickHandler,
         viewColumns: false
 
     };
@@ -101,7 +85,7 @@ function AppointmentTable() {
         <>
             <div id="mojaTabela">
                 <MUIDataTable
-                    title={"Appointment List"}
+                    title={"Appointment History List"}
                     data={requests}
                     columns={columns}
                     options={options}
@@ -111,4 +95,4 @@ function AppointmentTable() {
     );
 }
 
-export default AppointmentTable;
+export default PatientAppointmentHistory;

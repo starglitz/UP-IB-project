@@ -33,6 +33,7 @@ import {AuthenticationService} from "./services/AuthenticationService";
 import LinkNotValid from "./layouts/LinkNotValid";
 import PatientAppointments from "./components/tables/PatientAppointments";
 import BussinesReports from "./layouts/BussinesReports";
+import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
 
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
 
@@ -235,6 +236,12 @@ function App() {
                     path="/businessReports"
                     component={BussinesReports}
                     roles={['CLINIC_ADMIN']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/appointmentHistory"
+                    component={PatientAppointmentHistory}
+                    roles={['PATIENT']}
                 />
             </Switch>
         </Router>

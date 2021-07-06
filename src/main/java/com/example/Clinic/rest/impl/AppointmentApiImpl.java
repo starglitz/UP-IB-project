@@ -139,6 +139,14 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
+    public ResponseEntity<Appointment> getPatientAppointmentsHistory(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+
+        List<AppointmentDto> appointments = appointmentToDto.convertList(appointmentService.findByPatientFinished(user.getId()));
+        return new ResponseEntity(appointments, HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Appointment> addAppointment(@Valid @RequestBody AppointmentDto appointmentDto) {
         System.out.println("!!!!");
         System.out.println(appointmentDto);
