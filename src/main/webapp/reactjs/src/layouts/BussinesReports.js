@@ -6,6 +6,13 @@ import Box from '@material-ui/core/Box';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import Typography from '@material-ui/core/Typography';
+import DoctorsTable from "../components/businessReports/doctorsTable";
+import {render} from "@testing-library/react";
+import Chart from "../components/businessReports/chart";
+import Charts from "../components/businessReports/chart";
+import ChartWeeks from "../components/businessReports/chartWeeks";
+import IncomeComponent from "../components/businessReports/incomeComponent";
+import ChartDays from "../components/businessReports/chartDays";
 
 
 function BussinesReports() {
@@ -16,24 +23,26 @@ function BussinesReports() {
         clinic_id: 0,
         name: '',
         description: '',
-        rating: '',
+        rating: 0,
         priceList: [],
         addressName:'',
         lat:'',
         lng:''
     });
-
+    const [clinicId, setClinicId] = useState(0)
+    const [loaded, setLoaded] = useState(false)
 
     useEffect(() => {
         fetchData()
 
-    }, []);
+    }, [loaded]);
 
     async function fetchData() {
         try {
             const response = await ClinicService.getByLoggedInAdmin();
             setClinic(response.data)
-            console.log(response.data)
+            setClinicId(clinic.clinic_id)
+            setLoaded(true)
 
         } catch (error) {
             console.error(`Error loading clinic !: ${error}`);
@@ -41,7 +50,7 @@ function BussinesReports() {
     }
 
 
-            return (
+    return (
         <>
             <div className="hospitalReports-container">
 
@@ -62,7 +71,15 @@ function BussinesReports() {
                 </ul>
 
 
+                <DoctorsTable clinic_id={clinicId}/>
+
+                <Chart clinic_id={clinicId}/>
+
+                <ChartWeeks clinic_id={clinicId}/>
+                <IncomeComponent clinic_id={clinicId}/>
             </div>
+
+
         </>
     );
 }

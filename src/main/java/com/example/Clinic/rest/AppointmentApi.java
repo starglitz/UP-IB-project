@@ -31,6 +31,27 @@ public interface AppointmentApi {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllAppointments();
 
+
+    @PermitAll
+    @GetMapping(value = "/count/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getNumberByMonths(@PathVariable("id") Long id);
+
+    @PermitAll
+    @GetMapping(value = "/count/days/{id}/{month}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getDailyNumberByMonths(@PathVariable("id") Long id,@PathVariable("month") String month);
+
+    @PermitAll
+    @GetMapping(value = "/count/weeks/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getNumberByWeeks(@PathVariable("id") Long id);
+
+    @PermitAll
+    @GetMapping(value = "/income/{id}/{dateFrom}/{dateTo}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getIncomeBetweenDates(@PathVariable("id") Long id, @PathVariable("dateFrom") @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                 LocalDate dateFrom,
+                                         @PathVariable("dateTo") @DateTimeFormat(pattern = "yyyy-MM-dd")
+                                                 LocalDate dateTo);
+
     @PermitAll
     @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
