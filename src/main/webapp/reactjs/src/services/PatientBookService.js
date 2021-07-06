@@ -6,7 +6,8 @@ export const PatientBookService = {
     update,
     create,
     updateIllnesses,
-    updateDrugs
+    updateDrugs,
+    getLoggedPatient
 };
 
 
@@ -16,6 +17,10 @@ async function get(id) {
 
 async function getByPatient(id) {
     return await AxiosClient.get(`https://localhost:8080/patientBooks/patient/${id}`);
+}
+
+async function getLoggedPatient() {
+    return await AxiosClient.get(`https://localhost:8080/patientBooks/patient/healthCard`);
 }
 
 async function update(id, patient_book) {

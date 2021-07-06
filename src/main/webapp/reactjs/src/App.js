@@ -36,6 +36,7 @@ import BussinesReports from "./layouts/BussinesReports";
 import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
 
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+import PatientBook from "./layouts/PatientBook";
 
 
 
@@ -241,6 +242,12 @@ function App() {
                     exact
                     path="/appointmentHistory"
                     component={PatientAppointmentHistory}
+                    roles={['PATIENT']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/patientBook"
+                    component={PatientBook}
                     roles={['PATIENT']}
                 />
             </Switch>
