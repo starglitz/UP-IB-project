@@ -31,6 +31,7 @@ const navbar = () => {
     const doctorPatients = <Nav.Link key={key++}  href="patients">Patient</Nav.Link>
     const rate = <Nav.Link key={key++}  href="rate">Rate doctors & clinics</Nav.Link>
     const logoutLink = <Nav.Link key={key++} onClick={logoutClick}  href="">Logout</Nav.Link>
+    const bussinesReport = <Nav.Link key={key++}  href="businessReports">Business Reports</Nav.Link>
 
 
     let patient = [];
@@ -61,6 +62,7 @@ const navbar = () => {
     clinicAdmin.push(staffRegister)
     clinicAdmin.push(chandePassword)
     clinicAdmin.push(blockUsers)
+    clinicAdmin.push(bussinesReport)
 
     let clinicCentreAdmin = [];
     clinicCentreAdmin.push(logoutLink)

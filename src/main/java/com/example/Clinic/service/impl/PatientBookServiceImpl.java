@@ -1,10 +1,16 @@
 package com.example.Clinic.service.impl;
 
 
+import com.example.Clinic.model.Appointment;
+import com.example.Clinic.model.Doctor;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
+import com.example.Clinic.repository.AppointmentRepository;
+import com.example.Clinic.repository.DoctorRepository;
 import com.example.Clinic.repository.PatientBookRepository;
 import com.example.Clinic.repository.PatientRepository;
+import com.example.Clinic.rest.support.dto.DrugChangeDto;
+import com.example.Clinic.rest.support.dto.IllnessChangeDto;
 import com.example.Clinic.security.xml.AsymmetricKeyDecryption;
 import com.example.Clinic.security.xml.AsymmetricKeyEncryption;
 import com.example.Clinic.service.PatientBookService;
@@ -14,10 +20,18 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PatientBookServiceImpl implements PatientBookService {
+
+    @Autowired
+    private AppointmentRepository appointmentRepository;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
 
     @Autowired
     private PatientBookRepository patientBookRepository;
@@ -93,6 +107,47 @@ public class PatientBookServiceImpl implements PatientBookService {
             patientBookRepository.save(decipheredBook);
         }
         return valid;
+    }
+
+    @Override
+    public boolean updatePatientBookIllness(PatientBook patientBook, IllnessChangeDto dto) throws IOException, SAXException, ParserConfigurationException {
+        boolean valid = checkValid(patientBook);
+        if (valid) {
+            Doctor doctor = doctorRepository.getOne(dto.getDoctorId());
+            Appointment appointment = appointmentRepository.findAppointmentByDoctorAndConclusion(doctor, dto.getOldIllness());
+            System.out.println(appointment);
+            if (appointment != null) {  // This will only be true if the doctor who initially gave the conclusion wants to edit the same one
+                List<String> illnesses = patientBook.getIllnessHistory();
+                for (int i = 0; i < illnesses.size(); i++){
+                    if (illnesses.get(i).equals(dto.getOldIllness()))
+                        illnesses.set(i, illnesses.get(i).replace(dto.getOldIllness(), dto.getNewIllness()));
+                }
+
+                appointment.setConclusion(dto.getNewIllness());
+                appointmentRepository.save(appointment);
+
+                patientBook.setIllnessHistory(illnesses);
+                updatePatientBook(patientBook, patientBook.getId());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updatePatientBookDrugs(PatientBook patientBook, DrugChangeDto dto) throws IOException, SAXException, ParserConfigurationException {
+        boolean valid = checkValid(patientBook);
+        if (valid) {
+            List<String> drugs = patientBook.getDrugs();
+            for (int i = 0; i < drugs.size(); i++){
+                if (drugs.get(i).equals(dto.getOldDrug()))
+                    drugs.set(i, drugs.get(i).replace(dto.getOldDrug(), dto.getNewDrug()));
+            }
+            patientBook.setDrugs(drugs);
+            updatePatientBook(patientBook, patientBook.getId());
+            return true;
+        }
+        return false;
     }
 
     private boolean checkValid(PatientBook patientBook) {

@@ -57,6 +57,26 @@ public class AppointmentApiImpl implements AppointmentApi {
     }
 
     @Override
+    public ResponseEntity getNumberByMonths(Long id) {
+        return new ResponseEntity(appointmentService.findNumberByMonts(id), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getDailyNumberByMonths(Long id,String month) {
+        return new ResponseEntity(appointmentService.findNumberByDaysInMonth(id,month), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getNumberByWeeks(Long id) {
+        return new ResponseEntity(appointmentService.findNumberByWeeks(id), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getIncomeBetweenDates(Long id, LocalDate dateFrom, LocalDate dateTo) {
+        return new ResponseEntity(appointmentService.findIncomeBetweenDates(id, dateFrom, dateTo), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity getAppointment(Long id) {
         Appointment appointment = appointmentService.findById(id);
         if(appointment != null) {

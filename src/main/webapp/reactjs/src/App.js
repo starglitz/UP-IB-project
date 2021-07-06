@@ -32,7 +32,10 @@ import PasswordlessWithLink from "./services/PasswordlessWithLink";
 import {AuthenticationService} from "./services/AuthenticationService";
 import LinkNotValid from "./layouts/LinkNotValid";
 import PatientAppointments from "./components/tables/PatientAppointments";
+import BussinesReports from "./layouts/BussinesReports";
+
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+
 
 
 function App() {
@@ -225,6 +228,13 @@ function App() {
                     path="/rate"
                     component={RateTables}
                     roles={['PATIENT']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/businessReports"
+                    component={BussinesReports}
+                    roles={['CLINIC_ADMIN']}
                 />
             </Switch>
         </Router>
