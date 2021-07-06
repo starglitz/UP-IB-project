@@ -3,9 +3,14 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow}
 import Button from "@material-ui/core/Button";
 import {classes} from "istanbul-lib-coverage";
 import {RecipeService} from "../../services/RecipeService";
+import {TokenService} from "../../services/TokenService";
+import {UserService} from "../../services/UserService";
+import {NurseService} from "../../services/NurseService";
+import {useLocation} from "react-router-dom";
 
 export const RecipeTable = () => {
 
+    const location = useLocation();
     const [requests, setRequests] = useState([])
     const [hasError, setError] = useState(false)
 
@@ -15,7 +20,9 @@ export const RecipeTable = () => {
 
     async function fetchData() {
         try {
-            const response = await RecipeService.getNotApproved()
+            const decoded_token = TokenService.decodeToken(TokenService.getToken().sub());
+            const user = await UserService.getByEmail(decoded_token.sub)
+            const response = await RecipeService.getNotApproved(user.data.id)
             setRequests(response.data)
         } catch (error) {
             console.error(`Error loading recipes !: ${error}`);
