@@ -36,6 +36,8 @@ import BussinesReports from "./layouts/BussinesReports";
 import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
 
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+import {Calendar} from "./components/calendars/Calendar";
+import DoctorCalendar from "./layouts/DoctorCalendar";
 
 
 
@@ -81,6 +83,12 @@ function App() {
                     path="/recipes"
                     component={RecipeLayout}
                     roles={['NURSE']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/calendar"
+                    component={DoctorCalendar}
+                    roles={['DOCTOR']}
                 />
                 {/*<Route path="/addAppointment" exact component={NewAppointmentLayout}/>*/}
                 <PrivateRoute
