@@ -469,3 +469,29 @@ register-form {
 .navlink {
     color:white;
 }
+
+.before {
+    text-align: center;
+    color: wheat;
+    background-color: #353A40;
+    margin: 30px;
+    padding:30px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.hospitalLocation {
+
+    color: wheat;
+    background-color: #353A40;
+    margin: 30px;
+    padding:30px;
+    display: flex;
+    margin-top:0;
+    padding-top:10px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
