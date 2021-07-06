@@ -1,6 +1,8 @@
 package com.example.Clinic.service;
 
 import com.example.Clinic.model.Appointment;
+import com.example.Clinic.model.Doctor;
+import com.example.Clinic.model.Nurse;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,6 +19,8 @@ public interface AppointmentService {
     Appointment delete(Appointment appointment);
     Appointment findById(Long id);
     List<Appointment> findAll();
+    List<Appointment> findByDoctor(Doctor doctor);
+    List<Appointment> findByNurse(Nurse nurse);
     List<Appointment> findByClinicId(Long clinic_id);
     List<Appointment> findFreeByClinicId(Long clinic_id);
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);

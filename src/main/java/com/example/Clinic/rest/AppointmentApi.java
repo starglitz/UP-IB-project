@@ -89,6 +89,10 @@ public interface AppointmentApi {
     @GetMapping(value = "/patient/finished/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<Appointment> getPatientFinishedAppointments(@PathVariable long id);
 
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @GetMapping(value = "/appointmentHistory", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getPatientAppointmentsHistory(Authentication authentication);
+
     @PreAuthorize("hasAnyAuthority('PATIENT', 'DOCTOR', 'CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN')")
     @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE},  produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -102,5 +106,13 @@ public interface AppointmentApi {
     @PostMapping(value = "/booking/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity bookAppointment(Authentication authentication, @PathVariable long id);
+
+    @PreAuthorize("hasAuthority('NURSE')")
+    @GetMapping(value = "/nurse/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getNurseAppointments(@PathVariable long id);
+
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @GetMapping(value = "/doctor/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getDoctorAppointments(@PathVariable long id);
 
 }

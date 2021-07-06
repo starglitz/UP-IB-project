@@ -21,7 +21,7 @@ export function Calendar() {
 
     async function fetchData() {
         try {
-            const response = await AppointmentService.getAll();
+            const response = await AppointmentService.getNurseAppointments(333);
             setAppointments(response.data)
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
@@ -40,7 +40,7 @@ export function Calendar() {
             {
                 Id: i,
                 Subject: "Nurse: " + appointment.nurse.user.name + "<br> Doctor: " + appointment.doctor.user.name,
-                Description: "Price: " + appointment.price,
+                Description: "Price: " + appointment.price + " ---- Status: " + appointment.status,
                 StartTime: new Date(datePieces[0], datePieces[1] - 1, datePieces[2], startPieces[0], startPieces[1]),
                 EndTime: new Date(datePieces[0], datePieces[1] - 1, datePieces[2], endPieces[0], endPieces[1]),
                 IsAllDay: false
@@ -50,6 +50,7 @@ export function Calendar() {
         i++
     })
 
+    console.log(appointments)
     console.log(data)
 
     return (

@@ -12,11 +12,14 @@ export const AppointmentService = {
     deleteAppointment,
     postBookingAppointment,
     getPatientAppointments,
+    getNurseAppointments,
+    getDoctorAppointments,
     countAppointmentsByMonths,
     countAppointmentsByWeeks,
     getIncomeBetweenDates,
     countAppointmentsByDays,
-    getFinishedPatientAppointments
+    getFinishedPatientAppointments,
+    getPatientAppointmentsHistory
 };
 
 
@@ -32,8 +35,20 @@ async function getPatientAppointments(id) {
     return await AxiosClient.get(`https://localhost:8080/appointments/patient/${id}`);
 }
 
+async function getNurseAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/nurse/${id}`);
+}
+
+async function getDoctorAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/doctor/${id}`);
+}
+
 async function getFinishedPatientAppointments(id) {
     return await AxiosClient.get(`https://localhost:8080/appointments/patient/finished/${id}`);
+}
+
+async function getPatientAppointmentsHistory() {
+    return await AxiosClient.get(`https://localhost:8080/appointments/appointmentHistory`);
 }
 
 async function update(id, appointment) {
@@ -82,5 +97,7 @@ async function countAppointmentsByDays(id,month) {
 async function getIncomeBetweenDates(id, dateFrom, dateTo) {
     return await AxiosClient.get(`https://localhost:8080/appointments/income/${id}/${dateFrom}/${dateTo}`);
 }
+
+
 
 
