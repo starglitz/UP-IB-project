@@ -12,6 +12,8 @@ export const AppointmentService = {
     deleteAppointment,
     postBookingAppointment,
     getPatientAppointments,
+    getNurseAppointments,
+    getDoctorAppointments,
     countAppointmentsByMonths,
     countAppointmentsByWeeks,
     getIncomeBetweenDates,
@@ -31,6 +33,14 @@ async function getAll() {
 
 async function getPatientAppointments(id) {
     return await AxiosClient.get(`https://localhost:8080/appointments/patient/${id}`);
+}
+
+async function getNurseAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/nurse/${id}`);
+}
+
+async function getDoctorAppointments(id) {
+    return await AxiosClient.get(`https://localhost:8080/appointments/doctor/${id}`);
 }
 
 async function getFinishedPatientAppointments(id) {
