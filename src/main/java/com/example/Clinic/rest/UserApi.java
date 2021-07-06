@@ -22,10 +22,15 @@ public interface UserApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UserRegisterDto> update(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
 
-    @PermitAll
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
     @GetMapping(value = "/profile",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
+
+    @PreAuthorize("hasAnyAuthority('NURSE', 'DOCTOR')")
+    @GetMapping(value = "email/{email}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getLoggedInUserId(@PathVariable("email") String email);
 
     @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})

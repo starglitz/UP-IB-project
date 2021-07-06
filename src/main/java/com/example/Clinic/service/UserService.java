@@ -27,5 +27,5 @@ public interface UserService {
 
     User setFirstTime(User user);
 
-
+    User getByEmail(String email);
 }

@@ -25,6 +25,11 @@ public interface RecipeApi {
     ResponseEntity getAllRecipes();
 
     @PreAuthorize("hasAuthority('NURSE')")
+    @GetMapping(value = "/nurse/{id}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getNurseRecipes(@PathVariable("id") Long id);
+
+    @PreAuthorize("hasAuthority('NURSE')")
     @GetMapping(value = "/notApproved",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getNotApprovedRecipes();

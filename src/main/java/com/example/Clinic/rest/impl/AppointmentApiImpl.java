@@ -217,6 +217,11 @@ public class AppointmentApiImpl implements AppointmentApi {
 
     @Override
     public ResponseEntity<Appointment> getDoctorAppointments(long id) {
-        return null;
+        Doctor doctor = doctorService.findById(id);
+        if (doctor != null) {
+            List<AppointmentDto> appointments = appointmentToDto.convertList(appointmentService.findByDoctor(doctor));
+            return new ResponseEntity(appointments, HttpStatus.OK);
+        }
+        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
     }
 }

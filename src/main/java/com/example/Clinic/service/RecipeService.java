@@ -1,5 +1,6 @@
 package com.example.Clinic.service;
 
+import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Recipe;
 import org.springframework.stereotype.Service;
 
@@ -14,4 +15,5 @@ public interface RecipeService {
     List<Recipe> getNotApprovedRecipes();
     boolean updateRecipe(Recipe recipe, Long recipe_id);
     Optional<Recipe> findOne(Long id);
+    List<Recipe> getNurseRecipes(Nurse nurse);
 }

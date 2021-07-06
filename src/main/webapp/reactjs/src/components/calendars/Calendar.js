@@ -2,6 +2,10 @@ import * as React from 'react';
 import { ScheduleComponent, Day, Week, Month, Year, Inject, ViewsDirective, ViewDirective } from '@syncfusion/ej2-react-schedule';
 import {useEffect, useState} from "react";
 import {AppointmentService} from "../../services/AppointmentService";
+import {TokenService} from "../../services/TokenService";
+import {UserService} from "../../services/UserService";
+import {RecipeService} from "../../services/RecipeService";
+import App from "../../App";
 
 export function Calendar() {
 
@@ -9,20 +13,30 @@ export function Calendar() {
     const [hasError, setError] = useState(false)
 
     useEffect(() => {
-        fetchData()
-            // .then(res => setAppointments(res))
-            // .catch(err => setError(err));
+        fetchData().catch(err => setError(err));
     },[])
-
-    // async function fetchData() {
-    //     const res = await fetch('http://localhost:8080/allAppointments');
-    //     return res.json()
-    // }
 
     async function fetchData() {
         try {
-            const response = await AppointmentService.getNurseAppointments(333);
-            setAppointments(response.data)
+
+            const decoded_token = TokenService.decodeToken(TokenService.getToken().sub());
+            const user = await UserService.getByEmail(decoded_token.sub)
+
+            console.log(user.data)
+            console.log(decoded_token.roles)
+            console.log(decoded_token.roles)
+            console.log(decoded_token.roles)
+
+            if (decoded_token.roles === "[NURSE]") {
+                const response = await AppointmentService.getNurseAppointments(user.data.id)
+                console.log(response)
+                setAppointments(response.data)
+            }
+            if (decoded_token.roles === "[DOCTOR]") {
+                const response = await AppointmentService.getDoctorAppointments(user.data.id)
+                console.log(response)
+                setAppointments(response.data)
+            }
         } catch (error) {
             console.error(`Error loading appointments !: ${error}`);
         }
@@ -54,13 +68,15 @@ export function Calendar() {
     console.log(data)
 
     return (
-        <ScheduleComponent height='550px' eventSettings={{ dataSource: data }}>
-            <ViewsDirective>
-                <ViewDirective option='Week'/>
-                <ViewDirective option='Month'/>
-                <ViewDirective option='Year'/>
-            </ViewsDirective>
-            <Inject services={[Week, Month, Year]}/>
-        </ScheduleComponent>
+        <div>
+            <ScheduleComponent height='550px' eventSettings={{ dataSource: data }}>
+                <ViewsDirective>
+                    <ViewDirective option='Week'/>
+                    <ViewDirective option='Month'/>
+                    <ViewDirective option='Year'/>
+                </ViewsDirective>
+                <Inject services={[Week, Month, Year]}/>
+            </ScheduleComponent>
+        </div>
     )
 }

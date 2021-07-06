@@ -34,14 +34,11 @@ import LinkNotValid from "./layouts/LinkNotValid";
 import PatientAppointments from "./components/tables/PatientAppointments";
 import BussinesReports from "./layouts/BussinesReports";
 import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
-
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+import DoctorCalendar from "./layouts/DoctorCalendar";
 import PatientBook from "./layouts/PatientBook";
 
-
-
 function App() {
-    // TokenService.removeToken()
   return (
     <div className="App">
       <Navbar/>
@@ -82,6 +79,12 @@ function App() {
                     path="/recipes"
                     component={RecipeLayout}
                     roles={['NURSE']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/calendar"
+                    component={DoctorCalendar}
+                    roles={['DOCTOR']}
                 />
                 {/*<Route path="/addAppointment" exact component={NewAppointmentLayout}/>*/}
                 <PrivateRoute

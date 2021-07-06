@@ -11,8 +11,8 @@ async function getAll() {
     return await AxiosClient.get(`https://localhost:8080/recipes`);
 }
 
-async function getNotApproved() {
-    return await AxiosClient.get(`https://localhost:8080/recipes/notApproved`);
+async function getNotApproved(id) {
+    return await AxiosClient.get(`https://localhost:8080/recipes/nurse/${id}`);
 }
 
 async function approve(recipe_id, recipe) {

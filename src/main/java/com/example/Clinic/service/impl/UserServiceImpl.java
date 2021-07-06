@@ -147,4 +147,10 @@ public class UserServiceImpl  implements UserService {
         userRepository.save(user);
         return user;
     }
+
+    @Override
+    public User getByEmail(String email) {
+        Optional<User> user = userRepository.findFirstByEmail(email);
+        return user.orElse(null);
+    }
 }

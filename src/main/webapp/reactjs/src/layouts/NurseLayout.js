@@ -8,7 +8,7 @@ const NurseLayout = () => {
 
     return (
         <>
-            <div >
+            <div className="content-box">
                 <Calendar />
                 <hr/>
                 <PatientTable />
