@@ -14,9 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.Month;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.*;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -143,11 +144,94 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
+    public HashMap<String, Integer> findNumberByMonts(Long id) {
+        List<Appointment> appointments = appointmentRepository.findPassedByClinicId(id);
+        HashMap<String, Integer> appointmentsByMonths = new HashMap<>();
+        appointmentsByMonths.put("JANUARY", 0);
+        appointmentsByMonths.put("FEBRUARY", 0);
+        appointmentsByMonths.put("MARCH", 0);
+        appointmentsByMonths.put("APRIL", 0);
+        appointmentsByMonths.put("MAY", 0);
+        appointmentsByMonths.put("JUNE", 0);
+        appointmentsByMonths.put("JULY", 0);
+        appointmentsByMonths.put("AUGUST", 0);
+        appointmentsByMonths.put("SEPTEMBER", 0);
+        appointmentsByMonths.put("OCTOBER", 0);
+        appointmentsByMonths.put("NOVEMBER", 0);
+        appointmentsByMonths.put("DECEMBER", 0);
+        for(Appointment a : appointments){
+            Month month = a.getDate().getMonth();
+            Integer count = appointmentsByMonths.get(month.toString());
+            appointmentsByMonths.put(month.toString(), count+1);
+        }
+
+        return appointmentsByMonths;
+    }
+
+    @Override
+    public HashMap<Integer, Integer> findNumberByWeeks(Long id) {
+        List<Appointment> appointments = appointmentRepository.findPassedByClinicId(id);
+        HashMap<Integer, Integer> appointmentsByWeeks = new HashMap<>();
+        for(int i = 1; i < 53;i++){
+            appointmentsByWeeks.put(i, 0);
+        }
+        for(Appointment a : appointments){
+            TemporalField woy = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+            int weekNumber = a.getDate().get(woy);
+            Integer count = appointmentsByWeeks.get(weekNumber);
+            appointmentsByWeeks.put(weekNumber, count+1);
+
+
+        }
+        return appointmentsByWeeks;
+    }
+
+    @Override
+    public HashMap<Integer, Integer> findNumberByDaysInMonth(Long id,String month) {
+        List<Appointment> appointments = appointmentRepository.countAppointmentsByMonth(month, id);
+        HashMap<Integer, Integer> appointmentsByWeeks = new HashMap<>();
+        if(month.equals("April") || month.equals("June") || month.equals("September") || month.equals("November")) {
+            for (int i = 1; i < 31; i++) {
+                appointmentsByWeeks.put(i, 0);
+            }
+        }
+        else if(month.equals("February")){
+            for (int i = 1; i < 29; i++) {
+                appointmentsByWeeks.put(i, 0);
+            }
+        }
+        else{
+            for (int i = 1; i < 32; i++) {
+                appointmentsByWeeks.put(i, 0);
+            }
+        }
+
+        for(Appointment a : appointments){
+            int day = a.getDate().getDayOfMonth();
+            Integer count = appointmentsByWeeks.get(day);
+            appointmentsByWeeks.put(day, count+1);
+
+        }
+
+        return appointmentsByWeeks;
+    }
+
+    @Override
+    public Integer findIncomeBetweenDates(Long id,LocalDate dateFrom, LocalDate dateTo) {
+        List<Appointment> appointments = appointmentRepository.findIncomeBetweenDates(id, dateFrom, dateTo);
+        Integer income = 0;
+        for(Appointment a : appointments){
+            income += a.getPrice();
+
+        }
+        return income;
+
     public List<Appointment> findByPatientFinished(long id) {
         Optional<Patient> patient = patientService.getPatientById(id);
         return patient.map(value ->
                 appointmentRepository.findAppointmentByPatientAndStatus(value, AppointmentStatus.PASSED))
                 .orElse(null);
+
     }
 
 

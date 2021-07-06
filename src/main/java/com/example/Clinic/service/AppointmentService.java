@@ -3,7 +3,9 @@ package com.example.Clinic.service;
 import com.example.Clinic.model.Appointment;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,5 +21,9 @@ public interface AppointmentService {
     List<Appointment> findFreeByClinicId(Long clinic_id);
     List<Appointment> findFreeByDoctorAndDate(Long doctor_id, LocalDate date);
     List<Appointment> findByPatient(long id);
+    HashMap<String, Integer> findNumberByMonts(Long id);
+    HashMap<Integer, Integer> findNumberByWeeks(Long id);
+    HashMap<Integer, Integer> findNumberByDaysInMonth(Long id,String month);
+    Integer findIncomeBetweenDates(Long id,LocalDate dateFrom, LocalDate dateTo);
     List<Appointment> findByPatientFinished(long id);
 }
