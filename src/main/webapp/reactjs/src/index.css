@@ -1,6 +1,6 @@
 .content-box {
     width: 100%;
-    padding: 20px 5% 20px 5%;
+    padding: 20px 1% 20px 1%;
 }
 
 .react-calendar {
@@ -38,8 +38,8 @@ register-form {
 }
 
 .form-size {
-    margin: 1% 25%;
-    padding: 2% 8% 2% 8%;
+    margin: 1% 20%;
+    padding: 2% 4% 2% 4%;
 }
 
 .submit-register {
@@ -208,6 +208,93 @@ register-form {
     text-decoration: none;
     color: #000;
 }
+/*-----------------------Clinic reports-----------------------------------------*/
+.hospitalReports-container h1{
+    text-align:center;
+    margin:20px;
+}
+
+
+.hospitalReports-container
+{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.hospitalReports-container li{
+    background: #e5e5e5;
+    margin: 5% auto;
+    padding: 20px;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.hospitalReports-container img{
+    margin: auto;
+    display: block;
+    width: 300px;
+}
+
+.rating-row
+{
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+}
+
+.rating-row p{
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+/*------------------------------------------------------*/
+
+.income-container{
+    background: #f8f8f8;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.income-container .income-dataPickers{
+    display: block;
+    text-align: center;
+
+}
+
+.income-container .income-dataPickers .MuiTextField-root{
+    margin: 10px;
+
+}
+
+.income-container .MuiFormControl-root .MuiInputLabel-formControl{
+    position: initial;
+    transform-origin: initial;
+    margin-top: 10px;
+}
+
+.income-field{
+    display: block;
+    text-align: center;
+    margin: 10px;
+}
+.income-field .MuiInputBase-input.Mui-disabled{
+    text-align: center;
+}
+.income-container .income-tF-button button{
+    display: block;
+    margin: auto;
+}
+
+
 
 .link-appointments a:link{
     text-decoration: none;
@@ -352,4 +439,92 @@ register-form {
     padding: 2% 8% 2% 8%;
     border-radius: 25px;
     border: 2px solid #73AD21;
+}
+
+.rating-div {
+    margin: 0 auto;
+    width: 70%;
+}
+
+.text-align {
+    text-align: center;
+    margin: 30px;
+    margin-top:50px;
+}
+
+.flex-container {
+    display: flex;
+    margin: 0 auto;
+}
+
+.flex-child {
+    flex: 1;
+    margin:15px
+}
+
+.centered {
+    margin: 0 auto;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    outline: none;
+}
+
+nav a:hover{
+    text-decoration: none;
+    color: navajowhite;
+}
+
+.before {
+    text-align: center;
+    color: wheat;
+    background-color: #353A40;
+    margin: 30px;
+    padding:30px;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.hospitalLocation {
+
+    color: wheat;
+    background-color: #353A40;
+    margin: 30px;
+    padding:30px;
+    display: flex;
+    margin-top:0;
+    padding-top:10px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+}
+
+.healthCard{
+    display: block;
+
+}
+
+.healthCard #illnessTable{
+    width: 700px;
+    margin-left: 10%;
+    margin-top: 30px;
+    display: inline-block;
+
+}
+
+.healthCard #drugsTable{
+    width: 700px;
+    margin-left: 5%;
+    margin-top: 30px;
+    display: inline-block;
+
+
+}
+
+.healthCard h1{
+    text-align: center;
 }

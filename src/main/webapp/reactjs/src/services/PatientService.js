@@ -4,7 +4,8 @@ export const PatientService = {
     get,
     getAll,
     update,
-    create
+    create,
+    getByCurrentDoctor
 };
 
 
@@ -22,4 +23,8 @@ async function update(id, patient) {
 
 async function create(patient) {
     return await AxiosClient.post("https://localhost:8080/patients", patient);
+}
+
+async function getByCurrentDoctor() {
+    return await AxiosClient.get(`https://localhost:8080/patients/doctor`);
 }

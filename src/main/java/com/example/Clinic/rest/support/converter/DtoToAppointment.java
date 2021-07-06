@@ -50,10 +50,12 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
             appointment.setPatient(dtoToPatient.convert(dto.getPatient()));
         }
 
-        Nurse nurse = nurseService.findById(dto.getNurse().getId()).orElse(null);
+        System.out.println(dto);
+
+        Nurse nurse = nurseService.findById(dto.getNurse().getId());
         appointment.setNurse(nurse);
 
-        Doctor doctor = doctorService.findById(dto.getDoctor().getId()).orElse(null);
+        Doctor doctor = doctorService.findById(dto.getDoctor().getId());
         appointment.setDoctor(doctor);
 
         appointment.setAppointment_id(dto.getAppointment_id());
@@ -63,7 +65,7 @@ public class DtoToAppointment implements Converter<AppointmentDto, Appointment> 
         appointment.setEnd(dto.getEnd());
         appointment.setStatus(dto.getStatus());
         appointment.setPrice(dto.getPrice());
-
+        appointment.setConclusion(dto.getConclusion());
 
 
         return appointment;

@@ -5,16 +5,19 @@ export const DoctorService = {
     getAll,
     getByClinicAndDate,
     getByClinicId,
-    add
+    add,
+    getNotRatedByPatient,
+    rate,
+    getByAdminsClinic
 };
 
 
 async function get(id) {
-    return await AxiosClient.get(`httpss://localhost:8080/doctors/${id}`);
+    return await AxiosClient.get(`https://localhost:8080/doctors/${id}`);
 }
 
 async function getAll() {
-    return await AxiosClient.get(`httpss://localhost:8080/doctors`);
+    return await AxiosClient.get(`https://localhost:8080/doctors`);
 }
 
 async function getByClinicAndDate(clinic_id, date) {
@@ -27,4 +30,16 @@ async function getByClinicId(id) {
 
 async function add(doctor) {
     return await AxiosClient.post("https://localhost:8080/doctors", doctor);
+}
+
+async function getNotRatedByPatient() {
+    return await AxiosClient.get(`https://localhost:8080/doctors/not_rated`);
+}
+
+async function rate(id, rating) {
+    return await AxiosClient.put(`https://localhost:8080/doctors/rate/${id}`, rating);
+}
+
+async function getByAdminsClinic() {
+    return await AxiosClient.get(`https://localhost:8080/doctors/admin/clinic`);
 }

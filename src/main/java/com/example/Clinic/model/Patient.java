@@ -25,6 +25,8 @@ public class Patient {
     private boolean enabled = true;
     private boolean approved = false;
 
+    private boolean visitedMail = false;
+
     @Nullable
     private long patientBookId;
 

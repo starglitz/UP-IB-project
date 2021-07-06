@@ -43,7 +43,7 @@ public class PatientBook {
     List<String> drugs = new ArrayList<>();
 
 
-    private String xml = toXML();
+    private String xml;
 
     public String toXML() {
         String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";

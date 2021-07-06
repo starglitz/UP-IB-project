@@ -18,16 +18,23 @@ import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfil
 import ClinicAppointments from "./components/appointments/appointmentTable";
 import DoctorTable from "./components/clinicDoctors/doctorTable";
 import BookingPage from "./components/booking/bookingPage";
-import PatientProfile from "./profile/PatientProfile";
-import PatientsTable from "./components/patients/PatientsTable";
+import DoctorPatientsTable from "./components/patients/DoctorPatientsTable";
 import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
 import BlockUsers from "./layouts/BlockUsers";
 import UpdateStaff from "./layouts/UpdateStaff";
 import NewClinicAdmin from "./components/clinicCentreAdmin/NewClinicAdmin";
-import ClinicCentreAdminLayout from "./layouts/ClinicCentreAdminLayout";
 import NewClinic from "./components/clinics/NewClinic";
-
+import PasswordLess from "./services/PasswordLessError";
+import RateTables from "./components/ratings/RateTables";
+import PasswordlessWithLink from "./services/PasswordlessWithLink";
+import LinkNotValid from "./layouts/LinkNotValid";
+import PatientAppointments from "./components/tables/PatientAppointments";
+import BussinesReports from "./layouts/BussinesReports";
+import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
+import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+import DoctorCalendar from "./layouts/DoctorCalendar";
+import PatientBook from "./layouts/PatientBook";
 
 function App() {
   return (
@@ -38,6 +45,9 @@ function App() {
 
                 <Route path="/register" exact component={RegisterLayout}/>
                 <Route path="/login" exact component={LoginLayout}/>
+                <Route path="/magic/" component={PasswordLess}/>
+                <Route path="/magicWithLink/" component={PasswordlessWithLink}/>
+                <Route path="/linkExpired" component={LinkNotValid}/>
 
                 {/*<Route path="/nursePage" exact component={NurseLayout}/>*/}
                 <PrivateRoute
@@ -67,6 +77,12 @@ function App() {
                     path="/recipes"
                     component={RecipeLayout}
                     roles={['NURSE']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/calendar"
+                    component={DoctorCalendar}
+                    roles={['DOCTOR']}
                 />
                 {/*<Route path="/addAppointment" exact component={NewAppointmentLayout}/>*/}
                 <PrivateRoute
@@ -136,18 +152,35 @@ function App() {
                 {/*<Route path="/appointmentReview" exact component={AppointmentReview}/>*/}
                 <PrivateRoute
                     exact
-                    path="/appointmentReview"
+                    path="/patient/appointment/review"
                     component={AppointmentReview}
                     roles={['DOCTOR']}
                 />
 
-                {/*<Route path="/patients" exact component={PatientsTable}/>*/}
+
+                {/*<Route path="/appointmentReview" exact component={AppointmentReview}/>*/}
+                <PrivateRoute
+                    exact
+                    path="/patient/appointments"
+                    component={PatientAppointments}
+                    roles={['DOCTOR']}
+                />
+
+                {/*<Route path="/patients" exact component={DoctorPatientsTable}/>*/}
                 <PrivateRoute
                     exact
                     path="/patients"
-                    component={PatientsTable}
+                    component={DoctorPatientsTable}
                     roles={['DOCTOR']}
                 />
+
+                <PrivateRoute
+                    exact
+                    path="/patient/history"
+                    component={PatientMedicalHistory}
+                    roles={['DOCTOR']}
+                />
+
                 {/*<Route path="/staffRegister" exact component={RegisterStaff}/>*/}
                 <PrivateRoute
                     exact
@@ -191,6 +224,32 @@ function App() {
                     path="/newClinicAdmin"
                     component={NewClinicAdmin}
                     roles={['CLINIC_CENTRE_ADMIN']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/rate"
+                    component={RateTables}
+                    roles={['PATIENT']}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/businessReports"
+                    component={BussinesReports}
+                    roles={['CLINIC_ADMIN']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/appointmentHistory"
+                    component={PatientAppointmentHistory}
+                    roles={['PATIENT']}
+                />
+                <PrivateRoute
+                    exact
+                    path="/patientBook"
+                    component={PatientBook}
+                    roles={['PATIENT']}
                 />
             </Switch>
         </Router>

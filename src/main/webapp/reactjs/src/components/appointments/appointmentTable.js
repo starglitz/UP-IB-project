@@ -59,7 +59,7 @@ function AppointmentTable() {
                 sort: true,
                 customBodyRender: (value, tableMeta, updateValue) => (
                     <Typography>
-                        {value.user.name}
+                        {value.user.name + " " + value.user.lastName}
                     </Typography>
                 )
             }

@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import ServicesTable from "../components/tables/ServicesTable";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import PatientsTable from "../components/patients/PatientsTable";
+import Location from "../components/Location";
 import {AppointmentService} from "../services/AppointmentService";
 import {ClinicService} from "../services/ClinicService";
 import {DoctorService} from "../services/DoctorService";
@@ -157,18 +157,18 @@ const ClinicProfile = () => {
     };
 
     async function sendDataDelete(appointment_id) {
-            try {
-                await AppointmentService.deleteAppointment(appointment_id)
-                setAppointments((appointments) => appointments.filter((appointment) => appointment.appointment_id !== appointment_id));
-            } catch (error) {
-                console.error(`Error ocurred while deleting appointment : ${error}`);
-            }
+        try {
+            await AppointmentService.deleteAppointment(appointment_id)
+            setAppointments((appointments) => appointments.filter((appointment) => appointment.appointment_id !== appointment_id));
+        } catch (error) {
+            console.error(`Error ocurred while deleting appointment : ${error}`);
+        }
     }
 
 
-     const handleEnableClick = () => {
+    const handleEnableClick = () => {
         setDisabled(!disabled);
-       // this.setState( {disabled: !this.state.disabled} )
+        // this.setState( {disabled: !this.state.disabled} )
         let saveBtn = document.getElementById('save-btn');
         if (saveBtn.style.display === "initial") {
             saveBtn.style.display = "none";
@@ -217,127 +217,141 @@ const ClinicProfile = () => {
 
 
 
-            <div style={{display: 'flex', justifyContent:'center'}}>
+                    <div style={{display: 'flex', justifyContent:'center'}}>
 
 
 
-                <div className="hospital-info">
+                        <div className="hospital-info">
 
-                    <h1 style={{textAlign:'center',color: 'wheat'}}>Clinic info</h1>
-                    <table style={{marginTop:'30px'}}>
-                        <tbody>
-                    <tr>
-                        <td>
-                    <label htmlFor="name" className="label-hospital">Name:</label></td>
-                        <td>  <input defaultValue={clinic.name} onChange={handleFormInputChange("name")} id="name" type="text"  className="input-hospital"
-                                     disabled = {(disabled)? "disabled" : ""}/>
-                        </td>
-                    </tr>
-                        <tr>
-                            <td>
-                    <label htmlFor="description" className="label-hospital">Description:</label>
-                            </td>
-                            <td>  <input defaultValue={clinic.description} onChange={handleFormInputChange("description")}
-                                         id="description" type="text" className="input-hospital"
-                                         disabled = {(disabled)? "disabled" : ""}/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>  <label htmlFor="rating" className="label-hospital">Rating:</label>
-                            </td>
-                            <td>   <input defaultValue={clinic.rating}  id="rating" type="text" className="input-hospital"
-                                          disabled/>
-                            </td>
-                            </tr>
-
-
-                    <tr>
-                        <td>  <label htmlFor="addr" className="label-hospital">Address:</label>
-                        </td>
-                        <td>   <input defaultValue={clinic.addressName} onChange={handleFormInputChange("addressName")} id="rating" type="text" className="input-hospital"
-                                      disabled = {(disabled)? "disabled" : ""}/>
-                        </td>
-                    </tr>
-
-                        <tr><td><Button  onClick = {handleEnableClick}
-                                         variant="contained" color="primary"  size="medium"> Edit </Button></td>
-
-                        <td><Button id="save-btn" onClick={handleSaveData}
-                                    variant="contained"
-                                    color="primary"
-                                    size="medium"
-                                    style={{margin: '15px', display: 'none', backgroundColor: '#d60808'}}
-                                    startIcon={<SaveIcon />}>Save</Button></td>
-                        </tr>
-                        </tbody>
+                            <h1 style={{textAlign:'center',color: 'wheat'}}>Clinic info</h1>
+                            <table style={{marginTop:'30px'}}>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <label htmlFor="name" className="label-hospital">Name:</label></td>
+                                    <td>  <input defaultValue={clinic.name} onChange={handleFormInputChange("name")} id="name" type="text"  className="input-hospital"
+                                                 disabled = {(disabled)? "disabled" : ""}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label htmlFor="description" className="label-hospital">Description:</label>
+                                    </td>
+                                    <td>  <input defaultValue={clinic.description} onChange={handleFormInputChange("description")}
+                                                 id="description" type="text" className="input-hospital"
+                                                 disabled = {(disabled)? "disabled" : ""}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>  <label htmlFor="rating" className="label-hospital">Rating:</label>
+                                    </td>
+                                    <td>   <input defaultValue={clinic.rating}  id="rating" type="text" className="input-hospital"
+                                                  disabled/>
+                                    </td>
+                                </tr>
 
 
+                                <tr>
+                                    <td>  <label htmlFor="addr" className="label-hospital">Address:</label>
+                                    </td>
+                                    <td>   <input defaultValue={clinic.addressName} onChange={handleFormInputChange("addressName")} id="rating" type="text" className="input-hospital"
+                                                  disabled = {(disabled)? "disabled" : ""}/>
+                                    </td>
+                                </tr>
 
+                                <tr><td><Button  onClick = {handleEnableClick}
+                                                 variant="contained" color="primary"  size="medium"> Edit </Button></td>
 
-                    </table>
-                    <br/>
-              <br/>
-
-                </div>
+                                    <td><Button id="save-btn" onClick={handleSaveData}
+                                                variant="contained"
+                                                color="primary"
+                                                size="medium"
+                                                style={{margin: '15px', display: 'none', backgroundColor: '#d60808'}}
+                                                startIcon={<SaveIcon />}>Save</Button></td>
+                                </tr>
+                                </tbody>
 
 
 
-                <div className="flex-child right-part" style={{marginTop:'40px'}}>
-                    <ServicesTable hospital_id="1"/>
+
+                            </table>
+                            <br/>
+                            <br/>
+
+                        </div>
 
 
-                    <h1>Doctors of this clinic</h1>
 
-                    <table className="styled-table">
-                        <thead>
-                        <tr>
-                            <th>Doctor ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {doctors.map((doctor) =>
-                            <DoctorRow key={doctor.user.id} id={doctor.user.id} name={doctor.user.name + " " + doctor.user.lastName}
-                            email={doctor.user.email} phoneNumber={doctor.user.phoneNumber}/>
-                        )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                        <div className="flex-child right-part" style={{marginTop:'40px'}}>
+                            <ServicesTable hospital_id="1"/>
+
+
+                            <h1>Doctors of this clinic</h1>
+
+                            <table className="styled-table">
+                                <thead>
+                                <tr>
+                                    <th>Doctor ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {doctors.map((doctor) =>
+                                    <DoctorRow key={doctor.user.id} id={doctor.user.id} name={doctor.user.name + " " + doctor.user.lastName}
+                                               email={doctor.user.email} phoneNumber={doctor.user.phoneNumber}/>
+                                )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
 
                     <div>
-                    <h1 style={{textAlign:'center', marginTop:'40px', marginBottom:'20px'}}>Free appointments at this clinic</h1>
+                        <h1 style={{textAlign:'center', marginTop:'40px', marginBottom:'20px'}}>Free appointments at this clinic</h1>
 
-                    <table className="styled-table centered">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                            <th>Doctor</th>
-                            <th>Nurse</th>
-                            <th>Price</th>
-                            <th colSpan="2">Delete/Modify an appointment</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        <table className="styled-table centered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                                <th>Doctor</th>
+                                <th>Nurse</th>
+                                <th>Price</th>
+                                <th colSpan="2">Delete/Modify an appointment</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        {appointments.filter(app => app.deleted === false && app.status == 'FREE').map((app) =>
-                            <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
-                                            status={app.status} key={app.appointment_id} date={app.date} start={app.start}
-                                            end={app.end} id={app.appointment_id} doctor={app.doctor.user}
-                                            nurse={app.nurse.user} price={app.price} deleted={app.deleted}/>
+                            {appointments.filter(app => app.deleted === false && app.status == 'FREE').map((app) =>
+                                <AppointmentRow deleteAppointment={delete_appointment} updateAppointment={update_appointment}
+                                                status={app.status} key={app.appointment_id} date={app.date} start={app.start}
+                                                end={app.end} id={app.appointment_id} doctor={app.doctor.user}
+                                                nurse={app.nurse.user} price={app.price} deleted={app.deleted}/>
 
-                        )}
-                        </tbody>
-                    </table>
+                            )}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div className="before"><h3>Find us on maps: </h3></div>
+
+                    <div className="hospitalLocation">
+
+                        {/*<h3>Find us on maps:</h3>*/}
+
+                        <Location name={clinic.addressName} lat={clinic.lat} lng={clinic.lng}></Location>
+
 
                     </div>
                 </div>
+
+
             </div>
 
         </>

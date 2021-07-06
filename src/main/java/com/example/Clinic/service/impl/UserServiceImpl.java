@@ -66,6 +66,7 @@ public class UserServiceImpl  implements UserService {
                         updated.setPassword(passwordEncoder.encode(user.getPassword()));
                         updated.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
                         updated.setEnabled(userJpa.isEnabled());
+                        updated.setRoles(userJpa.getRoles());
                         userRepository.save(updated);
                         return ok;
                     } else {
@@ -73,6 +74,7 @@ public class UserServiceImpl  implements UserService {
                         updated.setPassword(userJpa.getPassword());
                         updated.setLastPasswordResetDate(userJpa.getLastPasswordResetDate());
                         updated.setEnabled(userJpa.isEnabled());
+                        updated.setRoles(userJpa.getRoles());
                         userRepository.save(updated);
                         return ok;
                     }
@@ -102,5 +104,53 @@ public class UserServiceImpl  implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User enable(User user) {
+        User userJpa = userRepository.findById(user.getId()).orElse(null);
+        userJpa.setEnabled(true);
+        userRepository.save(userJpa);
+
+        return userJpa;
+    }
+
+    @Override
+    public Boolean changePassword(UserRegisterDto user, String validatePassword) {
+
+        boolean ok = true;
+
+        User userJpa = userRepository.findById(user.getId()).orElse(null);
+
+        if (validatePassword != null && !validatePassword.equals("")) {
+            System.out.println("Password is not null or empty");
+            System.out.println("User DTO: " + user);
+            System.out.println("User JPA: " + userJpa);
+            if (passwordEncoder.matches(validatePassword,
+                    userJpa.getPassword())) {
+                System.out.println("Password matches & will be edited");
+                userJpa.setPassword(passwordEncoder.encode(user.getPassword()));
+                userJpa.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
+                userRepository.save(userJpa);
+            } else {
+                ok = false;
+            }
+        }
+        else {
+            ok = false;
+        }
+        return ok;
+    }
+
+    @Override
+    public User setFirstTime(User user) {
+        userRepository.save(user);
+        return user;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        Optional<User> user = userRepository.findFirstByEmail(email);
+        return user.orElse(null);
     }
 }

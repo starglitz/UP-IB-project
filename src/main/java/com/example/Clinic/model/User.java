@@ -21,6 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
@@ -36,6 +37,8 @@ public class User {
     private String country;
 
     private String phoneNumber;
+
+    private boolean firstTime;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",

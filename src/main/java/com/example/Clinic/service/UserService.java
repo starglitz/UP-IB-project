@@ -21,4 +21,11 @@ public interface UserService {
 
     List<User> getAll();
 
+    User enable(User user);
+
+    Boolean changePassword(UserRegisterDto user, String passwordValidate);
+
+    User setFirstTime(User user);
+
+    User getByEmail(String email);
 }

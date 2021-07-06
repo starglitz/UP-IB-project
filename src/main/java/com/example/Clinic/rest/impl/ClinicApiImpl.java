@@ -1,14 +1,13 @@
 package com.example.Clinic.rest.impl;
 
-import com.example.Clinic.model.Clinic;
-import com.example.Clinic.model.ClinicAdmin;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.rest.ClinicApi;
 import com.example.Clinic.rest.support.converter.ClinicToDto;
 import com.example.Clinic.rest.support.converter.DtoToClinic;
 import com.example.Clinic.rest.support.dto.ClinicDto;
 import com.example.Clinic.service.ClinicAdminService;
 import com.example.Clinic.service.ClinicService;
+import com.example.Clinic.service.PatientService;
 import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +39,9 @@ public class ClinicApiImpl implements ClinicApi {
     @Autowired
     private ClinicAdminService clinicAdminService;
 
+    @Autowired
+    private PatientService patientService;
+
     @Override
     public ResponseEntity getAllClinics() {
         return new ResponseEntity(clinicService.findAll(), HttpStatus.OK);
@@ -47,7 +49,7 @@ public class ClinicApiImpl implements ClinicApi {
 
     @Override
     public ResponseEntity getClinic(Long id) {
-        Clinic clinic = clinicService.findById(id).get();
+        Clinic clinic = clinicService.findById(id);
         if(clinic != null) {
             ClinicDto dto = clinicToDto.convert(clinic);
             return new ResponseEntity(dto, HttpStatus.OK);
@@ -89,16 +91,28 @@ public class ClinicApiImpl implements ClinicApi {
         User user = userService.getLoggedIn(authentication);
         ClinicAdmin admin = clinicAdminService.findById(user.getId());
         System.out.println(user);
-        //System.out.println(admin);
-        //System.out.println(admin.getClinic().getClinic_id());
-
-//        Clinic clinic = clinicService.findById(admin.getClinic().getClinic_id()).orElse(null);
-//        if(clinic == null) {
-//            return new ResponseEntity("no such clinic", HttpStatus.NOT_FOUND);
-//        }
         System.out.println(admin.getClinic());
-//        Clinic clinic = clinicService.findById(admin.getClinic());
+        Clinic clinic = admin.getClinic();
+
         return new ResponseEntity(clinicToDto.convert(admin.getClinic()), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity getNotRatedVisitedClinics(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        List<Clinic> clinics = clinicService.getNotRatedByPatientId(user.getId());
+        if(clinics.size() > 0) {
+            return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.OK);
+        }
+        return new ResponseEntity(clinicToDto.convertList(clinics), HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity setRate(Long id, Authentication authentication, ClinicRating clinicRating) {
+        User user = userService.getLoggedIn(authentication);
+        Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+        clinicRating.setPatient(patient);
+        return new ResponseEntity(clinicToDto.convert(clinicService.rate(id, clinicRating)), HttpStatus.OK);
     }
 
 

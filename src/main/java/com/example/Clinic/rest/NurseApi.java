@@ -5,6 +5,7 @@ import com.example.Clinic.rest.support.dto.RegisterNurseDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
@@ -24,5 +25,11 @@ public interface NurseApi {
     ResponseEntity getNurse(@PathVariable("id") Long id);
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<RegisterNurseDto> create(@RequestBody @Valid RegisterNurseDto nurse);
+    ResponseEntity<RegisterNurseDto> create(@RequestBody @Valid RegisterNurseDto nurse, Authentication authentication);
+
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @GetMapping(value = "/admin/clinic",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getByAdminsClinic(Authentication authentication);
+
 }

@@ -1,6 +1,7 @@
 package com.example.Clinic.service.impl;
 
 
+import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Recipe;
 import com.example.Clinic.repository.RecipeRepository;
 import com.example.Clinic.service.RecipeService;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
+
 
     @Autowired
     private RecipeRepository recipeRepository;
@@ -41,6 +43,11 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Optional<Recipe> findOne(Long id) {
         return recipeRepository.findById(id);
+    }
+
+    @Override
+    public List<Recipe> getNurseRecipes(Nurse nurse) {
+        return recipeRepository.findRecipeByNurseAndValidatedIsFalse(nurse);
     }
 
     @Override

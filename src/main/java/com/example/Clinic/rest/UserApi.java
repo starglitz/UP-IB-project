@@ -22,10 +22,15 @@ public interface UserApi {
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UserRegisterDto> update(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
 
-    @PermitAll
+    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
     @GetMapping(value = "/profile",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
+
+    @PreAuthorize("hasAnyAuthority('PATIENT', 'NURSE', 'DOCTOR')")
+    @GetMapping(value = "email/{email}",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getLoggedInUserId(@PathVariable("email") String email);
 
     @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -37,6 +42,20 @@ public interface UserApi {
     ResponseEntity getUser(@PathVariable("id") Long id);
 
 
+    @PutMapping(value = "/enable/{token}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity enable(@PathVariable("token") String token);
 
+
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTER_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PutMapping(value = "/passwordUpdate/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<UserRegisterDto> changePassword(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
+
+
+    @PermitAll
+    @GetMapping(value = "/firstTime",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity firstTime(Authentication authentication);
 
 }

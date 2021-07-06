@@ -8,8 +8,6 @@ const NurseLayout = () => {
 
     return (
         <>
-            <h3 style={{textAlign: 'center', margin: '30px'}}>Welcome nurse MARIJA</h3>
-
             <div className="content-box">
                 <Calendar />
                 <hr/>

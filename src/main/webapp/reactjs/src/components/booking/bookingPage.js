@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {AppointmentService} from "../../services/AppointmentService";
+import {useHistory} from "react-router-dom";
 
 function BookingPage() {
 
@@ -17,6 +18,7 @@ function BookingPage() {
         start: '',
         price: ''
     })
+    const history = useHistory();
     const [hasError, setError] = useState(false)
 
     useEffect(() => {
@@ -32,6 +34,7 @@ function BookingPage() {
 
 
 
+
     async function fetchData() {
         try {
             const response = await AppointmentService.get(id);
@@ -40,7 +43,21 @@ function BookingPage() {
             console.error(`Error loading appointment !: ${error}`);
         }
     }
-    console.log(appointment)
+
+    async function sendBooking() {
+        try {
+            await AppointmentService.postBookingAppointment(id);
+        } catch (error) {
+            console.error(`Error loading appointment !: ${error}`);
+        }
+    }
+
+
+    const clickHandler = () => {
+        sendBooking();
+        history.push("/clinics")
+    }
+
     return (
         <>
 
@@ -72,7 +89,7 @@ function BookingPage() {
                 </ul>
 
                 <div className="link-appointments">
-                    <Button type='submit' variant="contained" size="large" color="default">Book</Button>
+                    <Button onClick={clickHandler} type='submit' variant="contained" size="large" color="default">Book</Button>
                 </div>
 
             </div>

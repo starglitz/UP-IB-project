@@ -13,7 +13,7 @@ const navbar = () => {
 
     let key = 1;
     const registerElement = <Nav.Link key={key++} href="register">Register</Nav.Link>
-    const loginElement = <Nav.Link key={key++}  href="login">Login</Nav.Link>
+    const loginElement = <Nav.Link key={key++} href="login">Login</Nav.Link>
     const nursePageElement = <Nav.Link key={key++}  href="nursePage">Nurse page</Nav.Link>
     const recipeApprovalElement = <Nav.Link key={key++}  href="recipes">Recipe approval</Nav.Link>
     const profileElement = <Nav.Link key={key++}  href="profile">Profile</Nav.Link>
@@ -24,13 +24,17 @@ const navbar = () => {
     const addClinic = <Nav.Link key={key++}  href="newClinic">Add clinic</Nav.Link>
     const addClinicAdmin = <Nav.Link key={key++}  href="newClinicAdmin">Add clinic admin</Nav.Link>
     const clinicsElement = <Nav.Link key={key++}  href="clinics">Clinics</Nav.Link>
-    const updateAppointmentElement = <Nav.Link key={key++}  href="updateAppointment">Update appointment</Nav.Link>
+    //const updateAppointmentElement = <Nav.Link key={key++}  href="updateAppointment">Update appointment</Nav.Link>
     const staffRegister = <Nav.Link key={key++}  href="staffRegister">Staff register</Nav.Link>
     const chandePassword = <Nav.Link key={key++}  href="changePassword">Change password</Nav.Link>
     const blockUsers = <Nav.Link key={key++}  href="blockUsers">Block users</Nav.Link>
-    const appointmentReview = <Nav.Link key={key++}  href="appointmentReview">Appointment review</Nav.Link>
-    const doctorPatients = <Nav.Link key={key++}  href="patients">Patients</Nav.Link>
+    const doctorPatients = <Nav.Link key={key++}  href="patients">Patient</Nav.Link>
+    const doctorAppointments = <Nav.Link key={key++}  href="calendar">Calendar</Nav.Link>
+    const rate = <Nav.Link key={key++}  href="rate">Rate doctors & clinics</Nav.Link>
     const logoutLink = <Nav.Link key={key++} onClick={logoutClick}  href="">Logout</Nav.Link>
+    const businessReport = <Nav.Link key={key++}  href="businessReports">Business Reports</Nav.Link>
+    const appointmentHistory = <Nav.Link key={key++}  href="appointmentHistory">Appointment history</Nav.Link>
+    const patientBook = <Nav.Link key={key++}  href="patientBook">Health card</Nav.Link>
 
 
     let patient = [];
@@ -38,6 +42,9 @@ const navbar = () => {
     patient.push(profileElement)
     patient.push(clinicsElement)
     patient.push(chandePassword)
+    patient.push(appointmentHistory)
+    patient.push(patientBook)
+    patient.push(rate)
 
 
     let nurse = [];
@@ -49,18 +56,19 @@ const navbar = () => {
     let doctor = [];
     doctor.push(logoutLink)
     doctor.push(chandePassword)
-    doctor.push(appointmentReview)
     doctor.push(doctorPatients)
+    doctor.push(doctorAppointments)
 
     let clinicAdmin = [];
     clinicAdmin.push(logoutLink)
     clinicAdmin.push(newAppointmentElement)
     clinicAdmin.push(clinicProfileAdminElement)
-    clinicAdmin.push(updateAppointmentElement)
+  //  clinicAdmin.push(updateAppointmentElement)
     clinicAdmin.push(allAppointmentsAdminElement)
     clinicAdmin.push(staffRegister)
     clinicAdmin.push(chandePassword)
     clinicAdmin.push(blockUsers)
+    clinicAdmin.push(businessReport)
 
     let clinicCentreAdmin = [];
     clinicCentreAdmin.push(logoutLink)

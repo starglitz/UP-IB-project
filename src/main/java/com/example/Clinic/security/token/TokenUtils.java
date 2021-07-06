@@ -105,9 +105,8 @@ public class TokenUtils {
         final Date created = this.getIssuedAtDateFromToken(token);
         String username = getUsernameFromToken(token);
         UserDetailsImpl user = (UserDetailsImpl) this.userDetailsService.loadUserByUsername(username);
-        return (!(this.isCreatedBeforeLastPasswordReset(created, lastPasswordReset))
-                && (!(this.isTokenExpired(token)) || this.ignoreTokenExpiration(token))
-                && user.isEnabled());
+        return (!(this.isTokenExpired(token)) || this.ignoreTokenExpiration(token))
+                && user.isEnabled();
     }
 
     // Funkcija za validaciju JWT tokena

@@ -95,7 +95,7 @@ console.log(requests)
                 sort: true,
                 customBodyRender: (value, tableMeta, updateValue) => (
                     <Typography>
-                        {value.name}
+                        {value.lastName}
                     </Typography>
                 )
             }

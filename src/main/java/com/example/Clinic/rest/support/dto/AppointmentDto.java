@@ -18,6 +18,8 @@ public class AppointmentDto {
 
     private Long appointment_id;
 
+    private String conclusion;
+
     @NotNull
     private AppointmentStatus status;
 
