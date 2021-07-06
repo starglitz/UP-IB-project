@@ -50,6 +50,7 @@ const ChangePassword = () => {
                     const status = await UserService.updatePassword(user.id, user)
                     console.log("status here: " + status)
                     if(status == '200') {
+                        AuthenticationService.logout()
                         history.push("/")
                     }
                     else if(status == '400') {

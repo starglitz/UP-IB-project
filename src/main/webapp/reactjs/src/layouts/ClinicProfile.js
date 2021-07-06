@@ -308,6 +308,7 @@ const ClinicProfile = () => {
                 </div>
             </div>
 
+
                     <div>
                     <h1 style={{textAlign:'center', marginTop:'40px', marginBottom:'20px'}}>Free appointments at this clinic</h1>
 
@@ -339,6 +340,7 @@ const ClinicProfile = () => {
 
                     </div>
                 </div>
+
             </div>
 
         </>

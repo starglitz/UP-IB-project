@@ -43,10 +43,13 @@ const NewAppointmentLayout = () => {
     async function addAppointment(appointment) {
         try {
             await AppointmentService.create(appointment)
+            alert("Successfully created an appointment!")
+            history.push("/")
         }
         catch (error) {
 
             if(error.response.status == 400) {
+                alert("Entered data is invalid. Date/time you're trying to take might already be taken.")
                 setError("Entered data is invalid. Date/time you're trying to take might already be taken.")
             }
             console.error(`Error while adding new appointment: ${error}`);
@@ -85,8 +88,8 @@ const NewAppointmentLayout = () => {
             console.log(appointment);
             console.log(JSON.stringify(appointment));
             addAppointment(appointment);
-            alert("Successfully created an appointment!")
-            history.push("/")
+
+
 
         }
     }

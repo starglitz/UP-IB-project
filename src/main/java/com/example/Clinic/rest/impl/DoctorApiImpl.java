@@ -96,6 +96,7 @@ public class DoctorApiImpl implements DoctorApi {
         Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id());
 
         Doctor doctor1 = new Doctor(user);
+        doctor.setGrade(0);
         if(clinic != null) {
             doctor1.setClinic(clinic);
         }

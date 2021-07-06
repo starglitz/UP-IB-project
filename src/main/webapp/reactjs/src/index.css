@@ -461,3 +461,11 @@ register-form {
     flex: 1;
     margin:15px
 }
+
+.centered {
+    margin: 0 auto;
+}
+
+.navlink {
+    color:white;
+}

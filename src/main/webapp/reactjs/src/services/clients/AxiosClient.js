@@ -11,6 +11,7 @@ const AxiosClient = axios.create({
 AxiosClient.interceptors.request.use(function success(config) {
     const token = TokenService.getToken();
     const refreshToken = TokenService.getRefreshToken();
+    console.log(refreshToken)
     console.log(token)
     if (token && refreshToken) {
         if(TokenService.didTokenExpire(token) && TokenService.didTokenExpire(refreshToken)){

@@ -17,6 +17,8 @@ const RateTables = () => {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
+    const [doctorRating, setDoctorRating] = useState(0);
+    const [clinicRating, setClinicRating] = useState(0);
 
     const [error1, setError1] = useState("");
     const [error2, setError2] = useState("");
@@ -48,7 +50,7 @@ const RateTables = () => {
     async function rateClinic(clinic_id) {
         try {
             let rating = document.getElementById("clinic_rating").value;
-            if(rating < 1 || rating > 5) {
+            if(clinicRating < 1 || clinicRating > 5) {
                 setError2("Rating must be between 1 and 5!")
             }
             else {
@@ -67,8 +69,10 @@ const RateTables = () => {
     async function rateDoctor(id) {
         try {
             let rating = document.getElementById("doctor_rating").value;
-            if(rating < 1 || rating > 5) {
+          //  console.log(rating)
+            if(doctorRating < 1 || doctorRating > 5) {
                 setError1("Rating must be between 1 and 5!")
+              //  alert("Rating must be between 1 and 5")
             }
             else {
                 let obj = {'rating': rating}
@@ -83,7 +87,13 @@ const RateTables = () => {
         }
     }
 
+    const handleChange1 = (event) => {console.log(event.target.value)
+        setDoctorRating(event.target.value)
+    };
 
+    const handleChange2 = (event) => {console.log(event.target.value)
+        setClinicRating(event.target.value)
+    };
 
 return(
         <>
@@ -117,7 +127,8 @@ return(
                     <Modal.Header closeButton>
                     <Modal.Title>Rate dr. {doctor.user.name} {doctor.user.lastName}</Modal.Title>
                     </Modal.Header>
-                        <Modal.Body>Enter the rating in span of 1 to 5:    <input type="number" id="doctor_rating" min='1' max='5'/>
+                        <Modal.Body>Enter the rating in span of 1 to 5:    <input type="number" id="doctor_rating" onChange={(event) =>
+                            handleChange1(event)} min='1' max='5'/>
                         <br/>
                            <p style={{color:'red'}}>  {error1} </p>
                         </Modal.Body>
@@ -160,7 +171,8 @@ return(
                     <Modal.Header closeButton>
                     <Modal.Title>Rate "{clinic.name}" clinic</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Enter the rating in span of 1 to 5:    <input type="number" id="clinic_rating" min='1' max='5'/>
+                    <Modal.Body>Enter the rating in span of 1 to 5:    <input type="number" id="clinic_rating" onChange={(event) =>
+                        handleChange2(event)} min='1' max='5'/>
                         <br/>
                         <p style={{color:'red'}}>  {error2} </p>
                     </Modal.Body>

@@ -28,9 +28,10 @@ public class PatientToDto implements Converter<Patient, PatientDto> {
             retVal.setEnabled(source.isEnabled());
             retVal.setPatient_book_id(source.getPatientBookId());
 
-            AsymmetricEncription encription = new AsymmetricEncription(source.getLbo());
-
-            retVal.setLbo(encription.decrypt());
+//            AsymmetricEncription encription = new AsymmetricEncription(source.getLbo());
+//
+//            retVal.setLbo(encription.decrypt());
+            retVal.setLbo(source.getLbo());
             retVal.setUserDto(userToDto.convert(source.getUser()));
 
 

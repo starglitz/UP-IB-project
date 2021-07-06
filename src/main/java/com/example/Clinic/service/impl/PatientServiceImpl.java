@@ -41,6 +41,7 @@ public class PatientServiceImpl implements PatientService {
     public Patient updatePatient(Patient patient, Long id) {
         Patient jpa = patientRepository.findById(id).orElse(null);
         jpa.setVisitedMail(patient.isVisitedMail());
+
         return patientRepository.save(jpa);
     }
 
