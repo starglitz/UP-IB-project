@@ -7,6 +7,7 @@ export const UserService = {
     get,
     setEnabled,
     updatePassword,
+    getByEmail,
     isFirstTime
 };
 
@@ -35,6 +36,10 @@ async function getAll() {
 
 async function get(id) {
     return await AxiosClient.get(`https://localhost:8080/user/${id}`);
+}
+
+async function getByEmail(email) {
+    return await AxiosClient.get(`https://localhost:8080/user/email/${email}`);
 }
 
 async function setEnabled(token) {

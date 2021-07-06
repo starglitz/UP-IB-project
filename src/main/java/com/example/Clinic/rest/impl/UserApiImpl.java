@@ -59,6 +59,24 @@ public class UserApiImpl implements UserApi {
     }
 
     @Override
+    public ResponseEntity getLoggedInUserId(String email) {
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        System.out.println(email);
+        return new ResponseEntity<>(userToDto.convert(userService.getByEmail(email)), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity getAll() {
        return new ResponseEntity(userToDto.convert(userService.getAll()), HttpStatus.OK);
     }
