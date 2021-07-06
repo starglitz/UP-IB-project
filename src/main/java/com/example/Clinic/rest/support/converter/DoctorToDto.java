@@ -37,17 +37,16 @@ public class DoctorToDto implements Converter<Doctor, DoctorDto> {
 
         float total = 0;
         float average = 0;
-        int counterNotZero = 0;
+
 
         if (doctor.getRatings().size() != 0) {
 
             for (DoctorRating rating : doctor.getRatings()) {
-                if (rating.getRating() != 0) {
+
                     total += rating.getRating();
-                    counterNotZero += 1;
-                }
+
             }
-            average = total / counterNotZero;
+            average = total / doctor.getRatings().size();
         }
 
         dto.setGrade(average);
