@@ -29,6 +29,7 @@ const navbar = () => {
     const chandePassword = <Nav.Link key={key++}  href="changePassword">Change password</Nav.Link>
     const blockUsers = <Nav.Link key={key++}  href="blockUsers">Block users</Nav.Link>
     const doctorPatients = <Nav.Link key={key++}  href="patients">Patient</Nav.Link>
+    const doctorAppointments = <Nav.Link key={key++}  href="calendar">Calendar</Nav.Link>
     const rate = <Nav.Link key={key++}  href="rate">Rate doctors & clinics</Nav.Link>
     const logoutLink = <Nav.Link key={key++} onClick={logoutClick}  href="">Logout</Nav.Link>
     const bussinesReport = <Nav.Link key={key++}  href="businessReports">Business Reports</Nav.Link>
@@ -54,6 +55,7 @@ const navbar = () => {
     doctor.push(logoutLink)
     doctor.push(chandePassword)
     doctor.push(doctorPatients)
+    doctor.push(doctorAppointments)
 
     let clinicAdmin = [];
     clinicAdmin.push(logoutLink)

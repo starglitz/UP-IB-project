@@ -1,6 +1,6 @@
 .content-box {
     width: 100%;
-    padding: 20px 5% 20px 5%;
+    padding: 20px 1% 20px 1%;
 }
 
 .react-calendar {
@@ -38,8 +38,8 @@ register-form {
 }
 
 .form-size {
-    margin: 1% 25%;
-    padding: 2% 8% 2% 8%;
+    margin: 1% 20%;
+    padding: 2% 4% 2% 4%;
 }
 
 .submit-register {
@@ -466,6 +466,13 @@ register-form {
     margin: 0 auto;
 }
 
-.navlink {
-    color:white;
+nav a {
+    text-decoration: none;
+    color: white;
+    outline: none;
+}
+
+nav a:hover{
+    text-decoration: none;
+    color: navajowhite;
 }

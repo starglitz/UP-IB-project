@@ -45,31 +45,33 @@ export const RecipeTable = () => {
 
 
     return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align={"center"} >id</TableCell>
-                        <TableCell align={"center"} >Description</TableCell>
-                        <TableCell align={"center"} >Date</TableCell>
-                        <TableCell align={"center"} >Actions</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {requests.map(row => (
-                        <TableRow key={row.name}>
-                            <TableCell align={"center"} >{row.recipe_id}</TableCell>
-                            <TableCell align={"center"} >{row.description}</TableCell>
-                            <TableCell align={"center"} >{row.issueDate}</TableCell>
-                            <TableCell align={"center"} >
-                                <Button variant="contained" color="primary" onClick={() => {approveRecipe(row).catch(err => setError(err))}}>
-                                    Approve Recipe
-                                </Button>
-                            </TableCell>
+        <div  className="form-size" >
+            <TableContainer component={Paper} >
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align={"center"} >id</TableCell>
+                            <TableCell align={"center"} >Description</TableCell>
+                            <TableCell align={"center"} >Date</TableCell>
+                            <TableCell align={"center"} >Actions</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {requests.map(row => (
+                            <TableRow key={row.name}>
+                                <TableCell align={"center"} >{row.recipe_id}</TableCell>
+                                <TableCell align={"center"} >{row.description}</TableCell>
+                                <TableCell align={"center"} >{row.issueDate}</TableCell>
+                                <TableCell align={"center"} >
+                                    <Button variant="contained" color="primary" onClick={() => {approveRecipe(row).catch(err => setError(err))}}>
+                                        Approve Recipe
+                                    </Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }
