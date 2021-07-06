@@ -469,3 +469,28 @@ register-form {
 .navlink {
     color:white;
 }
+.healthCard{
+    display: block;
+
+}
+
+.healthCard #illnessTable{
+    width: 700px;
+    margin-left: 10%;
+    margin-top: 30px;
+    display: inline-block;
+
+}
+
+.healthCard #drugsTable{
+    width: 700px;
+    margin-left: 5%;
+    margin-top: 30px;
+    display: inline-block;
+
+
+}
+
+.healthCard h1{
+    text-align: center;
+}

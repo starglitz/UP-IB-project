@@ -59,7 +59,7 @@ public class ClinicServiceImpl implements ClinicService {
 
 
         if(date.equals(LocalDate.of(2000, 01, 01))){
-            return setAverageRatingToClinics(clinicRepository.findAll());
+            return setAverageRatingToClinics(clinicRepository.findAllCurrentDates());
         }
         return setAverageRatingToClinics(clinics);
 
