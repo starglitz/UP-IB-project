@@ -25,7 +25,7 @@ public interface NurseApi {
     ResponseEntity getNurse(@PathVariable("id") Long id);
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<RegisterNurseDto> create(@RequestBody @Valid RegisterNurseDto nurse);
+    ResponseEntity<RegisterNurseDto> create(@RequestBody @Valid RegisterNurseDto nurse, Authentication authentication);
 
     @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
     @GetMapping(value = "/admin/clinic",

@@ -51,7 +51,7 @@ public class NurseApiImpl implements NurseApi {
     }
 
     @Override
-    public ResponseEntity<RegisterNurseDto> create(@Valid RegisterNurseDto nurseDto) {
+    public ResponseEntity<RegisterNurseDto> create(@Valid RegisterNurseDto nurseDto, Authentication authentication) {
 
         //String email, String password, String name, String lastName,
         //                String address, String city, String country, String phoneNumber
@@ -61,16 +61,21 @@ public class NurseApiImpl implements NurseApi {
                 nurseDto.getUser().getCountry(), nurseDto.getUser().getPhoneNumber(),
                 nurseDto.getUser().isEnabled());
 
-        Clinic clinic = clinicService.findById(nurseDto.getClinic().getClinic_id());
+    //    Clinic clinic = clinicService.findById(nurseDto.getClinic().getClinic_id());
 
 
         Nurse nurse = new Nurse(user);
-        if(clinic != null) {
-            nurse.setClinic(clinic);
+//        if(clinic != null) {
+//            nurse.setClinic(clinic);
+//        }
+        boolean ok= nurseService.create(nurse, authentication);
+        if(ok) {
+            return new ResponseEntity("Successfully created", HttpStatus.OK);
         }
-        Nurse created = nurseService.create(nurse);
+        else {
+            return new ResponseEntity(":(", HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity("Successfully created", HttpStatus.OK);
     }
 
     @Override

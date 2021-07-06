@@ -1,17 +1,17 @@
 package com.example.Clinic.service.impl;
 
 
-import com.example.Clinic.model.Authority;
-import com.example.Clinic.model.Doctor;
-import com.example.Clinic.model.Nurse;
-import com.example.Clinic.model.User;
+import com.example.Clinic.model.*;
 import com.example.Clinic.model.enumerations.UserRole;
 import com.example.Clinic.repository.AuthorityRepository;
+import com.example.Clinic.repository.ClinicAdminRepository;
 import com.example.Clinic.repository.NurseRepository;
 import com.example.Clinic.repository.UserRepository;
 import com.example.Clinic.rest.support.converter.DtoToNurse;
 import com.example.Clinic.service.NurseService;
+import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +36,12 @@ public class NurseServiceImpl implements NurseService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ClinicAdminRepository clinicAdminRepository;
+
 
     @Autowired
     private DtoToNurse dtoToNurse;
@@ -49,12 +55,12 @@ public class NurseServiceImpl implements NurseService {
     public Nurse findById(Long id) { return nurseRepository.findById(id).orElse(null); }
 
     @Override
-    public Nurse create(Nurse nurse) {
+    public boolean create(Nurse nurse, Authentication authentication) {
 
         Optional<User> user = userRepository.findFirstByEmail(nurse.getUser().getEmail());
 
         if(user.isPresent()){
-            return null;
+            return false;
         }
 
         Set<Authority> authorities = new HashSet<>(){{
@@ -65,10 +71,16 @@ public class NurseServiceImpl implements NurseService {
         nurseUser.setRoles(authorities);
         nurseUser.setPassword(passwordEncoder.encode(nurseUser.getPassword()));
         nurseUser.setLastPasswordResetDate(new Timestamp(System.currentTimeMillis()));
+        nurseUser.setFirstTime(true);
+        User loggedInAdmin = userService.getLoggedIn(authentication);
+        ClinicAdmin admin = clinicAdminRepository.findById(loggedInAdmin.getId()).orElse(null);
 
+        nurse.setClinic(admin.getClinic());
         nurse.setUser(nurseUser);
+
         Nurse nurseJpa = nurseRepository.save(nurse);
-        return nurseJpa;
+
+        return true;
     }
 
     @Override

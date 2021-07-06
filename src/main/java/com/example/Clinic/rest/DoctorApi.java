@@ -41,7 +41,7 @@ public interface DoctorApi {
     ResponseEntity getDoctorByClinicId(@PathVariable("id") Long id);
 
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<RegisterDoctorDto> create(@RequestBody @Valid RegisterDoctorDto doctor);
+    public ResponseEntity<RegisterDoctorDto> create(@RequestBody @Valid RegisterDoctorDto doctor, Authentication authentication);
 
     @PreAuthorize("hasAuthority('PATIENT')")
     @GetMapping(value = "/not_rated",

@@ -6,6 +6,7 @@ import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
+import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import com.example.Clinic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,23 +87,31 @@ public class DoctorApiImpl implements DoctorApi {
     }
 
     @Override
-    public ResponseEntity<RegisterDoctorDto> create(@Valid RegisterDoctorDto doctor) {
+    public ResponseEntity<RegisterDoctorDto> create(@Valid RegisterDoctorDto doctor, Authentication authentication) {
         User user = new User(doctor.getUser().getEmail(), doctor.getUser().getPassword(),
                 doctor.getUser().getName(), doctor.getUser().getLastName(),
                 doctor.getUser().getAddress(),doctor.getUser().getCity(),
                 doctor.getUser().getCountry(), doctor.getUser().getPhoneNumber(),
                 doctor.getUser().isEnabled());
 
-        Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id());
+       // Clinic clinic = clinicService.findById(doctor.getClinic().getClinic_id());
+        User loggedInAdmin = userService.getLoggedIn(authentication);
+
+
 
         Doctor doctor1 = new Doctor(user);
         doctor.setGrade(0);
-        if(clinic != null) {
-            doctor1.setClinic(clinic);
-        }
-        Doctor created = doctorService.create(doctor1);
+//        if(clinic != null) {
+//            doctor1.setClinic(clinic);
+//        }
+        boolean ok = doctorService.create(doctor1, authentication);
 
-        return new ResponseEntity("Success", HttpStatus.OK);
+        if(ok) {
+            return new ResponseEntity("Success", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity("Noo :(", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
