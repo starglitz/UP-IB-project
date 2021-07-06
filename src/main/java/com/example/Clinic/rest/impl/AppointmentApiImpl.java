@@ -36,6 +36,12 @@ public class AppointmentApiImpl implements AppointmentApi {
     private PatientService patientService;
 
     @Autowired
+    private NurseService nurseService;
+
+    @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
     private PatientBookService patientBookService;
 
     @Autowired
@@ -197,5 +203,20 @@ public class AppointmentApiImpl implements AppointmentApi {
                             appointmentForUpdate.getDoctor().getUser().getLastName());
             return new ResponseEntity(HttpStatus.OK);
         }
+    }
+
+    @Override
+    public ResponseEntity<Appointment> getNurseAppointments(long id) {
+        Nurse nurse = nurseService.findById(id);
+        if (nurse != null) {
+            List<AppointmentDto> appointments = appointmentToDto.convertList(appointmentService.findByNurse(nurse));
+            return new ResponseEntity(appointments, HttpStatus.OK);
+        }
+        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<Appointment> getDoctorAppointments(long id) {
+        return null;
     }
 }

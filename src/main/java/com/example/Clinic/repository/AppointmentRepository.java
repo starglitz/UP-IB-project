@@ -2,11 +2,13 @@ package com.example.Clinic.repository;
 
 import com.example.Clinic.model.Appointment;
 import com.example.Clinic.model.Doctor;
+import com.example.Clinic.model.Nurse;
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.enumerations.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import javax.print.Doc;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,5 +44,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findAppointmentByPatientAndStatus(Patient patient, AppointmentStatus status);
 
     Appointment findAppointmentByDoctorAndConclusion(Doctor doctor, String conclusion);
+
+    List<Appointment> findAppointmentByNurse(Nurse nurse);
+
+    List<Appointment> findAppointmentByDoctor(Doctor doctor);
 
 }

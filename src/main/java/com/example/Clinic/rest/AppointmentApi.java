@@ -107,4 +107,12 @@ public interface AppointmentApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity bookAppointment(Authentication authentication, @PathVariable long id);
 
+    @PreAuthorize("hasAuthority('NURSE')")
+    @GetMapping(value = "/nurse/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getNurseAppointments(@PathVariable long id);
+
+    @PreAuthorize("hasAuthority('DOCTOR')")
+    @GetMapping(value = "/doctor/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Appointment> getDoctorAppointments(@PathVariable long id);
+
 }
