@@ -220,11 +220,12 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Integer findIncomeBetweenDates(Long id,LocalDate dateFrom, LocalDate dateTo) {
         List<Appointment> appointments = appointmentRepository.findIncomeBetweenDates(id, dateFrom, dateTo);
         Integer income = 0;
-        for(Appointment a : appointments){
+        for (Appointment a : appointments) {
             income += a.getPrice();
 
         }
         return income;
+    }
 
     public List<Appointment> findByPatientFinished(long id) {
         Optional<Patient> patient = patientService.getPatientById(id);

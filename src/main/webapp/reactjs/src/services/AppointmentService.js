@@ -15,9 +15,8 @@ export const AppointmentService = {
     countAppointmentsByMonths,
     countAppointmentsByWeeks,
     getIncomeBetweenDates,
-    countAppointmentsByDays
+    countAppointmentsByDays,
     getFinishedPatientAppointments
-
 };
 
 
@@ -79,7 +78,6 @@ async function countAppointmentsByWeeks(id) {
 async function countAppointmentsByDays(id,month) {
     return await AxiosClient.get(`https://localhost:8080/appointments/count/days/${id}/${month}`);
 }
-
 
 async function getIncomeBetweenDates(id, dateFrom, dateTo) {
     return await AxiosClient.get(`https://localhost:8080/appointments/income/${id}/${dateFrom}/${dateTo}`);
