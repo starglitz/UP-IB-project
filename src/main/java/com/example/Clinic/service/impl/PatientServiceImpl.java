@@ -54,7 +54,7 @@ public class PatientServiceImpl implements PatientService {
             AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
             patient.setLbo(encription.decrypt());
         }
-
+        System.out.println(patients);
         return patients;
     }
 
