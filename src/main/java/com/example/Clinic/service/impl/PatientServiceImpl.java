@@ -40,6 +40,9 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient updatePatient(Patient patient, Long id) {
         Patient jpa = patientRepository.findById(id).orElse(null);
+
+        AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
+        jpa.setLbo(encription.encrypt());
         jpa.setVisitedMail(patient.isVisitedMail());
 
         return patientRepository.save(jpa);

@@ -7,6 +7,7 @@ import com.example.Clinic.rest.support.converter.DtoToDoctor;
 import com.example.Clinic.rest.support.dto.DoctorDto;
 import com.example.Clinic.rest.support.dto.RegisterDoctorDto;
 import com.example.Clinic.rest.support.dto.UserRegisterDto;
+import com.example.Clinic.security.services.AsymmetricEncription;
 import com.example.Clinic.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -130,6 +131,10 @@ public class DoctorApiImpl implements DoctorApi {
     public ResponseEntity rate(Long id, Authentication authentication, DoctorRating doctorRating) {
         User user = userService.getLoggedIn(authentication);
         Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+
+        AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
+        patient.setLbo(encription.encrypt());
+
         doctorRating.setPatient(patient);
         return new ResponseEntity(doctorToDto.convert(doctorService.rate(id, doctorRating)), HttpStatus.OK);
     }

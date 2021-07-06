@@ -8,6 +8,7 @@ import com.example.Clinic.rest.support.converter.DoctorToDto;
 import com.example.Clinic.rest.support.converter.DtoToAppointment;
 import com.example.Clinic.rest.support.converter.NurseToDto;
 import com.example.Clinic.rest.support.dto.AppointmentDto;
+import com.example.Clinic.security.services.AsymmetricEncription;
 import com.example.Clinic.service.*;
 import com.example.Clinic.service.impl.EmailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,7 +193,14 @@ public class AppointmentApiImpl implements AppointmentApi {
             return new ResponseEntity("Appointment is already reserved",HttpStatus.BAD_REQUEST);
 
         }else {
-            appointmentForUpdate.setPatient(patientService.getPatientById(user.getId()).orElse(null));
+            System.out.println("ITS CALLED!!!");
+            Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+
+            AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
+            patient.setLbo(encription.encrypt());
+
+
+            appointmentForUpdate.setPatient(patient);
             appointmentForUpdate.setStatus(AppointmentStatus.RESERVED);
             appointmentService.update(appointmentForUpdate);
 

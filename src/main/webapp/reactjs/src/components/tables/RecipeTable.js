@@ -22,6 +22,9 @@ export const RecipeTable = () => {
         try {
             const decoded_token = TokenService.decodeToken(TokenService.getToken().sub());
             const user = await UserService.getByEmail(decoded_token.sub)
+
+            console.log(user.data)
+
             const response = await RecipeService.getNotApproved(user.data.id)
             setRequests(response.data)
         } catch (error) {
@@ -35,7 +38,7 @@ export const RecipeTable = () => {
     async function approveRecipe(recipe) {
         recipe.validated = true
         try {
-            recipe.nurseId = recipe.nurse.id
+
             await RecipeService.approve(recipe.recipe_id.toString(), recipe)
             window.location.reload();
         } catch (error) {

@@ -5,6 +5,7 @@ import com.example.Clinic.rest.ClinicApi;
 import com.example.Clinic.rest.support.converter.ClinicToDto;
 import com.example.Clinic.rest.support.converter.DtoToClinic;
 import com.example.Clinic.rest.support.dto.ClinicDto;
+import com.example.Clinic.security.services.AsymmetricEncription;
 import com.example.Clinic.service.ClinicAdminService;
 import com.example.Clinic.service.ClinicService;
 import com.example.Clinic.service.PatientService;
@@ -111,6 +112,10 @@ public class ClinicApiImpl implements ClinicApi {
     public ResponseEntity setRate(Long id, Authentication authentication, ClinicRating clinicRating) {
         User user = userService.getLoggedIn(authentication);
         Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+
+        AsymmetricEncription encription = new AsymmetricEncription(patient.getLbo());
+        patient.setLbo(encription.encrypt());
+
         clinicRating.setPatient(patient);
         return new ResponseEntity(clinicToDto.convert(clinicService.rate(id, clinicRating)), HttpStatus.OK);
     }
