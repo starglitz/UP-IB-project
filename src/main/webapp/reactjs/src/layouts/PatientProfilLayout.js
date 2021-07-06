@@ -47,7 +47,7 @@ const PatientProfilLayout = () => {
 
     async function fetchPatient() {
         try {
-            const response = await PatientService.get(15);
+            const response = await PatientService.get(40);
             setPatient(response.data);
             setLoading(false);
         } catch (error) {

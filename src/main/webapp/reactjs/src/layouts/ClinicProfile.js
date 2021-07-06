@@ -276,7 +276,6 @@ const ClinicProfile = () => {
 
                     </table>
                     <br/>
-                    <Location name={clinic.addressName} lat={clinic.lat} lng={clinic.lng}></Location>
               <br/>
 
                 </div>
@@ -339,7 +338,19 @@ const ClinicProfile = () => {
                     </table>
 
                     </div>
+
+                    <div className="before"><h3>Find us on maps: </h3></div>
+
+                    <div className="hospitalLocation">
+
+                        {/*<h3>Find us on maps:</h3>*/}
+
+                        <Location name={clinic.addressName} lat={clinic.lat} lng={clinic.lng}></Location>
+
+
+                    </div>
                 </div>
+
 
             </div>
 

@@ -2,6 +2,7 @@ package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.Patient;
 import com.example.Clinic.model.PatientBook;
+import com.example.Clinic.model.User;
 import com.example.Clinic.rest.PatientBookApi;
 import com.example.Clinic.rest.support.converter.PatientToDto;
 import com.example.Clinic.rest.support.dto.DrugChangeDto;
@@ -10,9 +11,11 @@ import com.example.Clinic.rest.support.dto.PatientBookDto;
 import com.example.Clinic.rest.support.dto.PatientDto;
 import com.example.Clinic.service.PatientBookService;
 import com.example.Clinic.service.PatientService;
+import com.example.Clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.xml.sax.SAXException;
 
@@ -34,6 +37,9 @@ public class PatientBookApiImpl implements PatientBookApi {
 
     @Autowired
     private PatientToDto patientToDto;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity<PatientBook> addPatientBook(@Valid PatientBook patientBook) throws ParserConfigurationException, SAXException, IOException {
@@ -61,6 +67,21 @@ public class PatientBookApiImpl implements PatientBookApi {
     @Override
     public ResponseEntity getPatientBookByPatient(Long id) throws ParserConfigurationException, SAXException, IOException {
         Optional<Patient> patient = patientService.getPatientById(id);
+        if (patient.isPresent()) {
+            PatientBook patientBook = patientBookService.findById(patient.get().getPatientBookId());
+            System.out.println(patientBook);
+            PatientDto patientDto = patientToDto.convert(patientBook.getPatient());
+            PatientBookDto dto = new PatientBookDto(patientBook.getId(), patientDto, patientBook.getIllnessHistory(),
+                    patientBook.getDrugs(), patientBook.getXml());
+            return new ResponseEntity(dto, HttpStatus.OK);
+        }
+        return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity getPatientBookByLoggedPatient(Authentication authentication) throws ParserConfigurationException, SAXException, IOException {
+        User user = userService.getLoggedIn(authentication);
+        Optional<Patient> patient = patientService.getPatientById(user.getId());
         if (patient.isPresent()) {
             PatientBook patientBook = patientBookService.findById(patient.get().getPatientBookId());
             System.out.println(patientBook);

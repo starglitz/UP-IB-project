@@ -3,6 +3,7 @@ import {Button, makeStyles, MenuItem, Select} from "@material-ui/core";
 import {NurseService} from "../services/NurseService";
 import {DoctorService} from "../services/DoctorService";
 import {ClinicService} from "../services/ClinicService";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -20,6 +21,8 @@ const RegisterStaff = () => {
 
     const classes = useStyles();
 
+    const history = useHistory();
+
     const [role, setRole] = useState('NURSE');
     const [showAlert, setShowAlert] = useState({ success: null, message: "" });
     const [user, setUser] = useState({
@@ -35,7 +38,7 @@ const RegisterStaff = () => {
 
     const [clinics, setClinics] = useState([])
     const [error, setError] = useState([])
-    const [clinic, setClinic] = useState({})
+    //const [clinic, setClinic] = useState({})
 
     const handleFormInputChange = (name) => (event) => {
         const val = event.target.value;
@@ -43,21 +46,21 @@ const RegisterStaff = () => {
     };
 
     useEffect(() => {
-        fetchClinics().catch(err => setError(err));
+        //fetchClinics().catch(err => setError(err));
     }, []);
 
-    async function fetchClinics() {
-        try {
-            const response = await ClinicService.getAll()
-            setClinics(response.data)
-        } catch (error) {
-            console.error(`Error loading doctors !: ${error}`);
-        }
-    }
+    // async function fetchClinics() {
+    //     try {
+    //         const response = await ClinicService.getAll()
+    //         setClinics(response.data)
+    //     } catch (error) {
+    //         console.error(`Error loading doctors !: ${error}`);
+    //     }
+    // }
 
     function handleChange(event) {
         console.log(event.target.value)
-        setClinic(event.target.value)
+        //setClinic(event.target.value)
     }
 
     let sameData = <>
@@ -107,22 +110,8 @@ const RegisterStaff = () => {
                 <label htmlFor="confirm" className="label-register">Confirm password:</label>
                 <input  id="confirm" type="password" placeholder="confirm password" className="input-register"/>
 
-                <div>
-                    <label htmlFor="clinic" className="label-register">Clinic:</label>
-                <Select
-                    className="input-register"
-                        labelId="clinicLabel"
-                        name="clinic"
-                        id="clinic"
-                        onChange={handleChange}
-                    style={{backgroundColor:"white"}}
 
-                >
-                    {clinics.map(clinic => (
-                        <MenuItem key={clinic.id} value={clinic}> {clinic.name} </MenuItem>
-                    ))}
-                </Select>
-                </div>
+
             </div>
         </div>
     </>
@@ -213,20 +202,25 @@ const RegisterStaff = () => {
 
         if (validate) {
 
-            let nurse = {"user": user, "clinic":clinic}
+            let nurse = {"user": user}
             console.log(nurse)
             console.log("NURSE REGISTER")
             try {
                 await NurseService.add(nurse)
                 setShowAlert({ success: true, message: "Successfully registered" });
+                alert("successfully registered!")
+                history.push("/")
+
             } catch (error) {
                 console.error(`Error occurred while registering: ${error}`);
+                alert("Bad request! Make sure your email is unique")
+
                 setShowAlert({
                     success: false,
                     message: "Error ocurred while registering",
                 });
             }
-            alert("successfully registered!")
+         //   alert("successfully registered!")
           //  window.location.assign("/home");
         }
     }
@@ -237,14 +231,17 @@ const RegisterStaff = () => {
 
 
         if (validate) {
-            let doctor = {"user": user, "clinic": clinic};
+            let doctor = {"user": user};
             console.log(doctor)
             console.log("DOCTOR REGISTER")
             try {
                 await DoctorService.add(doctor);
                 setShowAlert({ success: true, message: "Successfully registered" });
+                alert("successfully registered!")
+                history.push("/")
             } catch (error) {
                 console.error(`Error occurred while registering: ${error}`);
+                alert("Bad request! Make sure your email is unique")
                 setShowAlert({
                     success: false,
                     message: "Error ocurred while registering",

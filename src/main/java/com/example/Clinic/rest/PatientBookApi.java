@@ -6,6 +6,7 @@ import com.example.Clinic.rest.support.dto.IllnessChangeDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.xml.sax.SAXException;
 
@@ -32,6 +33,11 @@ public interface PatientBookApi {
     @GetMapping(value = "/patient/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatientBookByPatient(@PathVariable("id") Long id) throws ParserConfigurationException, SAXException, IOException;
+
+    @PreAuthorize("hasAuthority('PATIENT')")
+    @GetMapping(value = "/patient/healthCard",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getPatientBookByLoggedPatient(Authentication authentication) throws ParserConfigurationException, SAXException, IOException;
 
     @PreAuthorize("hasAuthority('DOCTOR')")
     @PutMapping(value = "/illnesses/{id}",
