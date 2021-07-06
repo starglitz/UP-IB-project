@@ -27,7 +27,7 @@ public interface UserApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
 
-    @PreAuthorize("hasAnyAuthority('NURSE', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('PATIENT', 'NURSE', 'DOCTOR')")
     @GetMapping(value = "email/{email}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedInUserId(@PathVariable("email") String email);

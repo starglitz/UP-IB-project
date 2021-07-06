@@ -29,7 +29,7 @@ public interface PatientBookApi {
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatientBook(@PathVariable("id") Long id) throws ParserConfigurationException, SAXException, IOException;
 
-    @PreAuthorize("hasAuthority('DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('PATIENT', 'DOCTOR')")
     @GetMapping(value = "/patient/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatientBookByPatient(@PathVariable("id") Long id) throws ParserConfigurationException, SAXException, IOException;

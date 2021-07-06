@@ -3,6 +3,8 @@ import {PatientBookService} from "../services/PatientBookService";
 import MUIDataTable from "mui-datatables";
 import {Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import {TokenService} from "../services/TokenService";
+import {UserService} from "../services/UserService";
 
 function PatientBook() {
 
@@ -21,7 +23,9 @@ function PatientBook() {
 
     async function fetchData() {
         try {
-            const response = await PatientBookService.getLoggedPatient()
+            const decoded_token = TokenService.decodeToken(TokenService.getToken().sub());
+            const user = await UserService.getByEmail(decoded_token.sub)
+            const response = await PatientBookService.getByPatient(user.data.id)
             setRequests(response.data)
             setDrugs(response.data.drugs)
             setIllnesses(response.data.illnessHistory)
