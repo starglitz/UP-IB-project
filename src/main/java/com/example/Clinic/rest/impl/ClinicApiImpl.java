@@ -92,6 +92,8 @@ public class ClinicApiImpl implements ClinicApi {
         ClinicAdmin admin = clinicAdminService.findById(user.getId());
         System.out.println(user);
         System.out.println(admin.getClinic());
+        Clinic clinic = admin.getClinic();
+
         return new ResponseEntity(clinicToDto.convert(admin.getClinic()), HttpStatus.OK);
     }
 

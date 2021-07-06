@@ -25,5 +25,5 @@ public interface AppointmentService {
     HashMap<Integer, Integer> findNumberByWeeks(Long id);
     HashMap<Integer, Integer> findNumberByDaysInMonth(Long id,String month);
     Integer findIncomeBetweenDates(Long id,LocalDate dateFrom, LocalDate dateTo);
-
+    List<Appointment> findByPatientFinished(long id);
 }

@@ -30,6 +30,7 @@ const PatientAppointments = () => {
                 appointments.push(response.data[i]);
             }
             console.log(appointments)
+            localStorage.setItem("DOCTOR_ID", appointments[0].doctor.id)
             setRequests(appointments)
         } catch (error) {
             console.error(`Error loading patients !: ${error}`);
@@ -92,9 +93,9 @@ const PatientAppointments = () => {
             console.log("CURRENT " + time)
             console.log("END " + end)
 
-            if (current > start && current < end)
+            if (current > start && current < end) {
                 clickHandler(e)
-            else
+            } else
                 alert("The appointment you have chosen begins \n" + start)
 
         }

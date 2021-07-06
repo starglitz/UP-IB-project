@@ -38,6 +38,8 @@ public class User {
 
     private String phoneNumber;
 
+    private boolean firstTime;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

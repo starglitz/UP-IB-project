@@ -225,6 +225,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 
         }
         return income;
+
+    public List<Appointment> findByPatientFinished(long id) {
+        Optional<Patient> patient = patientService.getPatientById(id);
+        return patient.map(value ->
+                appointmentRepository.findAppointmentByPatientAndStatus(value, AppointmentStatus.PASSED))
+                .orElse(null);
+
     }
 
 

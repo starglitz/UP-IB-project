@@ -79,10 +79,10 @@ public class RegisterRequestServiceImpl implements RegisterRequestService {
 
 
                 System.out.println("ITS APPROVED");
-                String link = "<a href=\"http://localhost:3000/magicWithLink/?token=" + jwt + "\">\"";
+                String link = "http://localhost:3000/magicWithLink/?token=" + jwt;
                 emailService.sendEmail(requestJpa.getPatient().getUser().getEmail(),
                         "Your register request has been approved",
-                        "To log in, you need to visit the given link:<br>" + link);
+                        "To log in, you need to visit the given link:" + link);
             }
             else if(request.getStatus().equals(RequestStatus.DECLINED)) {
                 System.out.println("ITS DENIED");

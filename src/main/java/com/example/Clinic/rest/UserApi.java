@@ -48,5 +48,9 @@ public interface UserApi {
     ResponseEntity<UserRegisterDto> changePassword(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
 
 
+    @PermitAll
+    @GetMapping(value = "/firstTime",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity firstTime(Authentication authentication);
 
 }

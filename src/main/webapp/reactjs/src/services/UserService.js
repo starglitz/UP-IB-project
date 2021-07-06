@@ -6,7 +6,8 @@ export const UserService = {
     getAll,
     get,
     setEnabled,
-    updatePassword
+    updatePassword,
+    isFirstTime
 };
 
 async function edit(id, user) {
@@ -54,4 +55,8 @@ async function updatePassword(id, user) {
             }
         });
     return status;
+}
+
+async function isFirstTime() {
+    return await AxiosClient.get(`https://localhost:8080/user/firstTime`);
 }

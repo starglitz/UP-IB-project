@@ -18,7 +18,7 @@ import ClinicProfilePatient from "./components/clinicProfilePatient/clinicProfil
 import ClinicAppointments from "./components/appointments/appointmentTable";
 import DoctorTable from "./components/clinicDoctors/doctorTable";
 import BookingPage from "./components/booking/bookingPage";
-import PatientsTable from "./components/patients/PatientsTable";
+import DoctorPatientsTable from "./components/patients/DoctorPatientsTable";
 import RegisterStaff from "./layouts/RegisterStaff";
 import ChangePassword from "./layouts/ChangePassword";
 import BlockUsers from "./layouts/BlockUsers";
@@ -33,6 +33,9 @@ import {AuthenticationService} from "./services/AuthenticationService";
 import LinkNotValid from "./layouts/LinkNotValid";
 import PatientAppointments from "./components/tables/PatientAppointments";
 import BussinesReports from "./layouts/BussinesReports";
+
+import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
+
 
 
 function App() {
@@ -160,13 +163,21 @@ function App() {
                     roles={['DOCTOR']}
                 />
 
-                {/*<Route path="/patients" exact component={PatientsTable}/>*/}
+                {/*<Route path="/patients" exact component={DoctorPatientsTable}/>*/}
                 <PrivateRoute
                     exact
                     path="/patients"
-                    component={PatientsTable}
+                    component={DoctorPatientsTable}
                     roles={['DOCTOR']}
                 />
+
+                <PrivateRoute
+                    exact
+                    path="/patient/history"
+                    component={PatientMedicalHistory}
+                    roles={['DOCTOR']}
+                />
+
                 {/*<Route path="/staffRegister" exact component={RegisterStaff}/>*/}
                 <PrivateRoute
                     exact
