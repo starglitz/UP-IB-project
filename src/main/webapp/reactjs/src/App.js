@@ -37,6 +37,7 @@ import PatientAppointmentHistory from "./layouts/PatientAppointmentHistory";
 import PatientMedicalHistory from "./layouts/PatientMedicalHistory";
 import DoctorCalendar from "./layouts/DoctorCalendar";
 import PatientBook from "./layouts/PatientBook";
+import UserProfile from "./profile/UserProfile";
 
 function App() {
   return (
@@ -57,6 +58,13 @@ function App() {
                     path="/nursePage"
                     component={NurseLayout}
                     roles={["NURSE"]}
+                />
+
+                <PrivateRoute
+                    exact
+                    path="/userProfile"
+                    component={UserProfile}
+                    roles={["NURSE", "CLINIC_ADMIN", "CLINIC_CENTRE_ADMIN", "DOCTOR"]}
                 />
 
                 {/*<Route path="/profile" exact component={PatientProfilLayout}/>*/}

@@ -35,6 +35,7 @@ const navbar = () => {
     const businessReport = <Nav.Link key={key++}  href="businessReports">Business Reports</Nav.Link>
     const appointmentHistory = <Nav.Link key={key++}  href="appointmentHistory">Appointment history</Nav.Link>
     const patientBook = <Nav.Link key={key++}  href="patientBook">Health card</Nav.Link>
+    const myProfile = <Nav.Link key={key++}  href="userProfile">My profile</Nav.Link>
 
 
     let patient = [];
@@ -52,12 +53,14 @@ const navbar = () => {
     nurse.push(nursePageElement)
     nurse.push(recipeApprovalElement)
     nurse.push(chandePassword)
+    nurse.push(myProfile)
 
     let doctor = [];
     doctor.push(logoutLink)
     doctor.push(chandePassword)
     doctor.push(doctorPatients)
     doctor.push(doctorAppointments)
+    doctor.push(myProfile)
 
     let clinicAdmin = [];
     clinicAdmin.push(logoutLink)
@@ -69,6 +72,7 @@ const navbar = () => {
     clinicAdmin.push(chandePassword)
     clinicAdmin.push(blockUsers)
     clinicAdmin.push(businessReport)
+    clinicAdmin.push(myProfile)
 
     let clinicCentreAdmin = [];
     clinicCentreAdmin.push(logoutLink)
@@ -76,6 +80,7 @@ const navbar = () => {
     clinicCentreAdmin.push(chandePassword)
     clinicCentreAdmin.push(addClinic)
     clinicCentreAdmin.push(addClinicAdmin)
+    clinicCentreAdmin.push(myProfile)
 
 
 

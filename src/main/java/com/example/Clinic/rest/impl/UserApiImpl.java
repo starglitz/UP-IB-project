@@ -2,6 +2,7 @@ package com.example.Clinic.rest.impl;
 
 import com.example.Clinic.model.User;
 import com.example.Clinic.rest.UserApi;
+import com.example.Clinic.rest.support.converter.DtoToUser;
 import com.example.Clinic.rest.support.converter.UserToDto;
 import com.example.Clinic.rest.support.dto.FirstTimeDto;
 import com.example.Clinic.rest.support.dto.UserDto;
@@ -24,6 +25,9 @@ public class UserApiImpl implements UserApi {
 
     @Autowired
     private UserToDto userToDto;
+
+    @Autowired
+    private DtoToUser dtoToUser;
 
 
 
@@ -120,6 +124,12 @@ public class UserApiImpl implements UserApi {
         }
 
         return new ResponseEntity(dto, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<UserDto> updateProfile(Long id, @Valid UserDto user) {
+        User update = userService.updateProfile(dtoToUser.convert(user));
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
 
