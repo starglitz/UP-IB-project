@@ -8,7 +8,8 @@ export const UserService = {
     setEnabled,
     updatePassword,
     getByEmail,
-    isFirstTime
+    isFirstTime,
+    editProfile
 };
 
 async function edit(id, user) {
@@ -64,4 +65,19 @@ async function updatePassword(id, user) {
 
 async function isFirstTime() {
     return await AxiosClient.get(`https://localhost:8080/user/firstTime`);
+}
+
+async function editProfile(id, user) {
+    let status = '200';
+    await AxiosClient.put(`https://localhost:8080/user/profile/${id}`, user)
+        .catch(function (error) {
+            if (error.response) {
+                console.log(error.response.status);
+                if(error.response.status == '400') {
+                    status = '400'
+                    return '400'
+                }
+            }
+        });
+    return status;
 }

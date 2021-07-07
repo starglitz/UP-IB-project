@@ -60,7 +60,6 @@ async function login(userCredentials) {
             }
 
             console.log(TokenService.getToken(), TokenService.getRefreshToken())
-            alert("A")
         } else {
             console.error("Invalid token");
 

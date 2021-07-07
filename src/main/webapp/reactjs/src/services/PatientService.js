@@ -5,13 +5,19 @@ export const PatientService = {
     getAll,
     update,
     create,
-    getByCurrentDoctor
+    getByCurrentDoctor,
+    getLogged
 };
 
 
 async function get(id) {
     return await AxiosClient.get(`https://localhost:8080/patients/${id}`);
 }
+
+async function getLogged() {
+    return await AxiosClient.get(`https://localhost:8080/patients/patient`);
+}
+
 
 async function getAll() {
     return await AxiosClient.get(`https://localhost:8080/patients`);

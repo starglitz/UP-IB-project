@@ -2,6 +2,7 @@ package com.example.Clinic.rest;
 
 import com.example.Clinic.model.LoginForm;
 import com.example.Clinic.rest.support.dto.RegisterNurseDto;
+import com.example.Clinic.rest.support.dto.UserDto;
 import com.example.Clinic.rest.support.dto.UserRegisterDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,12 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public interface UserApi {
 
-    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTER_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
     @PutMapping(value = "/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UserRegisterDto> update(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
 
-    @PreAuthorize("hasAuthority('CLINIC_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN', 'NURSE', 'DOCTOR')")
     @GetMapping(value = "/profile",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getLoggedIn(Authentication authentication);
@@ -47,7 +48,7 @@ public interface UserApi {
     ResponseEntity enable(@PathVariable("token") String token);
 
 
-    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTER_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
     @PutMapping(value = "/passwordUpdate/{id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<UserRegisterDto> changePassword(@PathVariable("id") Long id, @Valid @RequestBody UserRegisterDto user);
@@ -57,5 +58,11 @@ public interface UserApi {
     @GetMapping(value = "/firstTime",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity firstTime(Authentication authentication);
+
+    @PreAuthorize("hasAnyAuthority('CLINIC_ADMIN', 'CLINIC_CENTRE_ADMIN', 'PATIENT', 'NURSE', 'DOCTOR')")
+    @PutMapping(value = "/profile/{id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<UserDto> updateProfile(@PathVariable("id") Long id, @Valid @RequestBody UserDto user);
+
 
 }

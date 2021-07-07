@@ -153,4 +153,17 @@ public class UserServiceImpl  implements UserService {
         Optional<User> user = userRepository.findFirstByEmail(email);
         return user.orElse(null);
     }
+
+    @Override
+    public User updateProfile(User user) {
+        User jpa = userRepository.findById(user.getId()).orElse(null);
+        jpa.setAddress(user.getAddress());
+        jpa.setCity(user.getCity());
+        jpa.setCountry(user.getCountry());
+        jpa.setName(user.getName());
+        jpa.setLastName(user.getLastName());
+        jpa.setPhoneNumber(user.getPhoneNumber());
+        userRepository.save(jpa);
+        return jpa;
+    }
 }
