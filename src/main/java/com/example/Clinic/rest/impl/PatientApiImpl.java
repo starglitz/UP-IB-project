@@ -119,6 +119,13 @@ public class PatientApiImpl implements PatientApi {
     }
 
     @Override
+    public ResponseEntity getLogged(Authentication authentication) {
+        User user = userService.getLoggedIn(authentication);
+        Patient patient = patientService.getPatientById(user.getId()).orElse(null);
+        return new ResponseEntity(patientToDto.convert(patient) , HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity getPatient(Long id) {
 
         Optional<Patient> patient = patientService.getPatientById(id);

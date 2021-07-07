@@ -47,7 +47,7 @@ const PatientProfilLayout = () => {
 
     async function fetchPatient() {
         try {
-            const response = await PatientService.get(40);
+            const response = await PatientService.getLogged();
             setPatient(response.data);
             setLoading(false);
         } catch (error) {
@@ -101,9 +101,9 @@ const PatientProfilLayout = () => {
 
 
 
-    async function update(id, appointment) {
+    async function update(id, patient) {
         try {
-            await PatientService.update(15, patient)
+            await PatientService.update(patient.id, patient)
             window.location.reload();
         } catch (error) {
             console.error(`Error ocurred while updating the appointment: ${error}`);

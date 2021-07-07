@@ -25,6 +25,10 @@ public interface PatientApi {
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getAllPatients();
 
+    @PreAuthorize("hasAnyAuthority('PATIENT')")
+    @GetMapping(value = "/patient",produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity getLogged(Authentication authentication);
+
     @GetMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity getPatient(@PathVariable("id") Long id);
